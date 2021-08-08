@@ -1,0 +1,147 @@
+
+h2{
+    text-align: center;
+}
+
+button{
+    outline: none;
+    border: none;
+}
+
+.buttons{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+ .offerlink{
+    padding: 0.8rem 1.5rem;
+    background-color: black;
+    color: white;
+    
+}
+
+
+
+.im{
+    position: relative;
+}
+
+.hover{
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+}
+
+h3{
+    margin: 0 3.4rem;
+    font-size: 1.7rem;
+    font-weight: 400;
+}
+
+.outer{
+    position: relative;
+    width: 100%;
+    background-color: brown;
+    margin: 1.2rem 0  4.5rem 0;
+}
+
+.outer button{
+    padding: 1rem;
+    /* background-color: white; */
+    border-radius: 50%;
+    position: absolute;
+    bottom: 55%;
+}
+
+.leftar{
+   left: 3.4rem;
+}
+
+.rightar{
+
+    right: 3.4rem;
+
+}
+
+.whitebac{
+    background-color: white;
+}
+
+.scrollthis{
+    overflow-x: scroll;
+    padding: 0 0 4rem 0;
+}
+
+.lists{
+     display: inline-flex;  /*inline-flex makes the flex container inline, display:flex will make flex container block */
+    background-color: violet;
+   gap: 1rem;
+   /* width: 300%;
+   overflow-x: scroll; */
+}
+
+ .norbox:first-child{
+        margin: 0 0 0 3.4rem;
+        background-color: greenyellow;
+}
+
+.norbox:last-child{
+    background-color: indigo;
+margin: 0 2.4rem 0 0;
+}
+
+.norbox{
+    display: flex;
+    flex-direction: column;
+    background-color: pink;
+}
+
+.norbox img{
+   width: 30vw;
+   height: 30vw;
+   object-fit: cover;
+}
+
+.maindetail{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1rem 0 0;
+}
+
+.norbox p{
+    margin: 1rem 0 0 0;
+}
+
+.norbox .subdetail{
+    margin: 0.4rem 0 0 0;
+    color: gray;
+}
+
+.scrollthis::-webkit-scrollbar{
+    height: 0.5rem;
+    
+}
+
+.outer:hover .scrollthis::-webkit-scrollbar-thumb,.outer:hover .scrollthis::-webkit-scrollbar-track-piece{
+  visibility: visible;
+}
+
+
+.scrollthis::-webkit-scrollbar-thumb{
+    background-color: rgb(146, 142, 142);
+    border-radius: 1rem;
+visibility: hidden;
+}
+
+
+.scrollthis::-webkit-scrollbar-track-piece{
+    background-color: rgb(221, 218, 218);
+    border-radius: 1rem;
+visibility: hidden;
+}
+
+.scrollthis::-webkit-scrollbar-track{
+  margin: 0 10vw;
+}

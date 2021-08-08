@@ -1,0 +1,137 @@
+
+.totaldiv{
+    display: flex;
+    margin: 10vh ;
+}
+
+.shoeimages{
+    display: flex;
+    flex-wrap: wrap;
+    width: 60vw;
+    flex-direction: row;
+}
+
+.shoeimages  img{
+    height: 73vh;
+   width: 60vh;
+   margin:0 20px 20px 0;
+   cursor: pointer;
+}
+
+.infodiv{
+    width: 30vw;
+    margin: 0 0 0 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.infodiv img{
+width: 12vh;
+height: 12vh;
+margin: 0 5px 0 0;
+}
+
+.infodiv .shoetype{
+    margin-top: 10px;
+}
+
+.infodiv .shoename{
+    font-size: 1.82rem;
+margin-top: 5px;
+}
+
+.infodiv .shoecost{
+    margin-top: 13px;
+}
+
+.infodiv .pricedetail{
+    color: gray;
+    margin-top: 4px;
+}
+
+.shoepictures{
+    margin: 5vh 0;
+}
+
+
+
+.shoepictures > img{
+    border-radius: 0.4rem;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.shoepictures img:hover{
+    border:  1px solid black;
+}
+
+
+.shoepicimg{
+    border:  1px solid black;
+}
+
+
+p{
+    margin: 0;
+    font-size: 1.1rem;
+
+}
+
+.shoesizediv{
+    margin: 2vh 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+   
+}
+
+.shoesize{
+    width: 9.2vw;
+    height: 8vh;
+    box-sizing: border-box;
+    font-size: 1rem;
+    padding: 1.9vh 0vh;
+    border: rgb(177, 177, 177) 1px solid;
+    border-radius: 0.4rem;
+    margin: 0 5px 5px 0;
+   text-align: center;
+   flex-grow: 1;
+    /* check with fixed size for it */
+}
+
+.shoesize:hover{
+    border:1.5px solid black;
+    cursor: pointer;
+}
+
+.shoesize_active{
+    border:1.5px solid black;
+}
+
+.infodiv .addcartbut,.favbut{
+    background-color: black;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 20px 0;
+    font-size: 1rem;
+    border-radius: 1.9rem;
+    margin-bottom: 10px;
+}
+
+.infodiv button{
+    cursor: pointer;
+}
+
+.favbut{
+    background-color: white;
+    color: black;
+    border: rgb(158, 158, 158) 1px solid;
+}
+
+.shoedetails{
+    margin: 10vh 0;
+    font-size: 1.06rem;
+    line-height: 1.7rem;
+}

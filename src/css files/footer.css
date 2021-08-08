@@ -1,0 +1,26 @@
+
+.foot{
+    display: flex;
+    background-color: black;
+    justify-content: space-around;
+    gap: 5%;
+    color: white;
+    padding: 5rem;
+}
+
+.points{
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.points a{
+    color: white;
+
+}
+
+.allLinks{
+    display: flex;
+    gap: 1rem;
+}

@@ -1,0 +1,224 @@
+
+
+@media only screen and (max-width: 3020px) {
+    :root{
+        --hideicon:none;
+        --displayicon:block;
+        --selectiondisplay:flex;
+    }
+    
+      }
+
+@media only screen and (max-width: 1024px) {
+    :root{
+--hideicon: block;
+--displayicon: none;
+--selectiondisplay:none;
+
+    }
+  }
+
+.navbardiv{
+    width: 100%;
+    background-color: #F1F1F1;
+    position: relative;
+}
+
+.minbar{
+font-size: 0.8rem;
+font-weight: 500;
+display: var(--selectiondisplay);
+justify-content: flex-end;
+padding: 0.9em 3.5em;
+}
+
+.vl{
+    margin: 0em 1em;
+    width: 0.1rem;
+    background-color: black;
+    position: relative;
+    top: 0.1em;
+}
+
+.minbar > a{
+    line-height: 0.8rem;
+    text-decoration: none;
+}
+
+.mainbar{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+   align-items: center;
+    font-size: 1rem;
+    padding: 0em 2em;
+}
+
+h1{
+    line-height: 1rem;
+    padding: 0%;
+    margin: 0.7em;
+}
+
+.logo{
+    margin: 0 20% 0 0;
+    background-color: yellow;
+}
+
+.selections{
+    display: var(--selectiondisplay);
+    justify-content: space-between;
+    align-self: stretch;
+    width: 30%;
+}
+
+.selections div{
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+flex-grow: 1;
+/* width: 100%; diff bet flex-grow and width is that width:100% will make children small as possible and then apply the width of largest element to all other elemenets */
+/* flex-grow:1 will take available space and divide equal among all children */
+}
+
+
+.selections p{
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.input{
+    display: var(--displayicon);
+    background-color: #F1F1F1;
+    padding: 0.5em;
+    border-radius: 1.3rem;
+    width: 17%;
+    margin:  0 3% 0 7%;
+}
+
+.input input{
+    border:none;
+    background-color: transparent;
+    font-size: 0.95rem;
+    width: 75%;
+   margin: 0 0 0 0.8em;
+}
+
+.input input:focus{
+    outline: none;
+}
+
+.input input::placeholder{
+color: #cac5c5;
+}
+
+
+.fav{
+    display: var(--displayicon);
+}
+
+.cart{
+    margin: 0 0 0 1.6rem;
+}
+
+.search{
+    display: var(--hideicon);
+    margin: 0 0 0 1.6rem;
+}
+
+.options{
+    display: var(--hideicon);
+     margin: 0 0 0 1.6rem;
+}
+
+
+.iconlist{
+    display: flex;
+}
+
+
+.lastbarparent{
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 100%;
+}
+
+.lastbar{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+transform: translate(0,-100%);
+visibility: hidden;
+transition:  visibility 0s ease-in 2s , transform 150ms ease-out 0s;
+}
+
+.lastbaranim{
+visibility: visible;
+transform: translate(0,0);
+transition: transform 200ms ease-in;
+}
+
+
+
+.col{
+    font-size: 1.15rem;
+    margin: 0 5rem 0 0;
+}
+
+
+
+.lastbar > div > .col:last-child{
+    margin: 0;
+}
+
+
+.list{
+    font-size: 0.95rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.lastbar .listanim > .col > .list{
+    flex-direction: column;
+    }
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.lastbar .listanim{
+    padding:2.5rem;
+    animation: listanim 300ms ease-in 200ms 1 normal forwards;
+ width: 100%;
+}
+
+@keyframes listanim {
+    0%{
+        transform: translate(0,-10px);
+        opacity: 0;
+       
+    }
+
+    30%{
+        opacity: 0;
+        visibility: visible;
+    }
+    100%{
+        opacity: 1;
+        transform: translate(0,0);
+        visibility: visible;
+    }
+}
+
+.lastbar > div{
+  width: 0%;
+display: flex;
+  justify-content: center;
+ overflow: hidden;
+  visibility: hidden;
+
+}
