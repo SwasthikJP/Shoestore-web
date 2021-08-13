@@ -290,8 +290,8 @@ const [listdata,setlistdata]=useState([]);
 
 
                         {shoecolorslist.map((ele) => {
-                            return <div className="colorb" onClick={(e) => colorclick(e, ele)}><div className="circle" style={{ backgroundColor: ele, opacity: 0.85 }}> <div className={selectedcolors.includes(ele) ? "tickactive" : "tick"} style={{ borderColor: ele === "White" ? "black" : "white" }}></div> </div>
-                                <div className="cname">{ele}</div></div>
+                            return <div className="colorb" onClick={(e) => colorclick(e, ele)}><div className="circle" style={{ backgroundColor: ele, opacity: 0.85 }}> <div className={selectedcolors.includes(ele) ? "tick tickactive" : "tick"} style={{ borderColor: ele === "White" ? "black" : "white" }}></div> </div>
+                                <div className={selectedcolors.includes(ele) ?"cnameactive":""} >{ele}</div></div>
                         })}
 
 

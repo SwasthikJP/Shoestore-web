@@ -75,3 +75,187 @@ transition: transform  0.35s ease 0s;
     color: rgb(117, 117, 117);
 }
 
+
+.mainbody{
+    display: flex;
+    
+}
+
+.filterbody{
+    width: 15rem;
+    background-color: rgb(179, 136, 219);
+    padding: 0 1rem 0 2rem;
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+.filterbody::-webkit-scrollbar{
+    width: 7px;
+}
+
+.filterbody::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+
+.filterbody::-webkit-scrollbar-thumb{
+    background-color: gray;
+    border-radius: 200px;
+}
+
+h5{
+    font-size: 1rem;
+    margin: 0%;
+    padding: 0%;
+}
+
+.boxdiv{
+    margin-bottom: 0.5rem;
+}
+
+label{
+    padding-left: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+.box{
+    position: absolute;
+    left: 0%;
+    bottom: 0%;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid rgb(190, 188, 188);
+}
+
+.boxdiv input{
+    visibility: hidden;
+    height: 0%;
+    width: 0%;
+}
+
+label:hover{
+    color: rgb(179, 174, 174);
+}
+
+label input:checked ~ .box{
+    background-color: black;
+    border: 1px solid black;
+}
+
+label input ~ .box::after{
+  content: "";
+  visibility: hidden;
+  position: absolute;
+  top: 23%;
+  left: 2px;
+    width: 0;
+    height: 0;
+    transform: rotate(-45deg);
+    border-bottom:2px solid white;
+    border-left:2px solid white;
+    transition:  height 200ms ease,width 150ms ease;
+}
+
+label input:checked ~ .box::after{
+    visibility: visible;
+    height: 4px;
+    width: 11px;
+}
+
+.longdiv{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0 1rem 0;
+    padding: 0.4rem 0 0 0;
+    border-top: 1px solid rgb(185, 185, 185);
+cursor: pointer;
+transition: margin-bottom 300ms ease 0ms;
+}
+
+.minimizediv{
+    transition: margin-bottom 50ms ease 250ms;
+    margin-bottom: 0%;
+}
+
+.minimizediv + .bottompadding{
+max-height: 0;
+}
+
+.bottompadding{
+max-height: 300px;
+overflow: hidden;
+transition: max-height  300ms ease ;
+}
+
+.allsizes{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.size{
+    padding: 0.4rem 1.3rem;
+    border: 1px solid gray;
+    border-radius: 0.3rem;
+flex-grow: 1;
+text-align: center;
+
+}
+
+.size:hover{
+    box-shadow: 0px 0px 0 1px  black inset;
+
+}
+
+.allcolors{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2.1rem;
+    justify-content: center;
+    
+}
+
+.colorb{
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    align-items: center;
+    cursor: pointer;
+}
+
+.colorb:hover{
+    color: rgb(221, 221, 221);
+}
+
+.circle{
+    position: relative;
+    height: 1.85rem;
+    width: 1.85rem;
+    border-radius: 50%;
+}
+
+.tick{
+    position: absolute;
+    left: 22%;
+    bottom: 43%;
+   height: 0;
+   width: 0;
+    transform: rotate(-45deg);
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    visibility: hidden;
+}
+
+.tickactive{
+    visibility: visible;
+    width: 15px;
+    height: 7px;
+transition: width 150ms ease,height 150ms ease;
+}
+
+.colorb:hover > .cnameactive{
+ color: black;
+}
