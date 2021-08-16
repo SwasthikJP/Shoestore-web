@@ -4,8 +4,8 @@ p{
 
 .infotab{
     /* width: 90%; */
-  padding: 0% 2rem;
-    background-color: burlywood;
+  padding: 0% 2rem 0 2.8rem;
+    background-color: rgb(231, 204, 173);
     margin: 0% auto;
     display: flex;
     justify-content: space-between;
@@ -42,7 +42,9 @@ h3{
    background-color: greenyellow;
     position: absolute;
     top: 100%;
-    right: 0%;overflow: hidden;
+    right: 0%;
+    overflow: hidden;
+    z-index: 1;
    /* max-width: 200%; */
    /* width: 100%; */
     /* display: none; */
@@ -78,15 +80,32 @@ transition: transform  0.35s ease 0s;
 
 .mainbody{
     display: flex;
-    
+    justify-content: flex-start;
+    align-items: stretch;
+ max-height: 70vh;
 }
 
+.dt > .filterbody{
+  width: 0;
+ padding: 0%;
+ transform: translate(-100%,0);
+ transition: width 300ms ease , padding 300ms ease,transform 300ms ease;
+
+}
+
+.dt>.shoelistbody{
+    width: 100%;
+}
+
+
+
 .filterbody{
-    width: 15rem;
+    width: 15.8rem;
     background-color: rgb(179, 136, 219);
-    padding: 0 1rem 0 2rem;
-    height: 70vh;
+    padding: 0 1rem 0 2.8rem;
+   max-height: 70vh;
     overflow-y: scroll;
+    transition: width 280ms ease, padding 280ms ease,transform 300ms ease;
 }
 
 .filterbody::-webkit-scrollbar{
@@ -258,4 +277,76 @@ transition: width 150ms ease,height 150ms ease;
 
 .colorb:hover > .cnameactive{
  color: black;
+}
+
+.shoelistbody{
+    background-color: cadetblue;
+ display: flex;
+ flex-wrap: wrap;
+overflow-y: scroll;
+ width: calc(100% - 15.8rem);
+padding: 0 3.4rem;
+gap: 1rem;
+transition: width 290ms ease;
+/* flex-grow: 1; */
+}
+
+
+.norbox:first-child,.norbox:last-child,.norbox{
+    margin: 0%;
+    padding-bottom: 3.6rem;
+  width: 31.33%;
+  cursor: pointer;
+}
+
+.image{
+    position: relative;
+    width: 100%;
+}
+
+.image::after{
+    content: '';
+    display: block;
+    padding-top: 100%;
+    
+}
+
+.norbox > .image img{
+    /* width: 22.6vw;
+   height: 22.6vw; */
+   position: absolute;
+   width: 100%;
+  height: 100%;
+}
+
+.norbox .seconddetails{
+    display: none;
+}
+
+.norbox:hover .details{
+    display: none;
+}
+
+.norbox:hover .seconddetails{
+    display: block;
+}
+
+
+.picturediv{
+    margin: 1rem 0 2.02rem 0;
+}
+
+.picturediv img{
+margin-right: 0.5rem;
+}
+
+
+
+.norbox > p{
+    transform: translate(0,0);
+}
+
+.norbox:hover > p{
+    transform: translate(0,-37px);
+    transition: transform 300ms ease 0s;
 }

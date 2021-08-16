@@ -47,7 +47,7 @@ const selectionlist=["Men","Women","Nike","Puma","Skechers"];
 </div>
 
         </div>
-        <div className="lastbarparent" style={{pointerEvents:divnum!=-1?"auto":"none"}}>
+        <div className="lastbarparent" style={{pointerEvents:divnum!=-1?"auto":"none",backdropFilter:divnum!=-1?"blur(3px)":"blur(0px)",transition:divnum!=-1?"backdrop-filter 500ms linear":"none"}}>
         <div className={divnum!=-1?"lastbar lastbaranim":"lastbar"}>
             <div className={divnum===0?"listanim":""} onMouseOver={()=>{setdivnum(0)}} onMouseOut={()=>{setdivnum(-1)}}>
                 <div className="col">

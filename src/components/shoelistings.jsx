@@ -128,7 +128,7 @@ const [listdata,setlistdata]=useState([]);
     }
 
     const addseconddetails = (e) => {
-        e.target.closest(".norbox").childNodes[0].src = e.target.src;
+        e.target.closest(".norbox").childNodes[0].firstChild.src = e.target.src;
     }
 
     const addclassfun = () => {
@@ -243,7 +243,8 @@ const [listdata,setlistdata]=useState([]);
 
         <div className={maindivclass.classNames}>
             {/* <button className="dt"></button> */}
-            <div className="filterbody">
+            
+            <span className="filterbody">
                 {
                     Boolean(props.prop.shoetype) ||
                     <div className="typesofshoe">
@@ -310,15 +311,17 @@ const [listdata,setlistdata]=useState([]);
                     </div>
                 </div>
 
-            </div>
-            <div className="shoelistbody">
+            </span>
+            <span className="shoelistbody">
                 <div className="norbox" >
+                    <div className="image">
                     <img src={air} alt="" />
+                    </div>
                     <div className="details">
                         <p>Jordan</p>
                         <p className="subdetail">Basketball shoe</p>
                         <p className="subdetail">4 Colors</p>
-                        <p>₹20,200</p>
+                        {/* <p>₹20,200</p> */}
                     </div>
 
                     <div className="seconddetails">
@@ -326,13 +329,16 @@ const [listdata,setlistdata]=useState([]);
                             <img src={air2} onMouseOver={(e) => { addseconddetails(e) }} style={{ height: "40px", width: "40px" }} alt="" />
                             <img src={air} onMouseOver={(e) => { addseconddetails(e) }} style={{ height: "40px", width: "40px" }} alt="" />
                         </div>
-                        <p>₹20,200</p>
+                        {/* <p>₹20,200</p> */}
                     </div>
+                    <p>₹20,200</p>
                 </div>
 
 
                 <div className="norbox">
+                <div className="image">
                     <img src={air} alt="" />
+                    </div>
 
                     <p>Jordan</p>
                     <p className="subdetail">Basketball shoe</p>
@@ -342,7 +348,9 @@ const [listdata,setlistdata]=useState([]);
 
 
                 <div className="norbox">
+                <div className="image">
                     <img src={air} alt="" />
+                    </div>
 
                     <p>Jordan</p>
                     <p className="subdetail">Basketball shoe</p>
@@ -353,7 +361,9 @@ const [listdata,setlistdata]=useState([]);
 
 
                 <div className="norbox">
+                <div className="image">
                     <img src={air} alt="" />
+                    </div>
 
                     <p>Jordan</p>
                     <p className="subdetail">Basketball shoe</p>
@@ -362,7 +372,7 @@ const [listdata,setlistdata]=useState([]);
                 </div>
 
 
-            </div>
+            </span>
         </div>
 
 
