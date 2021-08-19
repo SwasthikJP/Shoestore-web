@@ -82,23 +82,23 @@ h3{
    overflow-x: scroll; */
 }
 
- .norbox:first-child{
+ .norbox2:first-child{
         margin: 0 0 0 3.4rem;
         background-color: greenyellow;
 }
 
-.norbox:last-child{
+.norbox2:last-child{
     background-color: indigo;
 margin: 0 2.4rem 0 0;
 }
 
-.norbox{
+.norbox2{
     display: flex;
     flex-direction: column;
     background-color: pink;
 }
 
-.norbox img{
+.norbox2 img{
    width: 30vw;
    height: 30vw;
    object-fit: cover;
@@ -110,11 +110,11 @@ margin: 0 2.4rem 0 0;
     margin: 0 1rem 0 0;
 }
 
-.norbox p{
+.norbox2 p{
     margin: 1rem 0 0 0;
 }
 
-.norbox .subdetail{
+.norbox2 .subdetail{
     margin: 0.4rem 0 0 0;
     color: gray;
 }

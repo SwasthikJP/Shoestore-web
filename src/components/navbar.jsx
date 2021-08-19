@@ -1,15 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faHeart, faShoppingBag, faFolderMinus } from "@fortawesome/free-solid-svg-icons";
-import {  useState } from "react";
+import {  useRef, useState } from "react";
 import "../css files/navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 
 export default function Navbar() {
 
-
 const [divnum,setdivnum]=useState(-1);
 const selectionlist=["Men","Women","Nike","Puma","Skechers"];
+const lastbarparentstyleactive=useRef({pointerEvents:"auto",backdropFilter:"blur(3px)",transition:"backdrop-filter 500ms linear"});
+const lastbarparentstyle=useRef({pointerEvents:"none",backdropFilter:"blur(0px)",transition:"none"});
 
     return <div className="navbardiv">
         <div className="minbar">
@@ -47,17 +48,17 @@ const selectionlist=["Men","Women","Nike","Puma","Skechers"];
 </div>
 
         </div>
-        <div className="lastbarparent" style={{pointerEvents:divnum!=-1?"auto":"none",backdropFilter:divnum!=-1?"blur(3px)":"blur(0px)",transition:divnum!=-1?"backdrop-filter 500ms linear":"none"}}>
+        <div className="lastbarparent" style={divnum!=-1?lastbarparentstyleactive.current:lastbarparentstyle.current}>
         <div className={divnum!=-1?"lastbar lastbaranim":"lastbar"}>
             <div className={divnum===0?"listanim":""} onMouseOver={()=>{setdivnum(0)}} onMouseOut={()=>{setdivnum(-1)}}>
                 <div className="col">
                     <a href="">Shoes</a>
                     {/* <Link to={{pathname:"/shoelistings/men",state:{hello:true}}}>Shoes</Link> */}
                     <div className="list">
-                    <a href="">All Shoes</a>
-                        <a href="">Running</a>
-                        <a href="">Sneakers</a>
-                        <a href="">Basketball</a>
+                    <Link to={`/list/men-allshoes/MnAs`}>All Shoes</Link>
+                    <Link to={`/list/men-running/MntseRn`}>Running</Link>
+                    <Link to={`/list/men-sneakers/MntseSk`}>Sneakers</Link>
+                    <Link to={`/list/men-basketball/MntseBll`}>Basketball</Link>
                         
                     </div>
                 </div>
@@ -65,9 +66,9 @@ const selectionlist=["Men","Women","Nike","Puma","Skechers"];
                 <div className="col">
                     <a href="">Brands</a>
                     <div className="list">
-                        <a href="">Nike</a>
-                        <a href="">Puma</a>
-                        <a href="">Skechers</a>
+                        <Link to={"list/men-nike/MnNk"}>Nike</Link>
+                        <Link to={"list/men-puma/MnPm"}>Puma</Link>
+                        <Link to={"list/men-skechers/MnSk"}>Skechers</Link>
                     </div>
                 </div>
 

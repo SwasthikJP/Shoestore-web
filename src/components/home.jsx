@@ -8,7 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import Footern from "./footer";
 import firebase from "firebase";
-import "../css files/home.css"
+import "../css files/home.css";
+import { Link } from "react-router-dom";
 
 export default function Home() {
 
@@ -97,7 +98,7 @@ export default function Home() {
           <div className="scrollthis" ref={lists} onScroll={() => scrolldetect()}>
             <div className="lists" >
 
-       <div className="norbox">
+       <div className="norbox2">
               <img src={air} alt="" />
               <div className="maindetail">
                   <p>NIke air</p>
@@ -106,7 +107,7 @@ export default function Home() {
               <p className="subdetail">Sneakers</p>
           </div>
 
-          <div className="norbox">
+          <div className="norbox2">
               <img src={air} alt="" />
               <div className="maindetail">
                   <p>NIke air</p>
@@ -115,7 +116,7 @@ export default function Home() {
               <p className="subdetail">Sneakers</p>
           </div>
 
-          <div className="norbox">
+          <div className="norbox2">
               <img src={air} alt="" />
               <div className="maindetail">
                   <p>NIke air</p>
@@ -124,7 +125,7 @@ export default function Home() {
               <p className="subdetail">Sneakers</p>
           </div>
 
-          <div className="norbox">
+          <div className="norbox2">
               <img src={air} alt="" />
               <div className="maindetail">
                   <p>NIke air</p>
@@ -133,7 +134,7 @@ export default function Home() {
               <p className="subdetail">Sneakers</p>
           </div>
 
-          <div className="norbox">
+          <div className="norbox2">
               <img src={air} alt="" />
               <div className="maindetail">
                   <p>NIke air</p>
@@ -142,7 +143,7 @@ export default function Home() {
               <p className="subdetail">Sneakers</p>
           </div>
 
-          <div className="norbox">
+          <div className="norbox2">
               <img src={air} alt="" />
               <div className="maindetail">
                   <p>NIke air</p>
@@ -150,7 +151,7 @@ export default function Home() {
               </div>
               <p className="subdetail">Sneakers</p>
           </div>
-          <div className="norbox">
+          <div className="norbox2">
               <img src={air} alt="" />
               <div className="maindetail">
                   <p>NIke air</p>
@@ -162,7 +163,7 @@ export default function Home() {
        
     {/* {listdata.map((ele)=>{
             
-              return  <div className="norbox">
+              return  <div className="norbox2">
               <img src={ele.shoeimages[ele.shoecolors[0]][0]} alt="" />
               <div className="maindetail">
                   <p>{ele.shoename}</p>

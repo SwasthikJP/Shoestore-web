@@ -55,7 +55,6 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
 
     const fun2= async()=>{
 const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-
 const supabaseapi=process.env.REACT_APP_SUPABASE_API;
 const supabase=createClient(superbaseURL,supabaseapi);
 
