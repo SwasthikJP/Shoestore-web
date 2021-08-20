@@ -15,12 +15,14 @@ p{
 h3{
     margin: 0%;
     font-size: 1.6rem;
+    text-transform: capitalize;
 }
 
 .roots{
     margin: 0;
     padding: 0%;
     font-size: 0.9rem;
+    text-transform: capitalize;
 }
 
 .cornerbut{
@@ -97,7 +99,9 @@ transition: transform  0.35s ease 0s;
     width: 100%;
 }
 
-
+.shoelistbody > h3{
+    margin: 0 auto;
+}
 
 .filterbody{
     width: 15.8rem;
@@ -129,46 +133,42 @@ h5{
 
 .boxdiv{
     margin-bottom: 0.5rem;
-}
-
-label{
-    padding-left: 30px;
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     cursor: pointer;
 }
 
-.box{
-    position: absolute;
-    left: 0%;
-    bottom: 0%;
+.boxdiv:hover > .gender{
+    color: rgb(179, 174, 174);
+}
+
+
+
+
+
+.boxdiv >.box2{
+    display: inline-block;
     width: 20px;
     height: 20px;
     background-color: white;
     border-radius: 4px;
+    position: relative;
     border: 1px solid rgb(190, 188, 188);
 }
 
-.boxdiv input{
-    visibility: hidden;
-    height: 0%;
-    width: 0%;
-}
-
-label:hover{
-    color: rgb(179, 174, 174);
-}
-
-label input:checked ~ .box{
+.boxdiv > .box2active{
     background-color: black;
     border: 1px solid black;
 }
 
-label input ~ .box::after{
-  content: "";
-  visibility: hidden;
-  position: absolute;
-  top: 23%;
-  left: 2px;
+
+.boxdiv > .box2  .tick2{
+    display: inline-block;
+    position: absolute;
+    top: 23%;
+    left: 2px;
+    visibility: hidden;
     width: 0;
     height: 0;
     transform: rotate(-45deg);
@@ -177,11 +177,29 @@ label input ~ .box::after{
     transition:  height 200ms ease,width 150ms ease;
 }
 
-label input:checked ~ .box::after{
+.boxdiv > .box2active > .tick2{
     visibility: visible;
-    height: 4px;
-    width: 11px;
+    height: 6px;
+    width: 13px;
+
 }
+
+ .boxdiv:hover .box2active + .gender{
+    color: black;
+}
+
+
+.boxdiv > .gender{
+    display: inline-block;
+    color: black;
+}
+
+
+
+
+
+
+
 
 .longdiv{
     display: flex;
@@ -192,6 +210,7 @@ label input:checked ~ .box::after{
 cursor: pointer;
 transition: margin-bottom 300ms ease 0ms;
 }
+
 
 .minimizediv{
     transition: margin-bottom 50ms ease 250ms;
@@ -336,6 +355,7 @@ transition: width 290ms ease,opacity 200ms linear;
     font-size: 1rem;
     margin: 0 0 0.2rem  0;
     color: gray;
+    text-transform: capitalize;
 }
 
 .norbox .subdetail:last-child{

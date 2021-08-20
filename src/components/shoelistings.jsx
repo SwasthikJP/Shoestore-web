@@ -45,6 +45,7 @@ const [listdata,setlistdata]=useState([]);
     });
     const [wrongid,setwrongid]=useState(false);
     const [transitionopacity,settransitionopacity]=useState(false);
+    
     // const addquery2=(ref)=>{
 
     //     for(const key in propsdata) {
@@ -189,7 +190,7 @@ propsdata.current[key]=[value];
     //               console.log(e)
     //           })
     console.log(props.location)
-    }, []);
+    }, [id]);
 
     const dropdown_fun = () => {
         setdropdown_classname((prev) => {
@@ -208,28 +209,37 @@ propsdata.current[key]=[value];
         })
     }
 
-    const genderfun = (e) => {
-        settransitionopacity(true);
-        var key = e.target.closest(".bottompadding").dataset.key;
-
-        console.log(e.target.checked)
-
-        var prev = propsdata.current;
-        // if (!Object.keys(prev).includes(key)) {
-        //     prev[key] = [];
-        // }
-        if (e.target.checked) {
-
-            prev[key].push(e.target.id);
-            console.log(prev[key])
-        } else {
-
-            prev[key] = prev[key].filter(ele => ele != e.target.id);
+    const getcount=(ar)=>{
+        if(ar.length!=0){
+            return `(${ar.length})`;
         }
-        console.log(prev)
-        // getshoeslist(prev);
-        propsdata.current = prev;
-        addquery();
+        return "";
+    }
+
+    const genderfun = (e) => {
+        var value=e.currentTarget.id;
+
+        settransitionopacity(true);
+
+        setTimeout(() => {
+            var key = e.target.closest(".bottompadding").dataset.key;
+            var prev = propsdata.current;
+            // if (!Object.keys(prev).includes(key)) {
+            //     prev[key] = [];
+            // }
+            if (!prev[key].includes(value)) {
+                prev[key].push(value);
+                console.log(prev[key])
+            } else {
+    
+                prev[key] = prev[key].filter(ele => ele != value);
+            }
+            console.log(prev)
+            // getshoeslist(prev);
+            propsdata.current = prev;
+            addquery();
+        }, 0);
+     
         
     }
 
@@ -259,24 +269,6 @@ propsdata.current[key]=[value];
     addquery();
 
     }, 0);
-
-
-       
-// var key = e.target.closest(".bottompadding").dataset.key;
-//   if(key==="shoesizes"){
-//         setselectedsizes((res) => {
-//             console.log(res)
-//             return statefun(res,key,ind);
-//         })
-//     }else{
-//         setselectedcolors((res)=>{
-//             return statefun(res,key,ind);
-//         })
-//     }
-
-//     addquery();
-
-
         console.log(e.target)
     }
 
@@ -336,6 +328,19 @@ addquery();
         console.log(e.target)
     }
 
+    const sortcost=(sign)=>{
+        setlistdata((prev)=>{
+            console.log("hhh")
+           var newar= prev.sort((a,b)=>{
+               var n=b.shoecost-a.shoecost;
+               console.log(n)
+                return (b.shoecost - a.shoecost);
+            })
+            console.log(newar)
+           return newar;
+        })
+    }
+
     if(wrongid){
         return <Redirect to="/" />
     }
@@ -344,8 +349,10 @@ addquery();
         <Navbar />
         <div className="infotab">
             <div>
-                <p className="roots">Running/ Shoes</p>
-                <h3>Men's Running Shoes</h3>
+                {!Boolean(id.includes("tse")) ||
+                <p className="roots">{propsdata.current["shoetype"]} / Shoes</p>
+              }
+                <h3>{propsdata.current["gender"].length===1? propsdata.current.gender+"'s":""} {propsdata.current["shoetype"]} Shoes {getcount(listdata)}</h3>
             </div>
             <div className="cornerbut">
                 <div className="hidefilter" onClick={() => { addclassfun() }}>Hide Filters <FontAwesomeIcon icon={faServer} /></div>
@@ -357,7 +364,7 @@ addquery();
                             <div> Featured</div>
                             <div>Newest</div>
                             <div>Price: High-Low</div>
-                            <div>Price: Low-High</div>
+                            <div onClick={(e)=>{sortcost(-1)}}>Price: Low-High</div>
                         </div>
                     </div>
                 </div>
@@ -367,7 +374,7 @@ addquery();
         <div className={maindivclass.classNames}>
             {/* <button className="dt"></button> */}
             
-            <span className="filterbody">
+            <div className="filterbody">
                 {
                     Boolean(id.includes("tse")) ||
                     <div className="typesofshoe">
@@ -379,17 +386,18 @@ addquery();
                 }
 
                 <div className="genderlist">
-                    <div className={minimizeclassgender.classNames} onClick={() => { setminimizeclassgender((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>  <h5>Gender(1)</h5>   <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
+                    <div className={minimizeclassgender.classNames} style={id.includes("tse")?{borderTop:"none"}:{}} onClick={() => { setminimizeclassgender((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>  <h5>Gender {getcount(propsdata.current.gender)}</h5>   <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
                     </div>
                     <div className="bottompadding" id="gender" data-key="gender">
-                        <div className="boxdiv"><label htmlFor="men"><span>Men</span><input type="checkbox" name="men" id="men" data-key="men" defaultChecked={id.includes("Mn")} onChange={(e) => { genderfun(e) }} /><span className="box" ></span></label> </div>
-                        <div className="boxdiv"><label htmlFor="women"><span>Women</span><input type="checkbox" name="women" id="women" data-key="women" defaultChecked={id.includes("Wm")} onChange={(e) => { genderfun(e) }} /><span className="box" ></span></label> </div>
-                        <div className="boxdiv"><label htmlFor="unisex"><span>Unisex</span><input type="checkbox" name="unisex" id="unisex" data-key="unisex" defaultChecked={id.includes("Ux")} onChange={(e) => { genderfun(e) }} /><span className="box"></span></label> </div>
+                    <div className="boxdiv" id="men"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("men")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Men</span></div>
+                    <div className="boxdiv" id="women"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("women")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Women</span></div>
+                    <div className="boxdiv" id="unisex"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("unisex")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Unisex</span></div>
+
                     </div>
                 </div>
 
                 <div className="sizelist">
-                    <div className={minimizeclasssize.classNames} onClick={() => { setminimizeclasssize((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Size</h5>
+                    <div className={minimizeclasssize.classNames} onClick={() => { setminimizeclasssize((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Size {getcount(propsdata.current.shoesizes)}</h5>
                         <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
                     </div>
 
@@ -407,7 +415,7 @@ addquery();
                 </div>
 
                 <div className="colorlist">
-                    <div className={minimizeclasscolor.classNames} onClick={() => { setminimizeclasscolor((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Color</h5>
+                    <div className={minimizeclasscolor.classNames} onClick={() => { setminimizeclasscolor((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Color {getcount(propsdata.current.shoecolors)}</h5>
                         <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
                     </div>
                     <div className="allcolors bottompadding" data-key="shoecolors">
@@ -425,19 +433,20 @@ addquery();
 
 
                 <div className="brandlist">
-                    <div className={minimizeclassbrands.classNames} onClick={() => { setminimizeclassbrands((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>    <h5>Brands</h5>  <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
+                    <div className={minimizeclassbrands.classNames} onClick={() => { setminimizeclassbrands((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>    <h5>Brands {getcount(propsdata.current.brand)}</h5>  <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
                     </div>
                     <div className="bottompadding" data-key="brand">
-                        <div className="boxdiv"><label htmlFor="nike"><span>Nike</span><input type="checkbox" name="nike" id="nike" defaultChecked={id.includes("Nk")} onClick={(e) => genderfun(e)} /><span className="box"></span></label> </div>
-                        <div className="boxdiv"><label htmlFor="puma"><span>Puma</span><input type="checkbox" name="puma" id="puma" defaultChecked={id.includes("Pm")} onClick={(e) => genderfun(e)} /><span className="box"></span></label> </div>
-                        <div className="boxdiv"><label htmlFor="skechers"><span>Skechers</span><input type="checkbox" name="skechers" id="skechers" defaultChecked={id.includes("Sk")} onClick={(e) => genderfun(e)} /><span className="box"></span></label> </div>
+                    <div className="boxdiv" id="nike"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("nike")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Nike</span></div>
+                    <div className="boxdiv" id="puma"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("puma")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Puma</span></div>
+                    <div className="boxdiv" id="skechers"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("skechers")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Skechers</span></div>
                     </div>
                 </div>
 
-            </span>
-            <span className="shoelistbody" style={{opacity:transitionopacity?0.5:1}}>
+            </div>
+            <div className="shoelistbody" style={{opacity:transitionopacity?0.5:1}}>
 
-                {listdata.map((ele)=>{
+                {listdata.length!==0?
+                listdata.map((ele)=>{
 
                 
              return  <div className="norbox">
@@ -465,11 +474,12 @@ addquery();
                     <p>₹{ele.shoecost}</p>
                 </div>
              
-            })
+            }):
+            <h3>Try other shoes :)</h3>
             }
 
 
-            </span>
+            </div>
         </div>
 
 
