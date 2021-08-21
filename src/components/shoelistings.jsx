@@ -1,7 +1,7 @@
 import Navbar from "./navbar";
 import Footern from "./footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faServer, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faServer, faArrowDown, faChevronCircleDown, faChevronDown, faChevronUp, faSlidersH } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState, useEffect } from "react";
 import classNames from "classnames";
 import air from "../images/air_jordan_4.jpg";
@@ -45,6 +45,7 @@ const [listdata,setlistdata]=useState([]);
     });
     const [wrongid,setwrongid]=useState(false);
     const [transitionopacity,settransitionopacity]=useState(false);
+    const setsorting=useRef({sort:false,ascend:true});
     
     // const addquery2=(ref)=>{
 
@@ -113,6 +114,12 @@ const supabase=createClient(superbaseURL,supabaseapi);
             }
         }
         }
+
+        if(setsorting.current.sort){
+           
+                ref.order("shoecost",{ascending:setsorting.current.ascend})
+            
+        }
     
 console.log(ref);
 
@@ -149,7 +156,7 @@ propsdata.current[key]=[value];
     }
     // console.log(ob)
     // propsdata.current=ob;
-
+setsorting.current={sort:false,ascend:true};
 
   
   addquery();
@@ -328,17 +335,30 @@ addquery();
         console.log(e.target)
     }
 
-    const sortcost=(sign)=>{
-        setlistdata((prev)=>{
-            console.log("hhh")
-           var newar= prev.sort((a,b)=>{
-               var n=b.shoecost-a.shoecost;
-               console.log(n)
-                return (b.shoecost - a.shoecost);
-            })
-            console.log(newar)
-           return newar;
-        })
+    const sortcostlh=(ascend)=>{
+        settransitionopacity((res)=>{
+            console.log("h1");
+            return true;
+        });
+        setTimeout(()=>{
+    setsorting.current.sort=true;
+    console.log("h2")
+    setsorting.current.ascend=ascend;
+    addquery();
+},0)
+
+    }
+
+
+    const getsortingtype=()=>{
+        if(setsorting.current.sort){
+            if(setsorting.current.ascend){
+                return <span><i>:</i> Price: Low-High</span>;
+            }else{
+                return <span><i>:</i> Price: High-Low</span>;
+            }
+        }
+        return "";
     }
 
     if(wrongid){
@@ -355,16 +375,16 @@ addquery();
                 <h3>{propsdata.current["gender"].length===1? propsdata.current.gender+"'s":""} {propsdata.current["shoetype"]} Shoes {getcount(listdata)}</h3>
             </div>
             <div className="cornerbut">
-                <div className="hidefilter" onClick={() => { addclassfun() }}>Hide Filters <FontAwesomeIcon icon={faServer} /></div>
+                <div className="hidefilter" style={{fontSize:"1.1rem"}} onClick={() => { addclassfun() }}>{maindivclass.effecton?"Hide":"Show"} Filters <FontAwesomeIcon style={{margin:"0 0 0 3px"}} size="sm" icon={faSlidersH} /></div>
                 <div className="select"  >
 
-                    <p onClick={() => { dropdown_fun() }} >Sort By<span>:hello</span> <FontAwesomeIcon icon={faArrowDown} /></p>
+                    <p onClick={() => { dropdown_fun() }} >Sort By{getsortingtype()} <FontAwesomeIcon style={{margin:"0 0 0 3px"}} size="sm" icon={dropdown_classname.effecton?faChevronDown:faChevronUp} /></p>
                     <div className="dropdown_wrapper" style={{pointerEvents:dropdown_classname.effecton?"none":"auto"}}>
                         <div className={dropdown_classname.classname}>
-                            <div> Featured</div>
-                            <div>Newest</div>
-                            <div>Price: High-Low</div>
-                            <div onClick={(e)=>{sortcost(-1)}}>Price: Low-High</div>
+                            {/* <button> Featured</button>
+                            <button>Newest</button> */}
+                            <button disabled={setsorting.current.sort && !setsorting.current.ascend} onClick={()=>{sortcostlh(false)}}>Price: High-Low</button>
+                            <button disabled={setsorting.current.sort && setsorting.current.ascend} onClick={()=>{sortcostlh(true)}}>Price: Low-High</button>
                         </div>
                     </div>
                 </div>
@@ -386,7 +406,7 @@ addquery();
                 }
 
                 <div className="genderlist">
-                    <div className={minimizeclassgender.classNames} style={id.includes("tse")?{borderTop:"none"}:{}} onClick={() => { setminimizeclassgender((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>  <h5>Gender {getcount(propsdata.current.gender)}</h5>   <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
+                    <div className={minimizeclassgender.classNames} style={id.includes("tse")?{borderTop:"none"}:{}} onClick={() => { setminimizeclassgender((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>  <h5>Gender {getcount(propsdata.current.gender)}</h5>   <FontAwesomeIcon  icon={minimizeclassgender.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
                     </div>
                     <div className="bottompadding" id="gender" data-key="gender">
                     <div className="boxdiv" id="men"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("men")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Men</span></div>
@@ -398,7 +418,7 @@ addquery();
 
                 <div className="sizelist">
                     <div className={minimizeclasssize.classNames} onClick={() => { setminimizeclasssize((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Size {getcount(propsdata.current.shoesizes)}</h5>
-                        <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
+                        <FontAwesomeIcon icon={minimizeclasssize.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
                     </div>
 
                     <div className="allsizes bottompadding" data-key="shoesizes">
@@ -416,7 +436,7 @@ addquery();
 
                 <div className="colorlist">
                     <div className={minimizeclasscolor.classNames} onClick={() => { setminimizeclasscolor((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Color {getcount(propsdata.current.shoecolors)}</h5>
-                        <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
+                        <FontAwesomeIcon icon={minimizeclasscolor.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
                     </div>
                     <div className="allcolors bottompadding" data-key="shoecolors">
 
@@ -433,7 +453,7 @@ addquery();
 
 
                 <div className="brandlist">
-                    <div className={minimizeclassbrands.classNames} onClick={() => { setminimizeclassbrands((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>    <h5>Brands {getcount(propsdata.current.brand)}</h5>  <FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon>
+                    <div className={minimizeclassbrands.classNames} onClick={() => { setminimizeclassbrands((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>    <h5>Brands {getcount(propsdata.current.brand)}</h5>  <FontAwesomeIcon icon={minimizeclassbrands.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
                     </div>
                     <div className="bottompadding" data-key="brand">
                     <div className="boxdiv" id="nike"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("nike")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Nike</span></div>

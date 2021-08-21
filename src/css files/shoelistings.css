@@ -34,9 +34,21 @@ h3{
     gap: 1.8rem;
 }
 
+.cornerbut > div{
+    cursor: pointer;
+}
 
 .select{
     position: relative;
+}
+
+.select p span{
+    color: rgb(117, 117, 117);
+}
+
+.select p span i{
+    color: black;
+    font-style: normal;
 }
 
 
@@ -67,15 +79,24 @@ transition: transform  0.35s ease 0s;
 }
 
 
-.dropdown div{
+.dropdown button{
+    width: 100%;
+    text-align: right;
     font-size: 1rem;
+    padding-right:0;
+   font-weight: 400;
    white-space: nowrap;
    padding-top:0.4rem;
    cursor: pointer;
    background-color: hotpink;
 }
 
-.dropdown div:hover{
+.dropdown button:hover{
+    color: rgb(117, 117, 117);
+}
+
+.dropdown button:disabled{
+    cursor: not-allowed;
     color: rgb(117, 117, 117);
 }
 
@@ -204,6 +225,7 @@ h5{
 .longdiv{
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     margin: 1rem 0 1rem 0;
     padding: 0.4rem 0 0 0;
     border-top: 1px solid rgb(185, 185, 185);
