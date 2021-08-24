@@ -33,6 +33,7 @@ margin: 0 5px 0 0;
 
 .infodiv .shoetype{
     margin-top: 10px;
+    text-transform: capitalize;
 }
 
 .infodiv .shoename{

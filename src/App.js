@@ -24,8 +24,8 @@ function App() {
       <Shoelistings />
     </Route>
 
-    <Route path="/details/:shoename/:id">
-     <Productview />
+    <Route path="/details/:shoename/:id/:colorindex">
+     <Productview prop={{shoecolor:"red"}}/>
     </Route>
 
   </Switch>

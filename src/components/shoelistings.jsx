@@ -7,12 +7,12 @@ import classNames from "classnames";
 import air from "../images/air_jordan_4.jpg";
 import air2 from "../images/jordan2.jpg";
 import firebase from "firebase";
-import { Redirect, useParams, withRouter } from "react-router-dom";
+import { Link, Redirect, useParams, withRouter } from "react-router-dom";
 import "../css files/shoelistings.css"
 import { createClient } from "@supabase/supabase-js";
 
-export default withRouter( function Shoelistings(props) {
-// export default function Shoelistings(props) {
+// export default withRouter( function Shoelistings(props) {
+export default function Shoelistings(props) {
 
     const shoesizeslist = [5, 6, 7, 8, 9, 10, 11, 12];
     const shoecolorslist = ["black", "white", "blue", "brown", "gray", "red", "green"];
@@ -46,7 +46,8 @@ const [listdata,setlistdata]=useState([]);
     const [wrongid,setwrongid]=useState(false);
     const [transitionopacity,settransitionopacity]=useState(false);
     const setsorting=useRef({sort:false,ascend:true});
-    
+    const [gotopage,setgotopage]=useState(false);
+    const [getdata,setgetdata]=useState({});
     // const addquery2=(ref)=>{
 
     //     for(const key in propsdata) {
@@ -120,6 +121,8 @@ const supabase=createClient(superbaseURL,supabaseapi);
                 ref.order("shoecost",{ascending:setsorting.current.ascend})
             
         }
+
+       
     
 console.log(ref);
 
@@ -127,11 +130,8 @@ console.log(ref);
             // const {data,error} = await supabase.from("shoes").select();
         //    var ref=supabase.from("shoes").select();
         const {data,error}=await ref;
-      
-            console.log(data)
-            setlistdata(data)
             if(error) throw error;
-
+            setlistdata(data);
           
           }catch (err){
           console.log(err)
@@ -206,9 +206,12 @@ setsorting.current={sort:false,ascend:true};
         );
     }
 
-    const addseconddetails = (e) => {
+    const addseconddetails = (e,index2) => {
+
+        e.target.closest(".norbox").dataset.key=index2;
         e.target.closest(".norbox").childNodes[0].firstChild.src = e.target.src;
     }
+
 
     const addclassfun = () => {
         setmaindivclass((prev) => {
@@ -361,6 +364,17 @@ addquery();
         return "";
     }
 
+    const setdata=(e,ele)=>{
+  console.log(e.currentTarget.dataset.key)
+  setgetdata({ele:ele,key:e.currentTarget.dataset.key});
+  setgotopage(true);
+    }
+
+
+    if(gotopage){
+      return  <Redirect push to={`/details/${getdata.ele.gender}'s-${getdata.ele.shoename.replace(/ /g,"-")}/${getdata.ele.id}/${getdata.key}`}></Redirect>
+    }
+
     if(wrongid){
         return <Redirect to="/" />
     }
@@ -375,7 +389,7 @@ addquery();
                 <h3>{propsdata.current["gender"].length===1? propsdata.current.gender+"'s":""} {propsdata.current["shoetype"]} Shoes {getcount(listdata)}</h3>
             </div>
             <div className="cornerbut">
-                <div className="hidefilter" style={{fontSize:"1.1rem"}} onClick={() => { addclassfun() }}>{maindivclass.effecton?"Hide":"Show"} Filters <FontAwesomeIcon style={{margin:"0 0 0 3px"}} size="sm" icon={faSlidersH} /></div>
+                <div className="hidefilter" style={{fontSize:"1.1rem"}} onClick={addclassfun}>{maindivclass.effecton?"Hide":"Show"} Filters <FontAwesomeIcon style={{margin:"0 0 0 3px"}} size="sm" icon={faSlidersH} /></div>
                 <div className="select"  >
 
                     <p onClick={() => { dropdown_fun() }} >Sort By{getsortingtype()} <FontAwesomeIcon style={{margin:"0 0 0 3px"}} size="sm" icon={dropdown_classname.effecton?faChevronDown:faChevronUp} /></p>
@@ -466,12 +480,12 @@ addquery();
             <div className="shoelistbody" style={{opacity:transitionopacity?0.5:1}}>
 
                 {listdata.length!==0?
-                listdata.map((ele)=>{
-
-                
-             return  <div className="norbox">
+                listdata.map((ele,index)=>{
+   
+            
+             return  <div className="norbox"  data-key="0" onClick={(e)=>{setdata(e,ele)}} >
                     <div className="image">
-                    <img src={ele.shoeimages[ele.shoecolors[0]]} alt="" />
+                    <img   src={ele.shoeimages[ele.shoecolors[0]]} alt="" />
                     </div>
                     <div className="details">
                         <p>{ele.shoename}</p>
@@ -483,8 +497,8 @@ addquery();
                     <div className="seconddetails">
                         <div className="picturediv">
                             {
-                                ele.shoecolors.map((color,index)=>{
-                             return     <img src={ele.shoeimages[color][0]} onMouseOver={(e) => { addseconddetails(e) }} style={{ height: "40px", width: "40px" }} alt="" />
+                                ele.shoecolors.map((color,index2)=>{
+                             return     <img src={ele.shoeimages[color][0]} onMouseOver={(e) => { addseconddetails(e,index2) }} style={{ height: "40px", width: "40px" }} alt="" />
                            
                                 })
                             }
@@ -492,8 +506,8 @@ addquery();
                         {/* <p>₹20,200</p> */}
                     </div>
                     <p>₹{ele.shoecost}</p>
-                </div>
-             
+               
+             </div>
             }):
             <h3>Try other shoes :)</h3>
             }
@@ -506,4 +520,5 @@ addquery();
         <Footern />
     </div>
 }
-)
+
+// )

@@ -6,7 +6,8 @@ import Footern from "./footer";
 import firebase from "firebase";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
-import Random from "random-number-arrays"
+import Random from "random-number-arrays";
+import { Redirect, useParams } from "react-router-dom";
 
 
 export default function Productview(props){
@@ -24,34 +25,32 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
     const [currentcolor,setcurrentcolor]=useState("");
     const [currentsize,setcurrentsize]=useState("7");
     const alldata=useRef([]);
+    const {id,colorindex}=useParams();
+    const [shoedata,setshoedata]=useState([]);
+    const [nextcolor,setnextcolor]=useState(0);
+    const [gotopage,setgotopage]=useState(false);
 
-    useEffect(()=>{
+    useEffect(async()=>{
+        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+        console.log(process.env.REACT_APP_SUPABASE_URL)
+        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+        const supabase=createClient(superbaseURL,supabaseapi);
+                var ref=supabase.from("shoes").select('*');
+        
+        try{
+           ref.eq("id",id);
+           const {data,error}=await ref;
+           if(error) throw error;
+           console.log(data)
+           setshoedata(data);
+        }
+        catch (error){
+             console.log(error);
+        }
+
         setcurrentcolor(props.prop.shoecolor)
-        var app = firebase.initializeApp({
-            apiKey: "AIzaSyAykEHE4EwOe98VDhdyUc8kHX-IATvHn98",
-            authDomain: "shoestore-890e7.firebaseapp.com",
-            projectId: "shoestore-890e7",
-            storageBucket: "shoestore-890e7.appspot.com",
-            messagingSenderId: "432163263716",
-            appId: "1:432163263716:web:cc911376956aa8d50648f1",
-            measurementId: "G-0X43EGYRB2"
-        });
-        var db = firebase.firestore();
-        db.collection("shoes")
-            .get().then((query) => {
-                const a=[];
-                query.forEach((ele) => {
-                   var obj=ele.data();
-                   obj["shoesizes"]=Random({ type:  'array', arraySize: 7,unique:true,data:shoesizes })
-                    a.push(obj)
-                });
-                alldata.current=[...a];
-                console.log(alldata.current)
-            }).catch((e) => {
-                console.log(e)
-
-            })
-    },[]);
+       
+    },[id]);
 
     const fun2= async()=>{
 const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
@@ -94,27 +93,33 @@ console.log(e)
           })
       }
 
+      if(gotopage){
+          return <Redirect push to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${nextcolor}`} />
+      }
+
     return <div>
         <Navbar />
-        <div className="totaldiv">
+        {shoedata.map((ele)=>{
+       
+      return <div className="totaldiv">
             <div className="shoeimages">
                 {
-                    data.current.shoeimages[currentcolor || props.prop.shoecolor].map((image)=>{
+                    ele.shoeimages[ele.shoecolors[colorindex]].map((image)=>{
                       return  <img src={image} alt="shoe image" />
                     })
                 }
 
             </div>
             <div className="infodiv">
-                <div className="shoetype">Mens shoe</div>
-                <div className="shoename">Nike React Miler 2</div>
-                <div className="shoecost">₹20,200</div>
+                <div className="shoetype">{ele.gender}'s shoe</div>
+                <div className="shoename">{ele.shoename}</div>
+                <div className="shoecost">₹{ele.shoecost}</div>
                 <div className="pricedetail">incl. of taxes and duties</div>
                 <div className="shoepictures">
                     {
-                        data.current.shoecolors.map((color)=>{
+                        ele.shoecolors.map((color,index)=>{
               
-             return <img className={currentcolor===color? "shoepicimg":""} src={data.current.shoeimages[color][0]}   alt="shoe image"  onClick={()=>{setcurrentcolor(color)}}/>
+             return <img className={currentcolor===color? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt="shoe image"  onClick={()=>{setnextcolor(index);setgotopage(true)}}/>
                
                         })
                     }
@@ -123,7 +128,9 @@ console.log(e)
                 </div>
                 <p>Select Size</p>
                 <div className="shoesizediv">
-                    {shoesizes.map((num)=>{
+                    {ele.shoesizes.sort((a,b)=>{
+                        return a-b;
+                    }).map((num)=>{
                         return <div className={currentsize===num? "shoesize shoesize_active":"shoesize"} onClick={()=>{setcurrentsize(num)}}>IND {num}</div>
                     })}
                  
@@ -133,11 +140,15 @@ console.log(e)
                 <button className="addcartbut">Add to Bag</button>
                 <button className="favbut" onClick={()=>{fun2()}}>Favourite</button>
                 <div className="shoedetails">
-                Your workhorse with wings returns.The Nike Air Zoom Pegasus 38 continues to put a spring in your step, using the same responsive foam as its predecessor.Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.
+                Your workhorse with wings returns.The {ele.shoename} continues to put a spring in your step, using the same responsive foam as its predecessor.Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.
                 </div>
 
             </div>
         </div>
+             
+            })}
         <Footern/>
     </div>
+         
+
 }
