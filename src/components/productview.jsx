@@ -7,7 +7,7 @@ import firebase from "firebase";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
 import Random from "random-number-arrays";
-import { Redirect, useParams } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 
 
 export default function Productview(props){
@@ -34,15 +34,19 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
         const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
         console.log(process.env.REACT_APP_SUPABASE_URL)
         const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
-                var ref=supabase.from("shoes").select('*');
-        
+       
         try{
+
+        const supabase=createClient(superbaseURL,supabaseapi);
+        var ref=supabase.from("shoes").select('*');
+        
+       
            ref.eq("id",id);
            const {data,error}=await ref;
            if(error) throw error;
            console.log(data)
            setshoedata(data);
+           setgotopage(false)
         }
         catch (error){
              console.log(error);
@@ -50,21 +54,21 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
 
         setcurrentcolor(props.prop.shoecolor)
        
-    },[id]);
+    },[id,colorindex]);
 
     const fun2= async()=>{
-const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-const supabase=createClient(superbaseURL,supabaseapi);
+// const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+// const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+// const supabase=createClient(superbaseURL,supabaseapi);
 
-try{
-  const {data,error} = await supabase.from("shoes").insert(alldata.current);
-  if(error) throw error;
-  console.log(data)
+// try{
+//   const {data,error} = await supabase.from("shoes").insert(alldata.current);
+//   if(error) throw error;
+//   console.log(data)
 
-}catch (err){
-console.log(err.message)
-}
+// }catch (err){
+// console.log(err.message)
+// }
 
 
     }
@@ -94,7 +98,7 @@ console.log(e)
       }
 
       if(gotopage){
-          return <Redirect push to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${nextcolor}`} />
+          return <Redirect  to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${nextcolor}`} />
       }
 
     return <div>
@@ -119,7 +123,7 @@ console.log(e)
                     {
                         ele.shoecolors.map((color,index)=>{
               
-             return <img className={currentcolor===color? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt="shoe image"  onClick={()=>{setnextcolor(index);setgotopage(true)}}/>
+             return <Link replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}> <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt="shoe image"  /> </Link>
                
                         })
                     }

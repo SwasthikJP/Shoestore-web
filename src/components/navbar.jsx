@@ -11,6 +11,102 @@ const [divnum,setdivnum]=useState(-1);
 const selectionlist=["Men","Women","Nike","Puma","Skechers"];
 const lastbarparentstyleactive=useRef({pointerEvents:"auto",backdropFilter:"blur(3px)",transition:"backdrop-filter 500ms linear"});
 const lastbarparentstyle=useRef({pointerEvents:"none",backdropFilter:"blur(0px)",transition:"none"});
+const navitemlist=useRef(
+    [
+       [ 
+        {
+            title:"Shoes",
+           listitem:["All Shoes","Running","Sneakers","Basketball"],
+           id:["MnAs","MntseRn","MntseSk","MntseBll"],
+           pathname:["mens-allshoes","mens-runningshoes","mens-sneakershoes","mens-jordanshoes"]
+        },
+        {
+            title:"Brands",
+            listitem:["Nike","Puma","Skechers"],
+            id:["MnNk","MnPm","MnSk"],
+            pathname:["mens-nikeshoes","mens-pumashoes","mens-skechershoes"]
+        }
+        ],
+        [
+            
+                {
+                    title:"Shoes",
+                   listitem:["All Shoes","Running","Sneakers","Basketball"],
+                 id:["WmnAs","WmntseRn","WmntseSk","WmntseBll"],
+           pathname:["womens-allshoes","womens-runningshoes","womens-sneakershoes","womens-jordanshoes"]
+
+                },
+                {
+                    title:"Brands",
+                    listitem:["Nike","Puma","Skechers"],
+                    id:["WmnNk","WmnPm","WmnSk"],
+            pathname:["womens-nikeshoes","womens-pumashoes","womens-skechershoes"]
+                }
+                
+        ],
+        [
+            {
+               title:"Shop By",
+               listitem:["Men","Women","Unisex"],
+               id:["MnNk","WmnNk","UnNk"],
+               pathname:["mens-nikeshoes","womens-nikeshoes","unisex-nikeshoes"]
+            },
+             {
+                 title:"Shoes",
+                 listitem:["All Shoes","Running","Sneakers","Jordans"],
+                 id:["NkAs","NktseRn","NktseSk","NktseBll"],
+                 pathname:["nike-allshoes","nike-runningshoes","nike-sneakershoes","nike-jordanshoes"]
+             },
+             {
+                 title:"Clothing",
+                 listitem:["All Clothing","Tops and T-Shirts","Jerseys","Tracksuits"],
+                 id:["NkAc","NkTpTs","NkJr","NkTs"],
+                 pathname:["nike-allclothing","nike-topsandtshirts","nike-jerseys","nike-tracksuits"]
+             }
+        ],
+        [
+            {
+                title:"Shop By",
+                listitem:["Men","Women","Unisex"],
+                id:["MnPm","WmnPm","UnPm"],
+                pathname:["mens-pumashoes","womens-pumashoes","unisex-pumashoes"]
+             },
+              {
+                  title:"Shoes",
+                  listitem:["All Shoes","Running","Sneakers"],
+                  id:["PmAs","PmtseRn","PmtseSk"],
+                  pathname:["puma-allshoes","puma-runningshoes","puma-sneakershoes"]
+              },
+              {
+                  title:"Clothing",
+                  listitem:["All Clothing","Tops and T-Shirts","Jerseys","Tracksuits"],
+                  id:["PmAc","PmTpTs","PmJr","PmTs"],
+                  pathname:["puma-allclothing","puma-topsandtshirts","puma-jerseys","puma-tracksuits"]
+              }
+        ],
+        [
+            {
+                title:"Shop By",
+                listitem:["Men","Women","Unisex"],
+                id:["MnSk","WmnSk","UnSk"],
+                pathname:["mens-skechersshoes","womens-skechersshoes","unisex-skechersshoes"]
+             },
+              {
+                  title:"Shoes",
+                  listitem:["All Shoes","Running","Sneakers"],
+                  id:["SkAs","SktseRn","SktseSk"],
+                  pathname:["skechers-allshoes","skechers-runningshoes","skechers-sneakershoes"]
+              },
+              {
+                  title:"Clothing",
+                  listitem:["All Clothing","Tops and T-Shirts","Jerseys","Tracksuits"],
+                  id:["SkAc","SkTpTs","SkJr","SkTs"],
+                  pathname:["skechers-allclothing","skechers-topsandtshirts","skechers-jerseys","skechers-tracksuits"]
+              }
+        ]
+
+    ]
+);
 
     return <div className="navbardiv">
         <div className="minbar">
@@ -50,10 +146,32 @@ const lastbarparentstyle=useRef({pointerEvents:"none",backdropFilter:"blur(0px)"
         </div>
         <div className="lastbarparent" style={divnum!=-1?lastbarparentstyleactive.current:lastbarparentstyle.current}>
         <div className={divnum!=-1?"lastbar lastbaranim":"lastbar"}>
-            <div className={divnum===0?"listanim":""} onMouseOver={()=>{setdivnum(0)}} onMouseOut={()=>{setdivnum(-1)}}>
+            {
+                navitemlist.current.map((ele,index)=>{
+                return <div key={index} className={divnum===index?"listanim":""} onMouseOver={()=>{setdivnum(index)}} onMouseOut={()=>{setdivnum(-1)}}>
+               {
+                   ele.map((ele2,index2)=>{
+                  return  <div key={index+index2} className="col">
+                  <a href="" key={index+index2}>{ele2.title}</a>
+                  <div className="list" key={index+index2}>
+                
+                 {ele2.listitem.map((ele3,index3)=>{
+                     return  <Link key={index+index2+index3} to={`/list/${ele2.pathname[index3]}/${ele2.id[index3]}`}>{ele3}</Link>
+                 })}
+                      
+                  </div>
+              </div>
+                   })
+               }
+               
+
+            </div>
+                })
+            }
+            {/* <div className={divnum===0?"listanim":""} onMouseOver={()=>{setdivnum(0)}} onMouseOut={()=>{setdivnum(-1)}}>
                 <div className="col">
                     <a href="">Shoes</a>
-                    {/* <Link to={{pathname:"/shoelistings/men",state:{hello:true}}}>Shoes</Link> */}
+                   
                     <div className="list">
                     <Link to={`/list/men-allshoes/MnAs`}>All Shoes</Link>
                     <Link to={`/list/men-running/MntseRn`}>Running</Link>
@@ -202,7 +320,7 @@ const lastbarparentstyle=useRef({pointerEvents:"none",backdropFilter:"blur(0px)"
                     </div>
                 </div>
 
-            </div>
+            </div> */}
 
             </div>
         </div>

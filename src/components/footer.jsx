@@ -10,9 +10,9 @@ export default function Footern(){
               <a href="">Help</a>
             </div>
             <div className="points">
-            <a href="">About Nike</a>
-            <a href="">About Puma</a>
-            <a href="">About Skechers</a>
+            <a target="_blank" href="https://www.nike.com/in">About Nike</a>
+            <a target="_blank" href="https://in.puma.com/">About Puma</a>
+            <a target="_blank" href="https://www.skechers.in/">About Skechers</a>
             </div>
             <div className="allLinks"  style={{backgroundColor:"orange"}}>
                 <a href=""><FontAwesomeIcon icon={faCalculator}/></a>

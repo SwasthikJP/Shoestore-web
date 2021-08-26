@@ -10,49 +10,90 @@ import Footern from "./footer";
 import firebase from "firebase";
 import "../css files/home.css";
 import { Link } from "react-router-dom";
+import { createClient } from "@supabase/supabase-js";
+import run from "../images/run.jpg";
+import snk from "../images/snk.jpg";
+import nike from "../images/nike.gif";
+import nike2 from "../images/nike2.gif";
+import puma from "../images/puma.gif";
+import puma2 from "../images/puma2.gif";
+import skechers from "../images/skechers.gif";
+ 
 
 export default function Home() {
 
 
-    const lists = useRef(null);
-    const [leftcl, setleftcl] = useState("leftar");
-    const [rightcl, setrightcl] = useState("rightar whitebac");
+    const lists1 = useRef(null);
+    const lists2 = useRef(null);
+    const lists3 = useRef(null);
+    const [leftcl1, setleftcl1] = useState("leftar");
+    const [rightcl1, setrightcl1] = useState("rightar whitebac");
+    const [leftcl2, setleftcl2] = useState("leftar");
+    const [rightcl2, setrightcl2] = useState("rightar whitebac");
+    const [leftcl3, setleftcl3] = useState("leftar");
+    const [rightcl3, setrightcl3] = useState("rightar whitebac");
     const [listdata, setlistdata] = useState([]);
-
-    // useEffect(() => {
-    //     var app = firebase.initializeApp({
-    //         apiKey: "AIzaSyAykEHE4EwOe98VDhdyUc8kHX-IATvHn98",
-    //         authDomain: "shoestore-890e7.firebaseapp.com",
-    //         projectId: "shoestore-890e7",
-    //         storageBucket: "shoestore-890e7.appspot.com",
-    //         messagingSenderId: "432163263716",
-    //         appId: "1:432163263716:web:cc911376956aa8d50648f1",
-    //         measurementId: "G-0X43EGYRB2"
-    //     });
-    //     var db = firebase.firestore();
-    //     db.collection("shoes").where("brand", "==", "nike").limit(6)
-    //         .get().then((query) => {
-    //             const a=[];
-    //             query.forEach((ele) => {
-    //                 a.push(ele.data())
-    //             });
-             
-    //             setlistdata(a)
-    //         }).catch((e) => {
-    //             console.log(e)
-
-    //         })
-    // }, [])
+    const [nikeshoedata,setnikeshoedata]=useState([]);
+    const [pumashoedata,setpumashoedata]=useState([]);
+    const [skechersshoedata,setskechershoedata]=useState([]);
 
 
+    const getshoelist=async(brand)=>{
+        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+        console.log(process.env.REACT_APP_SUPABASE_URL)
+        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+      
+                try{
+                    const supabase=createClient(superbaseURL,supabaseapi);
+                    var ref=supabase.from("shoes").select('*');
+                    ref=ref.eq("brand",brand);
+                    ref=ref.limit(8);
+                    const {data,error}=await ref;
+                    if(error) throw error;
+                    console.log(data)
+                  return data;
+
+                }
+                catch (error){
+                    console.log(error);
+                   return [];
+                }
+                
+    }
+
+  useEffect(async()=>{
+
+  
+    try{
+  const nikedata=await getshoelist("nike");
+  console.log("1")
+  setnikeshoedata(nikedata);
+  const pumadata=await getshoelist("puma");
+  console.log("2")
+  setpumashoedata(pumadata);
+  const skecherdata=await getshoelist("skechers");
+  console.log("3")
+  setskechershoedata(skecherdata);
+    }
+    catch (err){
+        console.log(err);
+        setnikeshoedata([]);
+        setpumashoedata([]);
+        setskechershoedata([]);
+    }
+
+  console.log("executed")
+  },[]);
 
 
-    const scroll = (left) => {
+
+
+    const scroll = (left,lists) => {
         lists.current.scrollBy({ left: left * -380, behavior: "smooth" });
     }
 
 
-    const scrolldetect = () => {
+    const scrolldetect = (lists,setrightcl,setleftcl) => {
 
         if (lists.current.scrollLeft === 0) {
             setleftcl(classNames("leftar"));
@@ -67,116 +108,96 @@ export default function Home() {
     }
 
 
+    const norboxfun=(item,index)=>{
+     return <Link to={`/details/${item.gender}'s-${item.shoename.replace(/ /g,"-")}/${item.id}/${0}`} className="norbox2" key={index}>
+     <img src={item.shoeimages[item.shoecolors[0]][0]} alt={`${item.shoename} image`} />
+     <div className="maindetail">
+         <p>{item.shoename}</p>
+         <p>₹{item.shoecost}</p>
+     </div>
+     <p className="subdetail">{item.shoetype}</p>
+ </Link>;
+    }
+
+
 
 
     return <div>
         <Navbar />
         <div className="cardanim">
-<a href="">hello</a>
         </div>
         <div className="im" >
-            <img style={{ objectFit: "fill", height: "80vh" }} src={blurry_gradient} alt="" />
+          <Link style={{height:"100%"}} to="/list/nike-allshoes/NkAs">  <img  style={{ objectFit: "fill", height: "100%" }} src={nike} alt="nike shoe" /></Link>
+            <span className="together">
+               
+            <Link to="/list/puma-allshoes/PmAs">  <img style={{display:"inline-block"}} src={puma2} alt="puma shoe" /></Link>
+            <Link to="/list/skechers-allshoes/SkAs"> <img src={skechers} alt="skechers shoe" /></Link>
+            </span>
+           
         </div>
 
         <h2>Shop Now</h2>
         <div className="buttons">
-           <a className="offerlink" href="">Men</a>
-           <a className="offerlink" href="">Women</a>
+           <Link to="/list/mens-allshoes/MnAs" className="offerlink" href="">Men</Link>
+           <Link to="/list/womens-allshoes/WmnAs" className="offerlink" href="">Women</Link>
         </div>
 
-        <div className="im" >
-            <img style={{ objectFit: "fill", height: "80vh" }} src={blurry_gradient} alt="" />
-            <a className="hover offerlink" href="">Shop</a>
+        <div className="im2" >
+            <img  src={nike2} alt="" />
+            <Link to="/details/women's-Air-Run-2/3/0" className="hover offerlink" >Shop</Link>
         </div>
 
-
-        <h3>More Nike</h3>
+{console.log("rendered")}
+        <h3 style={{margin:"0 3.4rem"}}>More Nike</h3>
 
         <div className="outer">
-            <button className={leftcl} onClick={() => scroll(1)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
-            <button className={rightcl} onClick={() => scroll(-1)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
-          <div className="scrollthis" ref={lists} onScroll={() => scrolldetect()}>
+            <button className={leftcl1} onClick={() => scroll(1,lists1)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
+            <button className={rightcl1} onClick={() => scroll(-1,lists1)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
+          <div className="scrollthis" ref={lists1} onScroll={() => scrolldetect(lists1,setrightcl1,setleftcl1)}>
             <div className="lists" >
-
-       <div className="norbox2">
-              <img src={air} alt="" />
-              <div className="maindetail">
-                  <p>NIke air</p>
-                  <p>₹15000</p>
-              </div>
-              <p className="subdetail">Sneakers</p>
-          </div>
-
-          <div className="norbox2">
-              <img src={air} alt="" />
-              <div className="maindetail">
-                  <p>NIke air</p>
-                  <p>₹15000</p>
-              </div>
-              <p className="subdetail">Sneakers</p>
-          </div>
-
-          <div className="norbox2">
-              <img src={air} alt="" />
-              <div className="maindetail">
-                  <p>NIke air</p>
-                  <p>₹15000</p>
-              </div>
-              <p className="subdetail">Sneakers</p>
-          </div>
-
-          <div className="norbox2">
-              <img src={air} alt="" />
-              <div className="maindetail">
-                  <p>NIke air</p>
-                  <p>₹15000</p>
-              </div>
-              <p className="subdetail">Sneakers</p>
-          </div>
-
-          <div className="norbox2">
-              <img src={air} alt="" />
-              <div className="maindetail">
-                  <p>NIke air</p>
-                  <p>₹15000</p>
-              </div>
-              <p className="subdetail">Sneakers</p>
-          </div>
-
-          <div className="norbox2">
-              <img src={air} alt="" />
-              <div className="maindetail">
-                  <p>NIke air</p>
-                  <p>₹15000</p>
-              </div>
-              <p className="subdetail">Sneakers</p>
-          </div>
-          <div className="norbox2">
-              <img src={air} alt="" />
-              <div className="maindetail">
-                  <p>NIke air</p>
-                  <p>₹15000</p>
-              </div>
-              <p className="subdetail">Sneakers</p>
-          </div>
+       {
+           nikeshoedata.map((item,index)=> norboxfun(item,index))
+           
+       }
 
        
-    {/* {listdata.map((ele)=>{
-            
-              return  <div className="norbox2">
-              <img src={ele.shoeimages[ele.shoecolors[0]][0]} alt="" />
-              <div className="maindetail">
-                  <p>{ele.shoename}</p>
-                  <p>₹{ele.shoecost}</p>
-              </div>
-              <p className="subdetail">{ele.shoetype}</p>
-          </div>
-          })} */}
+      
                
                </div>
             </div>
 
         </div>
+
+        <h3 style={{margin:"0 3.4rem"}}>More Puma</h3>
+
+<div className="outer">
+    <button className={leftcl2} onClick={() => scroll(1,lists2)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
+    <button className={rightcl2} onClick={() => scroll(-1,lists2)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
+  <div className="scrollthis" ref={lists2} onScroll={() => scrolldetect(lists2,setrightcl2,setleftcl2)}>
+    <div className="lists" >
+{
+   pumashoedata.map((item,index)=>norboxfun(item,index))
+}
+
+</div>
+</div>
+</div>
+
+<h3 style={{margin:"0 3.4rem"}}>More Skechers</h3>
+
+<div className="outer">
+    <button className={leftcl3} onClick={() => scroll(1,lists3)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
+    <button className={rightcl3} onClick={() => scroll(-1,lists3)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
+  <div className="scrollthis" ref={lists3} onScroll={() => scrolldetect(lists3,setrightcl3,setleftcl3)}>
+    <div className="lists" >
+{
+  skechersshoedata.map((item,index)=>norboxfun(item,index))
+}
+
+</div>
+</div>
+</div>
+
         <Footern />
     </div>
 }

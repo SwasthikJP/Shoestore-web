@@ -41,9 +41,34 @@ const [listdata,setlistdata]=useState([]);
         MntseBll:{gender:"men",shoetype:"jordan"},
         MnNk:{gender:"men",brand:"nike"},
         MnPm:{gender:"men",brand:"puma"},
-        MnSk:{gender:"men",brand:"skechers"}
+        MnSk:{gender:"men",brand:"skechers"},
+        WmnAs:{gender:"women"},
+        WmntseRn:{gender:"women",shoetype:"running"},
+        WmntseSk:{gender:"women",shoetype:"sneakers"},
+        WmntseBll:{gender:"women",shoetype:"jordan"},
+        WmnNk:{gender:"women",brand:"nike"},
+        WmnPm:{gender:"women",brand:"puma"},
+        WmnSk:{gender:"women",brand:"skechers"},
+        MnNk:{gender:"men",brand:"nike"},
+        WmnNk:{gender:"women",brand:"nike"},
+        UnNk:{gender:"unisex",brand:"nike"},
+        MnPm:{gender:"men",brand:"puma"},
+        WmnPm:{gender:"women",brand:"puma"},
+        UnPm:{gender:"unisex",brand:"puma"},
+        MnSk:{gender:"men",brand:"skechers"},
+        WmnSk:{gender:"women",brand:"skechers"},
+        UnSk:{gender:"unisex",brand:"skechers"},
+        PmAs:{brand:"puma"},
+        NkAs:{brand:"nike"},
+        SkAs:{brand:"skechers"},
+        NktseRn:{brand:"nike",shoetype:"running"},
+        NktseSk:{brand:"nike",shoetype:"sneakers"},
+        NktseBll:{brand:"nike",shoetype:"jordan"},
+        PmtseRn:{brand:"puma",shoetype:"running"},
+        PmtseSk:{brand:"puma",shoetype:"sneakers"},
+        SktseRn:{brand:"skechers",shoetype:"running"},
+        SktseSk:{brand:"skechers",shoetype:"sneakers"},
     });
-    const [wrongid,setwrongid]=useState(false);
     const [transitionopacity,settransitionopacity]=useState(false);
     const setsorting=useRef({sort:false,ascend:true});
     const [gotopage,setgotopage]=useState(false);
@@ -96,7 +121,10 @@ const [listdata,setlistdata]=useState([]);
         const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
 console.log(process.env.REACT_APP_SUPABASE_URL)
 const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-const supabase=createClient(superbaseURL,supabaseapi);
+     
+       
+  try{
+     const supabase=createClient(superbaseURL,supabaseapi);
         var ref=supabase.from("shoes").select('*');
         
               
@@ -126,7 +154,7 @@ const supabase=createClient(superbaseURL,supabaseapi);
     
 console.log(ref);
 
-        try{
+        
             // const {data,error} = await supabase.from("shoes").select();
         //    var ref=supabase.from("shoes").select();
         const {data,error}=await ref;
@@ -148,6 +176,13 @@ console.log(ref);
     useEffect(() => {
     console.log(id+" haha "+data)
     // const dataarray=data.split("-");
+    propsdata.current={
+        brand:[],
+        gender:[],
+        shoecolors:[],
+        shoesizes:[],
+        shoetype:[]
+    };
     if(id in idlist.current){
     // var ob={};
   for(const [key,value] of Object.entries(idlist.current[id])){
@@ -162,7 +197,6 @@ setsorting.current={sort:false,ascend:true};
   addquery();
     }else{
         console.log("id does not exist");
-       setwrongid(true);
     }
 
 
@@ -375,9 +409,11 @@ addquery();
       return  <Redirect push to={`/details/${getdata.ele.gender}'s-${getdata.ele.shoename.replace(/ /g,"-")}/${getdata.ele.id}/${getdata.key}`}></Redirect>
     }
 
-    if(wrongid){
+    if(! (id in idlist.current)){
         return <Redirect to="/" />
     }
+
+  
 
     return <div>
         <Navbar />
