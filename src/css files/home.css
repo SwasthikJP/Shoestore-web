@@ -1,4 +1,5 @@
 
+
 h2{
     text-align: center;
 }
@@ -26,13 +27,23 @@ button{
 
 .im{
     margin-top: 2rem;
-    height: 82vh;
+    /* height: 82vh; */
+    background-color: brown;
     position: relative;
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 var(--homemargin);
+}
 
+.im .Link{
+    width:60%;
+}
+
+.im .Link > img{
+    height: 100%;
+    width: 100%;
 }
 
 .im img{
@@ -40,31 +51,31 @@ button{
 }
 
 .together{
-   
+   flex-grow: 1;
    width: 30%;
    display: flex;
-  
+  gap: 1rem;
     flex-direction: column;
     justify-content: space-between;
 
 }
 
-.together Link{
+/* .together Link{
     margin: 0%;
-    height: calc((100% - 1rem) /2);
-}
+    height: 40%;
+} */
 
 .together  img{
     width: 100%;
     height: 100%;
-
+    object-fit: cover;
 }
 
 .im2{
   
-    height: 80vh;
-    width: 80vw;
-    margin: 3rem auto;
+
+    width: calc(100% - var(--homemargin)*2);
+    margin: 3rem var(--homemargin);
     position: relative;
 }
 
@@ -86,6 +97,10 @@ h3{
     font-weight: 400;
 }
 
+.moreh3{
+    margin: 0 var(--homemargin);
+}
+
 .outer{
     position: relative;
     width: 100%;
@@ -102,12 +117,12 @@ h3{
 }
 
 .leftar{
-   left: 3.4rem;
+   left: var(--homemargin);
 }
 
 .rightar{
 
-    right: 3.4rem;
+    right: var(--homemargin);
 
 }
 
@@ -129,7 +144,7 @@ h3{
 }
 
  .norbox2:first-child{
-        margin: 0 0 0 3.4rem;
+        margin: 0 0 0 var(--homemargin);
         background-color: greenyellow;
 }
 
@@ -158,6 +173,10 @@ margin: 0 2.4rem 0 0;
 
 .norbox2 p{
     margin: 1rem 0 0 0;
+}
+
+.norbox2 .shoecost2{
+    display: none;
 }
 
 .norbox2 .subdetail{
@@ -192,3 +211,62 @@ visibility: hidden;
 .scrollthis::-webkit-scrollbar-track{
   margin: 0 10vw;
 }
+
+
+
+@media only screen and (max-width: 3020px) {
+    :root{
+        --homemargin:3.4rem;
+    }
+    
+      }
+
+@media only screen and (max-width: 640px) {
+    :root{
+--homemargin:1rem;
+
+    }
+    .im{
+        flex-direction: column;
+    }
+     
+    .im .Link{
+        width: 100%;
+    }
+
+    .together{
+        width: 100%;
+        flex-direction: row;
+    }
+    
+    .offerlink{
+        padding: 0.4rem 1rem;
+    }
+
+    
+
+    .shoecost1{
+        display: none;
+    }
+
+
+    .norbox2 img{
+        width: 65vw;
+        height: 65vw;
+    }
+
+    .norbox2 p{
+        margin-top: 0.2rem;
+        font-size: 0.9rem;
+    }
+
+    .norbox2 .subdetail{
+        margin: 0%;
+    }
+
+   .norbox2 .shoecost2{
+        display: block;
+    }
+    
+   
+  }

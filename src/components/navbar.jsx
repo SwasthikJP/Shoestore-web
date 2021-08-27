@@ -3,6 +3,7 @@ import { faSearch, faHeart, faShoppingBag, faFolderMinus } from "@fortawesome/fr
 import {  useRef, useState } from "react";
 import "../css files/navbar.css";
 import { Link, useRouteMatch } from "react-router-dom";
+import classNames from "classnames";
 
 
 export default function Navbar() {
@@ -11,6 +12,7 @@ const [divnum,setdivnum]=useState(-1);
 const selectionlist=["Men","Women","Nike","Puma","Skechers"];
 const lastbarparentstyleactive=useRef({pointerEvents:"auto",backdropFilter:"blur(3px)",transition:"backdrop-filter 500ms linear"});
 const lastbarparentstyle=useRef({pointerEvents:"none",backdropFilter:"blur(0px)",transition:"none"});
+const [col2num,setcol2num]=useState(-1);
 const navitemlist=useRef(
     [
        [ 
@@ -168,162 +170,34 @@ const navitemlist=useRef(
             </div>
                 })
             }
-            {/* <div className={divnum===0?"listanim":""} onMouseOver={()=>{setdivnum(0)}} onMouseOut={()=>{setdivnum(-1)}}>
-                <div className="col">
-                    <a href="">Shoes</a>
-                   
-                    <div className="list">
-                    <Link to={`/list/men-allshoes/MnAs`}>All Shoes</Link>
-                    <Link to={`/list/men-running/MntseRn`}>Running</Link>
-                    <Link to={`/list/men-sneakers/MntseSk`}>Sneakers</Link>
-                    <Link to={`/list/men-basketball/MntseBll`}>Basketball</Link>
-                        
-                    </div>
-                </div>
-
-                <div className="col">
-                    <a href="">Brands</a>
-                    <div className="list">
-                        <Link to={"list/men-nike/MnNk"}>Nike</Link>
-                        <Link to={"list/men-puma/MnPm"}>Puma</Link>
-                        <Link to={"list/men-skechers/MnSk"}>Skechers</Link>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div className={divnum===1?"listanim":""} onMouseOver={()=>{setdivnum(1)}} onMouseOut={()=>{setdivnum(-1)}}>
-                <div className="col">
-                    <a href="">Shoes</a>
-                    <div className="list">
-                    <a href="">All Shoes</a>
-                        <a href="">Running</a>
-                        <a href="">Sneakers</a>
-                        <a href="">Basketball</a>
-                        
-
-                    </div>
-                </div>
-
-                <div className="col">
-                    <a href="">Brands</a>
-                    <div className="list">
-                        <a href="">Nike</a>
-                        <a href="">Puma</a>
-                        <a href="">Skechers</a>
-                      
-
-                    </div>
-                </div>
-
-            </div>
-
-            <div className={divnum===2?"listanim":""} onMouseOver={()=>{setdivnum(2)}} onMouseOut={()=>{setdivnum(-1)}}>
-
- 
-            <div className="col">
-                    <a href="">Shop By</a>
-                    <div className="list">
-                        <a href="">Men</a>
-                        <a href="">Women</a>
-                        <a href="">Unisex</a>
-                    </div>
-                </div>
-
-
-                <div className="col">
-                    <a href="">Shoes</a>
-                    <div className="list">
-                    <a href="">All Shoes</a>
-                        <a href="">Running shoes</a>
-                        <a href="">Sneakers</a>
-                        <a href="">Jordans</a>
-                    </div>
-                </div>
-
-                <div className="col">
-                    <a href="">Clothing</a>
-                    <div className="list">
-                        <a href="">All Clothing</a>
-                        <a href="">Tops and T-Shirts</a>
-                        <a href="">Jerserys</a>
-                        <a href="">Tracksuits</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div className={divnum===3?"listanim":""} onMouseOver={()=>{setdivnum(3)}} onMouseOut={()=>{setdivnum(-1)}}>
-
-            <div className="col">
-                    <a href="">Shop By</a>
-                    <div className="list">
-                        <a href="">Men</a>
-                        <a href="">Women</a>
-                        <a href="">Unisex</a>
-                    </div>
-                </div>
-
-                <div className="col">
-                    <a href="">Shoes</a>
-                    <div className="list">
-                    <a href="">All Shoes</a>
-                        <a href="">Running shoes</a>
-                        <a href="">Sneakers</a>
-
-                    </div>
-                </div>
-
-                <div className="col">
-                    <a href="">Clothing</a>
-                    <div className="list">
-                        <a href="">All Clothing</a>
-                        <a href="">Tops and T-Shirts</a>
-                        <a href="">Jerserys</a>
-                        <a href="">Tracksuits</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div className={divnum===4?"listanim":""} onMouseOver={()=>{setdivnum(4)}} onMouseOut={()=>{setdivnum(-1)}}>
-
-            <div className="col">
-                    <a href="">Shop By</a>
-                    <div className="list">
-                        <a href="">Men</a>
-                        <a href="">Women</a>
-                        <a href="">Unisex</a>
-                    </div>
-                </div>
-
-
-                <div className="col">
-                    <a href="">Shoes</a>
-                    <div className="list">
-                    <a href="">All Shoes</a>
-                        <a href="">Running shoes</a>
-                        <a href="">Sneakers</a>
-
-                    </div>
-                </div>
-
-
-                <div className="col">
-                    <a href="">Clothing</a>
-                    <div className="list">
-                        <a href="">All Clothing</a>
-                        <a href="">Tops and T-Shirts</a>
-                        <a href="">Jerserys</a>
-                        <a href="">Tracksuits</a>
-                    </div>
-                </div>
-
-            </div> */}
-
             </div>
         </div>
+
+        <div className="sidebar">
+            <div className={col2num===-1?"col2":"col2hide"}>
+            <button onClick={()=>{setcol2num(0)}}>Men</button>
+            <button>Women</button>
+            <button>Nike</button>
+            <button>Puma</button>
+            <button>Skechers</button>
+            </div>
+            <div className={col2num===0?"col2":"col2hide"}>
+            <button onClick={()=>{setcol2num(-1)}}>go back</button>
+            <button onClick={()=>{setcol2num(1)}}>Brands</button>
+            <button>Shoes</button>
+            </div>
+            <div className={col2num===1?"col2":"col2hide"}>
+            <button onClick={()=>{setcol2num(0)}}>go back</button>
+            <p>Brands</p>
+            <button>Nike</button>
+            <button>Puma</button>
+            <button>Skechers</button>
+            <p>Shoes</p>
+            <button>All Shoes</button>
+            <button>Running</button>
+            </div>
+        </div>
+       
 
     </div>
 }

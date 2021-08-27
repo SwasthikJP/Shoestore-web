@@ -1,26 +1,8 @@
 
 
-@media only screen and (max-width: 3020px) {
-    :root{
-        --hideicon:none;
-        --displayicon:block;
-        --selectiondisplay:flex;
-    }
-    
-      }
-
-@media only screen and (max-width: 1024px) {
-    :root{
---hideicon: block;
---displayicon: none;
---selectiondisplay:none;
-
-    }
-  }
-
 .navbardiv{
     width: 100%;
-    background-color: #F1F1F1;
+    background-color: #3115ac;
     position: relative;
 }
 
@@ -46,7 +28,8 @@ padding: 0.9em 3.5em;
 }
 
 .mainbar{
-    background-color: white;
+   width: 100%;
+    background-color: rgb(151, 19, 19);
     display: flex;
     justify-content: space-between;
    align-items: center;
@@ -136,6 +119,7 @@ color: #cac5c5;
 
 .iconlist{
     display: flex;
+    background-color: blueviolet;
 }
 
 
@@ -230,3 +214,63 @@ display: flex;
   visibility: hidden;
 
 }
+
+
+.sidebar{
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: darkgoldenrod;
+    display: flex;
+    width: 10vw;
+    overflow: hidden;
+}
+
+.sidebar .col2{
+    display: flex;
+    flex-direction: column;
+    /* transform: translate(0,0px); */
+    width: 100%;
+    transition: width 2s linear;
+}
+
+.col2hide{
+    width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* transform: translate(100%,0); */
+   transition: width 2s linear;
+}
+
+
+
+@media only screen and (max-width: 3020px) {
+    :root{
+        --hideicon:none;
+        --displayicon:block;
+        --selectiondisplay:flex;
+    }
+    
+      }
+
+@media only screen and (max-width: 1024px) {
+    :root{
+--hideicon: block;
+--displayicon: none;
+--selectiondisplay:none;
+
+    }
+  }
+
+
+  @media only screen and (max-width:640px){
+
+    h1{
+        margin: 0.7em 0;
+    }
+      .logo{
+          margin:  0 0;
+      }
+  }

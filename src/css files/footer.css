@@ -24,3 +24,13 @@
     display: flex;
     gap: 1rem;
 }
+
+
+
+@media only screen and (max-width:640px){
+   
+    .foot{
+        padding: 2rem;
+    }
+   
+  }

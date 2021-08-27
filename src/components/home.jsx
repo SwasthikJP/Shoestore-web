@@ -11,11 +11,8 @@ import firebase from "firebase";
 import "../css files/home.css";
 import { Link } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
-import run from "../images/run.jpg";
-import snk from "../images/snk.jpg";
 import nike from "../images/nike.gif";
 import nike2 from "../images/nike2.gif";
-import puma from "../images/puma.gif";
 import puma2 from "../images/puma2.gif";
 import skechers from "../images/skechers.gif";
  
@@ -113,21 +110,22 @@ export default function Home() {
      <img src={item.shoeimages[item.shoecolors[0]][0]} alt={`${item.shoename} image`} />
      <div className="maindetail">
          <p>{item.shoename}</p>
-         <p>₹{item.shoecost}</p>
+         <p className="shoecost1">₹{item.shoecost}</p>
      </div>
      <p className="subdetail">{item.shoetype}</p>
+     <p className="shoecost2">₹{item.shoecost}</p>
  </Link>;
     }
 
 
 
 
-    return <div>
+    return <div className="home">
         <Navbar />
         <div className="cardanim">
         </div>
         <div className="im" >
-          <Link style={{height:"100%"}} to="/list/nike-allshoes/NkAs">  <img  style={{ objectFit: "fill", height: "100%" }} src={nike} alt="nike shoe" /></Link>
+          <Link  className="Link" to="/list/nike-allshoes/NkAs">  <img  style={{ objectFit: "cover",width:"100%"}} src={nike} alt="nike shoe" /></Link>
             <span className="together">
                
             <Link to="/list/puma-allshoes/PmAs">  <img style={{display:"inline-block"}} src={puma2} alt="puma shoe" /></Link>
@@ -148,7 +146,7 @@ export default function Home() {
         </div>
 
 {console.log("rendered")}
-        <h3 style={{margin:"0 3.4rem"}}>More Nike</h3>
+        <h3 className="moreh3">More Nike</h3>
 
         <div className="outer">
             <button className={leftcl1} onClick={() => scroll(1,lists1)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
@@ -168,7 +166,7 @@ export default function Home() {
 
         </div>
 
-        <h3 style={{margin:"0 3.4rem"}}>More Puma</h3>
+        <h3 className="moreh3">More Puma</h3>
 
 <div className="outer">
     <button className={leftcl2} onClick={() => scroll(1,lists2)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
@@ -183,7 +181,7 @@ export default function Home() {
 </div>
 </div>
 
-<h3 style={{margin:"0 3.4rem"}}>More Skechers</h3>
+<h3 className="moreh3">More Skechers</h3>
 
 <div className="outer">
     <button className={leftcl3} onClick={() => scroll(1,lists3)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
