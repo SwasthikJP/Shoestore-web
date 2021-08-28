@@ -1,7 +1,7 @@
 import Navbar from "./navbar";
 import Footern from "./footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faServer, faArrowDown, faChevronCircleDown, faChevronDown, faChevronUp, faSlidersH } from "@fortawesome/free-solid-svg-icons";
+import { faServer, faArrowDown, faChevronCircleDown, faChevronDown, faChevronUp, faSlidersH, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState, useEffect } from "react";
 import classNames from "classnames";
 import air from "../images/air_jordan_4.jpg";
@@ -73,6 +73,7 @@ const [listdata,setlistdata]=useState([]);
     const setsorting=useRef({sort:false,ascend:true});
     const [gotopage,setgotopage]=useState(false);
     const [getdata,setgetdata]=useState({});
+    const [showfilter,setshowfilter]=useState(false);
     // const addquery2=(ref)=>{
 
     //     for(const key in propsdata) {
@@ -405,6 +406,77 @@ addquery();
     }
 
 
+    const filtercomp=(classname)=>{
+        return  <div className={classname}>
+          { Boolean(id.includes("tse")) ||
+            <div className="typesofshoe">
+                <div>Running</div>
+                <div>Basketball</div>
+                <div>Sneakers</div>
+
+            </div>
+        }
+
+        <div className="genderlist">
+            <div className={minimizeclassgender.classNames} style={id.includes("tse")?{borderTop:"none"}:{}} onClick={() => { setminimizeclassgender((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>  <h5>Gender {getcount(propsdata.current.gender)}</h5>   <FontAwesomeIcon  icon={minimizeclassgender.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
+            </div>
+            <div className="bottompadding" id="gender" data-key="gender">
+            <div className="boxdiv" id="men"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("men")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Men</span></div>
+            <div className="boxdiv" id="women"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("women")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Women</span></div>
+            <div className="boxdiv" id="unisex"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("unisex")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Unisex</span></div>
+
+            </div>
+        </div>
+
+        <div className="sizelist">
+            <div className={minimizeclasssize.classNames} onClick={() => { setminimizeclasssize((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Size {getcount(propsdata.current.shoesizes)}</h5>
+                <FontAwesomeIcon icon={minimizeclasssize.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
+            </div>
+
+            <div className="allsizes bottompadding" data-key="shoesizes">
+                {
+
+                    shoesizeslist.map((ele) => {
+                      
+                        return <div className={propsdata.current["shoesizes"].includes(ele) ? "size sizeactive" : "size"} id={ele} onClick={(e) => { sizeclick(e, ele) }}>{ele}</div>
+                    })
+                }
+
+            </div>
+
+        </div>
+
+        <div className="colorlist">
+            <div className={minimizeclasscolor.classNames} onClick={() => { setminimizeclasscolor((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Color {getcount(propsdata.current.shoecolors)}</h5>
+                <FontAwesomeIcon icon={minimizeclasscolor.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
+            </div>
+            <div className="allcolors bottompadding" data-key="shoecolors">
+
+
+                {shoecolorslist.map((ele) => {
+                    return <div className="colorb" onClick={(e) =>sizeclick(e, ele)}><div className="circle" style={{ backgroundColor:ele, opacity: 0.85 }}> <div className={propsdata.current["shoecolors"].includes(ele) ? "tick tickactive" : "tick"} style={{ borderColor: ele === "white" ? "black" : "white" }}></div> </div>
+                        <div className={propsdata.current["shoecolors"].includes(ele) ?"cnameactive":""} >{ele}</div></div>
+                })}
+
+
+            </div>
+        </div>
+
+
+
+        <div className="brandlist">
+            <div className={minimizeclassbrands.classNames} onClick={() => { setminimizeclassbrands((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>    <h5>Brands {getcount(propsdata.current.brand)}</h5>  <FontAwesomeIcon icon={minimizeclassbrands.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
+            </div>
+            <div className="bottompadding" data-key="brand">
+            <div className="boxdiv" id="nike"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("nike")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Nike</span></div>
+            <div className="boxdiv" id="puma"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("puma")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Puma</span></div>
+            <div className="boxdiv" id="skechers"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("skechers")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Skechers</span></div>
+            </div>
+        </div> 
+        </div>
+    }
+
+
     if(gotopage){
       return  <Redirect push to={`/details/${getdata.ele.gender}'s-${getdata.ele.shoename.replace(/ /g,"-")}/${getdata.ele.id}/${getdata.key}`}></Redirect>
     }
@@ -415,7 +487,7 @@ addquery();
 
   
 
-    return <div>
+    return <div style={{position:"relative"}}>
         <Navbar />
         <div className="infotab">
             <div>
@@ -439,80 +511,15 @@ addquery();
                     </div>
                 </div>
             </div>
+            <button className="filterbut" onClick={()=>setshowfilter(true)}>Filter<FontAwesomeIcon style={{margin:"0 0 0 6px"}} size="sm" icon={faSlidersH}  /></button>
         </div>
 
         <div className={maindivclass.classNames}>
             {/* <button className="dt"></button> */}
             
-            <div className="filterbody">
-                {
-                    Boolean(id.includes("tse")) ||
-                    <div className="typesofshoe">
-                        <div>Running</div>
-                        <div>Basketball</div>
-                        <div>Sneakers</div>
+            
+               {filtercomp("filterbody")}
 
-                    </div>
-                }
-
-                <div className="genderlist">
-                    <div className={minimizeclassgender.classNames} style={id.includes("tse")?{borderTop:"none"}:{}} onClick={() => { setminimizeclassgender((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>  <h5>Gender {getcount(propsdata.current.gender)}</h5>   <FontAwesomeIcon  icon={minimizeclassgender.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
-                    </div>
-                    <div className="bottompadding" id="gender" data-key="gender">
-                    <div className="boxdiv" id="men"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("men")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Men</span></div>
-                    <div className="boxdiv" id="women"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("women")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Women</span></div>
-                    <div className="boxdiv" id="unisex"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["gender"].includes("unisex")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="gender">Unisex</span></div>
-
-                    </div>
-                </div>
-
-                <div className="sizelist">
-                    <div className={minimizeclasssize.classNames} onClick={() => { setminimizeclasssize((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Size {getcount(propsdata.current.shoesizes)}</h5>
-                        <FontAwesomeIcon icon={minimizeclasssize.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
-                    </div>
-
-                    <div className="allsizes bottompadding" data-key="shoesizes">
-                        {
-
-                            shoesizeslist.map((ele) => {
-                              
-                                return <div className={propsdata.current["shoesizes"].includes(ele) ? "size sizeactive" : "size"} id={ele} onClick={(e) => { sizeclick(e, ele) }}>{ele}</div>
-                            })
-                        }
-
-                    </div>
-
-                </div>
-
-                <div className="colorlist">
-                    <div className={minimizeclasscolor.classNames} onClick={() => { setminimizeclasscolor((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}><h5>Color {getcount(propsdata.current.shoecolors)}</h5>
-                        <FontAwesomeIcon icon={minimizeclasscolor.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
-                    </div>
-                    <div className="allcolors bottompadding" data-key="shoecolors">
-
-
-                        {shoecolorslist.map((ele) => {
-                            return <div className="colorb" onClick={(e) =>sizeclick(e, ele)}><div className="circle" style={{ backgroundColor:ele, opacity: 0.85 }}> <div className={propsdata.current["shoecolors"].includes(ele) ? "tick tickactive" : "tick"} style={{ borderColor: ele === "white" ? "black" : "white" }}></div> </div>
-                                <div className={propsdata.current["shoecolors"].includes(ele) ?"cnameactive":""} >{ele}</div></div>
-                        })}
-
-
-                    </div>
-                </div>
-
-
-
-                <div className="brandlist">
-                    <div className={minimizeclassbrands.classNames} onClick={() => { setminimizeclassbrands((prev) => { return { classNames: classNames("longdiv", { minimizediv: prev.effecton }), effecton: !prev.effecton } }); }}>    <h5>Brands {getcount(propsdata.current.brand)}</h5>  <FontAwesomeIcon icon={minimizeclassbrands.effecton?faChevronUp:faChevronDown}></FontAwesomeIcon>
-                    </div>
-                    <div className="bottompadding" data-key="brand">
-                    <div className="boxdiv" id="nike"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("nike")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Nike</span></div>
-                    <div className="boxdiv" id="puma"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("puma")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Puma</span></div>
-                    <div className="boxdiv" id="skechers"  onClick={(e) => { genderfun(e) }} ><div className={propsdata.current["brand"].includes("skechers")? "box2 box2active":"box2"}><div className="tick2"></div></div><span className="brand">Skechers</span></div>
-                    </div>
-                </div>
-
-            </div>
             <div className="shoelistbody" style={{opacity:transitionopacity?0.5:1}}>
 
                 {listdata.length!==0?
@@ -554,6 +561,14 @@ addquery();
 
 
         <Footern />
+<div className="filterdivcover" style={{pointerEvents:showfilter?"auto":"none"}}>
+<div className={showfilter? "filterdiv filterdiv_active":"filterdiv"}>
+  <button onClick={()=>setshowfilter(false)} style={{position:"sticky",top:"0rem",left:"100%",backgroundColor:"transparent"}}><FontAwesomeIcon icon={faTimesCircle} size="2x"></FontAwesomeIcon></button>
+
+    <h3 style={{marginBottom:"1rem"}}>Filter</h3>
+    {filtercomp("")}
+</div>
+</div>
     </div>
 }
 

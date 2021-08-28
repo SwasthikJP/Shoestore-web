@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faHeart, faShoppingBag, faFolderMinus } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import {  useRef, useState } from "react";
 import "../css files/navbar.css";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -9,10 +9,11 @@ import classNames from "classnames";
 export default function Navbar() {
 
 const [divnum,setdivnum]=useState(-1);
-const selectionlist=["Men","Women","Nike","Puma","Skechers"];
+const selectionlist=useRef(["Men","Women","Nike","Puma","Skechers"]);
 const lastbarparentstyleactive=useRef({pointerEvents:"auto",backdropFilter:"blur(3px)",transition:"backdrop-filter 500ms linear"});
 const lastbarparentstyle=useRef({pointerEvents:"none",backdropFilter:"blur(0px)",transition:"none"});
 const [col2num,setcol2num]=useState(-1);
+const [curcol,setcurcol]=useState(-1);
 const navitemlist=useRef(
     [
        [ 
@@ -110,6 +111,13 @@ const navitemlist=useRef(
     ]
 );
 
+
+const hidesidebar=(e)=>{
+    if(e.target==e.currentTarget){
+        setcol2num(-1)
+    }
+}
+
     return <div className="navbardiv">
         <div className="minbar">
 
@@ -124,7 +132,7 @@ const navitemlist=useRef(
             <div className="logo"><h1>Shoestore</h1></div>
             <div className="selections">
                 {
-                    selectionlist.map((br,index)=>{
+                    selectionlist.current.map((br,index)=>{
                      return  <div onMouseOver={()=>{setdivnum(index)}} onMouseOut={()=>{setdivnum(-1)}} style={{borderBottom:divnum===index? "2px solid black":"2px solid transparent"}}>
             <p href="">{br}</p>
                  </div>
@@ -141,7 +149,7 @@ const navitemlist=useRef(
             <div className="fav"> <FontAwesomeIcon icon={faHeart} size="lg" /></div>
             <div className="cart"> <FontAwesomeIcon icon={faShoppingBag} size="lg" /></div>
             <div className="search"> <FontAwesomeIcon icon={faSearch} size="lg" /></div>
-            <div className="options"> <FontAwesomeIcon icon={faFolderMinus} size="lg" /></div>
+            <div className="options"onClick={()=>{setcol2num(0)}}> <FontAwesomeIcon icon={faFolderMinus} size="lg" /></div>
             
 </div>
 
@@ -172,32 +180,54 @@ const navitemlist=useRef(
             }
             </div>
         </div>
+<div className="sidebarcover"  style={col2num!==-1?{pointerEvents:"auto",boxShadow:"inset 0 0px 0px 100vh rgba(14, 13, 13, 0.281)",backdropFilter:"blur(3px)"}:{pointerEvents:"none"}} onClick={(e)=>{hidesidebar(e)}}>
+        <div className="sidebar" style={col2num!==-1?{transform:"translate(0,0)"}:{}}>
+      
+        <div className={col2num===0?"col2":"col2hide"}>
+        {
+            selectionlist.current.map((title,index)=>{
+                return   <button onClick={()=>{setcol2num(1);setdivnum(index)}}><span> {title} <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
+            })
+        }
 
-        <div className="sidebar">
-            <div className={col2num===-1?"col2":"col2hide"}>
-            <button onClick={()=>{setcol2num(0)}}>Men</button>
-            <button>Women</button>
-            <button>Nike</button>
-            <button>Puma</button>
-            <button>Skechers</button>
+            <button className="offerlink" style={{marginTop:"1rem"}}><span className="goback"><FontAwesomeIcon icon={faHeart} size="lg" /> favourite</span> </button>
+
+             <div className="signbuts">
+                 <button className="offerlink offlink2">Signup</button>
+                 <button className="offerlink offlink2">Signin</button>
+             </div>
             </div>
-            <div className={col2num===0?"col2":"col2hide"}>
-            <button onClick={()=>{setcol2num(-1)}}>go back</button>
-            <button onClick={()=>{setcol2num(1)}}>Brands</button>
-            <button>Shoes</button>
-            </div>
+
+
             <div className={col2num===1?"col2":"col2hide"}>
-            <button onClick={()=>{setcol2num(0)}}>go back</button>
-            <p>Brands</p>
-            <button>Nike</button>
-            <button>Puma</button>
-            <button>Skechers</button>
-            <p>Shoes</p>
-            <button>All Shoes</button>
-            <button>Running</button>
+            <button onClick={()=>{setcol2num(0)}}><span className="goback"><FontAwesomeIcon  icon={faChevronLeft} size="sm" /> All  </span></button>
+
+                {divnum!==-1 && navitemlist.current[divnum].map((col,index)=>
+            <button onClick={()=>{setcol2num(2);setcurcol(index)}}><span>{col.title}<FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
+                
+                )}
+       
+           
+            </div>
+
+
+            <div className={col2num===2?"col2":"col2hide"}>
+            <button onClick={()=>{setcol2num(1)}}><span className="goback"><FontAwesomeIcon  icon={faChevronLeft} size="sm" /> Men </span></button>
+          {
+             curcol!==-1 && divnum!==-1 && <p> {navitemlist.current[divnum][curcol].title} </p>
+          }
+          {
+              
+              curcol!==-1 && divnum!==-1 && navitemlist.current[divnum][curcol].listitem.map((option,index)=>
+            <Link className="link2" to={`/list/${navitemlist.current[divnum][curcol].pathname[index]}/${navitemlist.current[divnum][curcol].id[index]}`}>{option}</Link>
+              
+              )
+          }
+           
+           
             </div>
         </div>
        
-
+        </div>
     </div>
 }

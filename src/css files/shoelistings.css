@@ -392,6 +392,8 @@ transition: width 290ms ease,opacity 200ms linear;
     display: none;
 }
 
+
+
 .norbox:hover .seconddetails{
     display: block;
 }
@@ -415,4 +417,104 @@ margin-right: 0.5rem;
 .norbox:hover > p{
     transform: translate(0,-37px);
     transition: transform 300ms ease 0s;
+}
+
+.filterbut{
+    display: var(--hidediv);
+    margin: 0.3rem 0;
+    border-radius: 1rem;
+    padding: 0.5rem 1.3rem ;
+    background-color: black;
+    color: white;
+}
+
+
+button{
+    cursor: pointer;
+}
+
+.filterdivcover{
+    display: var(--hidediv);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow:hidden;
+}
+
+.filterdiv{
+
+    background-color: white;
+    position: relative;
+    height: 100%;
+    padding: 1rem 2rem;
+    overflow: scroll;
+    transform: translate(0,100%);
+    transition: transform 250ms ease;
+}
+
+.filterdiv_active{
+  transform: translate(0,0);
+}
+
+
+
+
+@media only screen and (max-width: 3020px) {
+    :root{
+        --hidediv:none;
+    }
+
+}
+
+
+@media only screen and (max-width: 1024px) {
+
+    :root{
+        --hidediv:block;
+    }
+
+    .filterbody{
+        display: none;
+        width: 0;
+       padding: 0%;
+       transform: translate(-100%,0);
+       transition: width 300ms ease , padding 300ms ease,transform 300ms ease;
+      
+      }
+      
+      .shoelistbody{
+          width: 100%;
+          padding: 0 0.5rem;
+      }
+
+      .cornerbut{
+          display: none;
+      }
+
+      .infotab{
+        padding: 0% 2rem 0 2rem;
+      }
+      
+      .filterbut{
+          display: block;
+      }
+
+      .filterdivcover{
+      display: block;
+      }
+
+}
+
+@media only screen and (max-width: 960px) {
+
+    .shoelistbody{
+        gap: 0.35rem;
+    }
+
+    .norbox:first-child,.norbox:last-child,.norbox{
+        width: 49%;
+    }
+
 }

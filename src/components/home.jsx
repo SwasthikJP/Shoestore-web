@@ -120,7 +120,7 @@ export default function Home() {
 
 
 
-    return <div className="home">
+    return <div className="home" >
         <Navbar />
         <div className="cardanim">
         </div>
