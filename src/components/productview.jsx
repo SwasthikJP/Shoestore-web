@@ -97,6 +97,13 @@ console.log(e)
           })
       }
 
+
+    const scrollfast=(e)=>{
+        console.log(e.currentTarget.scrollLeft)
+        // e.currentTarget.scrollBy({ left: e.currentTarget.width, behavior: "smooth" });
+    }
+
+
       if(gotopage){
           return <Redirect  to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${nextcolor}`} />
       }
@@ -109,16 +116,35 @@ console.log(e)
             <div className="shoeimages">
                 {
                     ele.shoeimages[ele.shoecolors[colorindex]].map((image)=>{
-                      return  <img src={image} alt="shoe image" />
+                      return   <div className="image2"> <img src={image} alt="shoe image" /> </div>
                     })
                 }
 
             </div>
             <div className="infodiv">
+                <div className="changedir">
+                    <div className="tog">
                 <div className="shoetype">{ele.gender}'s shoe</div>
+              
+               
                 <div className="shoename">{ele.shoename}</div>
+                </div>
+                <div className="tog">
                 <div className="shoecost">₹{ele.shoecost}</div>
                 <div className="pricedetail">incl. of taxes and duties</div>
+                </div>
+                </div>
+
+             <div className="shoeimages2cover" >
+                <div className="shoeimages2">
+                {
+                    ele.shoeimages[ele.shoecolors[colorindex]].map((image)=>{
+                      return   <span className="image2"> <img src={image} alt="shoe image" /> </span>
+                    })
+                }
+             </div>
+            </div>
+
                 <div className="shoepictures">
                     {
                         ele.shoecolors.map((color,index)=>{
@@ -143,7 +169,7 @@ console.log(e)
                 </div>
                 <button className="addcartbut">Add to Bag</button>
                 <button className="favbut" onClick={()=>{fun2()}}>Favourite</button>
-                <div className="shoedetails">
+                <div  className="shoedetails">
                 Your workhorse with wings returns.The {ele.shoename} continues to put a spring in your step, using the same responsive foam as its predecessor.Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.
                 </div>
 

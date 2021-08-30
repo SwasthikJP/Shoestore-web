@@ -72,8 +72,6 @@ button{
 }
 
 .im2{
-  
-
     width: calc(100% - var(--homemargin)*2);
     margin: 3rem var(--homemargin);
     position: relative;

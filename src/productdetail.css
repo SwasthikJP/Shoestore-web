@@ -1,36 +1,58 @@
 
 .totaldiv{
     display: flex;
-    margin: 10vh ;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 3rem;
+    gap: 4rem;
 }
 
 .shoeimages{
     display: flex;
+    width: calc(90% - 400px);
     flex-wrap: wrap;
-    width: 60vw;
+    gap: 1rem;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.shoeimages  img{
-    height: 73vh;
-   width: 60vh;
-   margin:0 20px 20px 0;
+
+
+.shoeimages  .image2{
+    width: calc((100% - 1rem)/2);
+    position: relative;
+  
+}
+
+ .image2::after{
+    content: '';
+    display: block;
+    padding-top: 120%;
+}
+
+.shoeimages .image2  img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
    cursor: pointer;
    border: 0.1px solid rgb(197, 197, 197);
 border-radius: 1rem;
 }
 
 .infodiv{
-    width: 30vw;
-    margin: 0 0 0 12px;
+    width: 400px;
     display: flex;
     flex-direction: column;
 }
 
-.infodiv img{
-width: 12vh;
-height: 12vh;
-margin: 0 5px 0 0;
+.infodiv .shoepictures img{
+width: 6rem;
+height: 6rem;
+margin: 0 0.1rem 0 0;
 }
 
 .infodiv .shoetype{
@@ -85,31 +107,31 @@ p{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    gap:0.4rem;
     justify-content: space-between;
    
 }
 
 .shoesize{
-    width: 9.2vw;
-    height: 8vh;
+    width: calc((100% - 0.8rem)/3);
     box-sizing: border-box;
     font-size: 1rem;
-    padding: 1.9vh 0vh;
+    padding: 0.8rem 0;
     border: rgb(177, 177, 177) 1px solid;
     border-radius: 0.4rem;
-    margin: 0 5px 5px 0;
    text-align: center;
-   flex-grow: 1;
+
     /* check with fixed size for it */
 }
 
 .shoesize:hover{
-    border:1.5px solid black;
+   box-shadow: inset 0 0 0 1.5px black;
     cursor: pointer;
 }
 
 .shoesize_active{
-    border:1.5px solid black;
+    box-shadow: inset 0 0 0 1.5px black;
+
 }
 
 .infodiv .addcartbut,.favbut{
@@ -117,11 +139,19 @@ p{
     color: white;
     outline: none;
     border: none;
-    padding: 20px 0;
+    padding: 1.2rem 0;
     font-size: 1rem;
     border-radius: 1.9rem;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 }
+
+.addcartbut{
+    position: sticky;
+    bottom: 0;
+
+}
+
+
 
 .infodiv button{
     cursor: pointer;
@@ -134,7 +164,111 @@ p{
 }
 
 .shoedetails{
-    margin: 10vh 0;
+    margin: 2.5rem 0;
     font-size: 1.06rem;
     line-height: 1.7rem;
 }
+
+.changedir{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.tog:last-child{
+    margin: 0.6rem 0 0 0;
+    width: 30%;
+    text-align: right;
+}
+
+.shoeimages2cover{
+    display: block;
+    position: relative;
+    width: 100%;
+  overflow-x: scroll;
+scroll-snap-type: x mandatory;
+margin: 1rem 0 0 0;
+}
+
+.shoeimages2{
+    height: 100%;
+    display: inline-flex;
+    gap: 0.5rem;
+   position: relative;
+}
+
+.shoeimages2 .image2{
+    scroll-snap-align: center;
+width: 100vw;
+position: relative;
+}
+
+
+
+.shoeimages2 .image2 img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+object-fit: cover;
+}
+
+
+
+.shoeimages2cover::-webkit-scrollbar{
+    height: 0.3rem;
+}
+
+.shoeimages2cover:hover::-webkit-scrollbar-thumb{
+    visibility:visible;
+}
+
+
+.shoeimages2cover::-webkit-scrollbar-thumb{
+    background-color: rgb(146, 142, 142);
+    border-radius: 1rem;
+    visibility: hidden;
+}
+
+
+.shoeimages2cover::-webkit-scrollbar-track-piece{
+    visibility: hidden;
+}
+
+/* .shoeimages2cover::-webkit-scrollbar-track{
+  margin: 0 10vw;
+} */
+
+@media only screen and (max-width: 3020px) {
+    .shoeimages2cover{
+        display: none;
+    }
+
+  
+}
+
+
+@media only screen and (max-width: 1024px) {
+
+    .totaldiv{
+        margin: 1rem;
+    }
+
+    .shoeimages2cover{
+        display: block;
+    }
+
+    .shoeimages{
+        display: none;
+    }
+
+    .infodiv{
+        width: 100%;
+    }
+
+ 
+}
+
