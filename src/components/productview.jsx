@@ -7,6 +7,7 @@ import firebase from "firebase";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
 import Random from "random-number-arrays";
+import classNames from "classnames";
 import { Link, Redirect, useParams } from "react-router-dom";
 
 
@@ -29,7 +30,9 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
     const [shoedata,setshoedata]=useState([]);
     const [nextcolor,setnextcolor]=useState(0);
     const [gotopage,setgotopage]=useState(false);
-
+    const infoDiv=useRef(null);
+    const [addcartclass,setaddcartclass]=useState("addcartbut2");
+    const favbut=useRef(null);
     useEffect(async()=>{
         const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
         console.log(process.env.REACT_APP_SUPABASE_URL)
@@ -46,7 +49,20 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
            if(error) throw error;
            console.log(data)
            setshoedata(data);
-           setgotopage(false)
+           setgotopage(false);
+           let observer=new IntersectionObserver((entries)=>{
+               entries.forEach((entry,index)=>{
+                   setaddcartclass(classNames("addcartbut2",{addcartbut_active:entry.intersectionRatio===0}));
+                console.log("index"+index)
+                   console.log(entry.target)
+                    console.log(entry.intersectionRatio)
+               
+                 
+               })
+               
+           },{root:null,rootMargin:"16px 0px",threshold:[0,0.1]});
+           observer.observe(favbut.current);
+
         }
         catch (error){
              console.log(error);
@@ -112,7 +128,7 @@ console.log(e)
         <Navbar />
         {shoedata.map((ele)=>{
        
-      return <div className="totaldiv">
+      return <div className="totaldiv"  >
             <div className="shoeimages">
                 {
                     ele.shoeimages[ele.shoecolors[colorindex]].map((image)=>{
@@ -121,7 +137,7 @@ console.log(e)
                 }
 
             </div>
-            <div className="infodiv">
+            <div className="infodiv" ref={infoDiv}>
                 <div className="changedir">
                     <div className="tog">
                 <div className="shoetype">{ele.gender}'s shoe</div>
@@ -167,8 +183,11 @@ console.log(e)
   
 
                 </div>
-                <button className="addcartbut">Add to Bag</button>
-                <button className="favbut" onClick={()=>{fun2()}}>Favourite</button>
+
+                <button  className="addcartbut">Add to Bag</button>
+                <button  className={addcartclass}>Add to Bag</button>
+                <button ref={favbut} className="favbut" onClick={()=>{fun2()}}>Favourite</button>
+
                 <div  className="shoedetails">
                 Your workhorse with wings returns.The {ele.shoename} continues to put a spring in your step, using the same responsive foam as its predecessor.Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.
                 </div>
