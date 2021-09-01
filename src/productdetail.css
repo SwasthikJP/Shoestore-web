@@ -151,11 +151,12 @@ p{
 
 
 .infodiv .addcartbut2{
+    display: var(--displaynone);
    position: fixed;
    bottom: 0;
- left: 0;
- width: 100%;
-  transform: scaleX(0.9);
+ left: 10%;
+ width: 80%;
+margin: 0;
    visibility: hidden;
 }
 
@@ -164,11 +165,10 @@ p{
 .infodiv .addcartbut_active{
     visibility: visible;
     position: fixed;
-    /* width: 100%; */
-  transform: scaleX(1);
+    width: 100%;
     border-radius: 0;
-    margin: 0;
-transition: transform 300ms linear;
+    left: 0;
+transition: width 300ms linear, left 300ms linear , border-radius 300ms linear;
 }
 
 
@@ -204,7 +204,7 @@ transition: transform 300ms linear;
 }
 
 .shoeimages2cover{
-    display: block;
+    display: var(--displaynone);
     position: relative;
     width: 100%;
   overflow-x: scroll;
@@ -263,9 +263,9 @@ object-fit: cover;
 } */
 
 @media only screen and (max-width: 3020px) {
-    .shoeimages2cover{
-        display: none;
-    }
+:root{
+    --displaynone: none;
+}
 
   
 }
@@ -277,8 +277,8 @@ object-fit: cover;
         margin: 1rem;
     }
 
-    .shoeimages2cover{
-        display: block;
+    :root{
+        --displaynone: block;
     }
 
     .shoeimages{

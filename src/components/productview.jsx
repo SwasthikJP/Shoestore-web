@@ -1,7 +1,8 @@
 import Navbar from "./navbar"
 import air from "../images/air_jordan_4.jpg";
 import air2 from "../images/jordan2.jpg";
-import '../productdetail.css'
+import '../productdetail.css';
+import '../css files/sign.css';
 import Footern from "./footer";
 import firebase from "firebase";
 import { createClient } from "@supabase/supabase-js";
@@ -9,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import Random from "random-number-arrays";
 import classNames from "classnames";
 import { Link, Redirect, useParams } from "react-router-dom";
+import Sign from "./sign.jsx";
 
 
 export default function Productview(props){
@@ -32,7 +34,7 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
     const [gotopage,setgotopage]=useState(false);
     const infoDiv=useRef(null);
     const [addcartclass,setaddcartclass]=useState("addcartbut2");
-    const favbut=useRef(null);
+    const addcartBut=useRef(null);
     useEffect(async()=>{
         const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
         console.log(process.env.REACT_APP_SUPABASE_URL)
@@ -60,8 +62,8 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
                  
                })
                
-           },{root:null,rootMargin:"16px 0px",threshold:[0,0.1]});
-           observer.observe(favbut.current);
+           },{root:null,rootMargin:"0px",threshold:[0,0.1]});
+           observer.observe(addcartBut.current);
 
         }
         catch (error){
@@ -125,6 +127,9 @@ console.log(e)
       }
 
     return <div>
+
+     <Sign />
+
         <Navbar />
         {shoedata.map((ele)=>{
        
@@ -184,9 +189,9 @@ console.log(e)
 
                 </div>
 
-                <button  className="addcartbut">Add to Bag</button>
-                <button  className={addcartclass}>Add to Bag</button>
-                <button ref={favbut} className="favbut" onClick={()=>{fun2()}}>Favourite</button>
+                <button ref={addcartBut} className="addcartbut">Add to Bag</button>
+                <button  className={addcartclass} onClick={()=>{console.log("pressed")}}>Add to Bag</button>
+                <button  className="favbut" onClick={()=>{fun2()}}>Favourite</button>
 
                 <div  className="shoedetails">
                 Your workhorse with wings returns.The {ele.shoename} continues to put a spring in your step, using the same responsive foam as its predecessor.Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.
