@@ -128,7 +128,6 @@ console.log(e)
 
     return <div>
 
-     <Sign />
 
         <Navbar />
         {shoedata.map((ele)=>{

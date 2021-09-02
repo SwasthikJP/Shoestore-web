@@ -22,9 +22,13 @@ padding: 0.9em 3.5em;
     top: 0.1em;
 }
 
-.minbar > a{
+.minbar > button{
+    background-color: transparent;
     line-height: 0.8rem;
     text-decoration: none;
+    font-weight: 700;
+    font-size: 0.74rem;
+    padding: 0;
 }
 
 .mainbar{

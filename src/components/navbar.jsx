@@ -4,6 +4,7 @@ import {  useRef, useState } from "react";
 import "../css files/navbar.css";
 import { Link, useRouteMatch } from "react-router-dom";
 import classNames from "classnames";
+import Sign from "./sign";
 
 
 export default function Navbar() {
@@ -14,6 +15,10 @@ const lastbarparentstyleactive=useRef({pointerEvents:"auto",backdropFilter:"blur
 const lastbarparentstyle=useRef({pointerEvents:"none",backdropFilter:"blur(0px)",transition:"none"});
 const [col2num,setcol2num]=useState(-1);
 const [curcol,setcurcol]=useState(-1);
+const [signactive,setsignactive]=useState(false);
+const [signIn,setsignIn]=useState(true);
+const signUpbut=useRef(null);
+const signInbut=useRef(null);
 const navitemlist=useRef(
     [
        [ 
@@ -113,19 +118,19 @@ const navitemlist=useRef(
 
 
 const hidesidebar=(e)=>{
-    if(e.target==e.currentTarget){
+    if(e.target==e.currentTarget || e.target==signUpbut.current || e.target==signInbut.current){
         setcol2num(-1)
     }
 }
 
     return <div className="navbardiv">
+       {signactive && <Sign setactive={setsignactive} signIn={signIn} setsignIn={setsignIn}/>}
         <div className="minbar">
-
-           <a  href="">Help</a>
+           <button>Help</button>
           <div className="vl"></div>
-           <a href="">Signup</a>
+           <button onClick={()=>{setsignactive(true);setsignIn(false);}}>Signup</button>
          <div className="vl"></div>
-           <a href="">Signin</a>
+           <button onClick={()=>{setsignactive(true);setsignIn(true);}}>Signin</button>
         
         </div>
         <div className="mainbar">
@@ -193,8 +198,8 @@ const hidesidebar=(e)=>{
             <button className="offerlink" style={{marginTop:"1rem"}}><span className="goback"><FontAwesomeIcon icon={faHeart} size="lg" /> favourite</span> </button>
 
              <div className="signbuts">
-                 <button className="offerlink offlink2">Signup</button>
-                 <button className="offerlink offlink2">Signin</button>
+                 <button ref={signUpbut} className="offerlink offlink2" onClick={()=>{setsignactive(true);setsignIn(false);}}>Signup</button>
+                 <button ref={signInbut} className="offerlink offlink2" onClick={()=>{setsignactive(true);setsignIn(true);}}>Signin</button>
              </div>
             </div>
 
