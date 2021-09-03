@@ -1,7 +1,9 @@
  import '../css files/sign.css';
  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
- import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+ import {  faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { createClient } from '@supabase/supabase-js';
 
  export default function Sign(props){
 
@@ -73,6 +75,34 @@ import { useEffect, useState } from 'react';
             console.log("hehe")
         }
     }
+
+    useEffect(()=>{
+        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+        console.log(process.env.REACT_APP_SUPABASE_URL)
+        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+        const supabase=createClient(superbaseURL,supabaseapi);
+     
+        const user =  supabase.auth.user();
+        console.log(user)
+    
+    })
+
+    const googlesignin=async()=>{
+        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+        console.log(process.env.REACT_APP_SUPABASE_URL)
+        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+        const supabase=createClient(superbaseURL,supabaseapi);
+        try{
+        const { user, session, error } = await supabase.auth.signIn({
+          provider: 'google'
+        },{redirectTo:'http://localhost:3000/#/list/mens-allshoes/MnAs/'});
+        if(error) throw error;
+      
+    }
+    catch (err){
+        console.log(err)
+    }
+      }
     
 
  
@@ -87,6 +117,7 @@ import { useEffect, useState } from 'react';
            {!checklength(erremailmsg) && <p className="erMessage">{erremailmsg}</p>}
             <input value={password} onBlur={(e)=>inputpassword(e.target.value)} style={!checklength(errpasswordmsg)? {borderColor:"#fe0000"}:{}} onChange={(e)=>{setpassword(e.target.value)}}  type="text" placeholder="Password"/>
           {!checklength(errpasswordmsg) && <p className="erMessage">{errpasswordmsg}</p> }
+           {/* <button>Using <FontAwesomeIcon  icon={faAd} size="2x" /></button> */}
             <button type="submit">Signin</button>
         </form>:
         <form onSubmit={(e)=>userSignup(e)}>
@@ -99,6 +130,8 @@ import { useEffect, useState } from 'react';
             <button type="submit">Signup</button>
         </form>
          }
+           <p style={{textAlign:"center",fontWeight:"500"}}>Or</p>
+        <button onClick={googlesignin} className="google">Using <FontAwesomeIcon style={{marginLeft:"5px"}} icon={faGoogle} size="lg" /></button>
          {props.signIn?
         <p>Not a member? <button onClick={()=>{props.setsignIn(false)}}>Join Us</button></p>:
         <p>Already a member? <button onClick={()=>{props.setsignIn(true)}}>Sign In</button></p>

@@ -70,7 +70,7 @@
       border: 1px solid #e5e5e5;
   }
 
-  .signbox form button{
+  .signbox form button,.signbox .google{
       margin: 1rem 0 0 0 ;
       padding: 0.8rem ;
       color: white;
@@ -79,7 +79,7 @@
       text-decoration: none;
   }
 
- 
+
 
   .signbox p{
       margin-top: 0.6rem;

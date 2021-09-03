@@ -63,6 +63,7 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
                })
                
            },{root:null,rootMargin:"0px",threshold:[0,0.1]});
+           console.log(addcartBut.current)
            observer.observe(addcartBut.current);
 
         }

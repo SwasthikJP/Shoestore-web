@@ -7,6 +7,7 @@ import Productview from './components/productview';
 import {HashRouter as Router, Route, Switch, useParams} from "react-router-dom"
 import { useEffect } from 'react';
 import firebase from 'firebase';
+import Footern from './components/footer';
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
     <Route exact path="/">
       <Home></Home>
     </Route>
-    <Route path="/list/:data/:id">
+    <Route path="/list/:data/:id/:acc">
       <Shoelistings />
     </Route>
 
