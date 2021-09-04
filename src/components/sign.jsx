@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { createClient } from '@supabase/supabase-js';
+import { useLocation } from 'react-router';
 
  export default function Sign(props){
 
@@ -13,7 +14,21 @@ import { createClient } from '@supabase/supabase-js';
     const [erremailmsg,seterremailmsg]=useState("");
     const [errpasswordmsg,seterrpasswordmsg]=useState("");
     const [errusernamemsg,seterrusernamemsg]=useState("");
+    const [verifymsg,setverifymsg]=useState("");
+    const location=useLocation();
 
+
+
+    useEffect(()=>{
+        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+        console.log(process.env.REACT_APP_SUPABASE_URL)
+        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+        const supabase=createClient(superbaseURL,supabaseapi);
+     console.log(location)
+        const user =  supabase.auth.user();
+        console.log(user)
+    
+    },[]);
 
     const inputemail=(value)=>{
     // setemail(e.target.value);
@@ -53,18 +68,41 @@ import { createClient } from '@supabase/supabase-js';
         return inputstring.length===0;
     }
 
-    const userSignin=(e)=>{
+    const userSignin=async(e)=>{
         console.log(errpasswordmsg)
         e.preventDefault();
         let v1=inputpassword(password);
         let v2=inputemail(email);
+        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+        const supabase=createClient(superbaseURL,supabaseapi);
         if(v1 && v2){
-            console.log(errpasswordmsg)
-            console.log("hehe")
+            try{
+                const {user,session, error } = await supabase.auth.signIn({
+                 email:email,
+                 password:password
+                },{redirectTo:`http://localhost:3000${location.pathname}`});
+                if (error) throw error;
+                if(user &&  !session){
+                    setverifymsg("Verify your account by clicking the link sent to your email.")
+                 }else{
+                     props.setactive(false);
+                 }
+               console.log(user)
+               console.log(session)
+             }
+             catch (err){
+                 console.log(err)
+                 setverifymsg(err.message)
+                 
+             }
         }
     }
 
-    const userSignup=(e)=>{
+    const userSignup=async(e)=>{
+          const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+        const supabase=createClient(superbaseURL,supabaseapi);
         console.log(errpasswordmsg)
         e.preventDefault();
         let v1=inputpassword(password);
@@ -73,34 +111,42 @@ import { createClient } from '@supabase/supabase-js';
         if(v1 && v2 && v3){
             console.log(errpasswordmsg)
             console.log("hehe")
+            try{
+                const { user,session,error } = await supabase.auth.signUp({
+                 email:email,
+                 password:password
+                },{redirectTo:`http://localhost:3000${location.pathname}`});
+                if(error) throw error;
+                if(user &&  !session){
+                   setverifymsg("Verify your account by clicking the link sent to your email.")
+                }else{
+                    props.setactive(false);
+                }
+              console.log(user)
+              console.log(session)
+            }
+            catch (err){
+                console.log(err)
+                setverifymsg(err.message);
+            }
         }
     }
 
-    useEffect(()=>{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        console.log(process.env.REACT_APP_SUPABASE_URL)
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
-     
-        const user =  supabase.auth.user();
-        console.log(user)
-    
-    })
+  
 
     const googlesignin=async()=>{
         const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        console.log(process.env.REACT_APP_SUPABASE_URL)
         const supabaseapi=process.env.REACT_APP_SUPABASE_API;
         const supabase=createClient(superbaseURL,supabaseapi);
         try{
-        const { user, session, error } = await supabase.auth.signIn({
+        const {error } = await supabase.auth.signIn({
           provider: 'google'
-        },{redirectTo:'http://localhost:3000/#/list/mens-allshoes/MnAs/'});
+        },{redirectTo:`http://localhost:3000${location.pathname}`});
         if(error) throw error;
-      
     }
     catch (err){
         console.log(err)
+        verifymsg(err.message);
     }
       }
     
@@ -117,6 +163,7 @@ import { createClient } from '@supabase/supabase-js';
            {!checklength(erremailmsg) && <p className="erMessage">{erremailmsg}</p>}
             <input value={password} onBlur={(e)=>inputpassword(e.target.value)} style={!checklength(errpasswordmsg)? {borderColor:"#fe0000"}:{}} onChange={(e)=>{setpassword(e.target.value)}}  type="text" placeholder="Password"/>
           {!checklength(errpasswordmsg) && <p className="erMessage">{errpasswordmsg}</p> }
+          {!checklength(verifymsg) && <p className="erMessage">{verifymsg}</p>}
            {/* <button>Using <FontAwesomeIcon  icon={faAd} size="2x" /></button> */}
             <button type="submit">Signin</button>
         </form>:
@@ -127,6 +174,7 @@ import { createClient } from '@supabase/supabase-js';
             {!checklength(errpasswordmsg) &&   <p className="erMessage">{errpasswordmsg}</p>}
             <input value={username}  onBlur={(e)=>inputusername(e.target.value)} style={!checklength(errusernamemsg)? {borderColor:"#fe0000"}:{}} onChange={(e)=>{setusername(e.target.value)}}  type="text" placeholder="Username"/>
             {!checklength(errusernamemsg) && <p className="erMessage">{errusernamemsg}</p>}
+            {!checklength(verifymsg) && <p className="erMessage">{verifymsg}</p>}
             <button type="submit">Signup</button>
         </form>
          }

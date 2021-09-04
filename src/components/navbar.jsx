@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import {  useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import "../css files/navbar.css";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch,useParams } from "react-router-dom";
 import classNames from "classnames";
 import Sign from "./sign";
 
@@ -118,7 +118,8 @@ const navitemlist=useRef(
 
 
 const hidesidebar=(e)=>{
-    if(e.target==e.currentTarget || e.target==signUpbut.current || e.target==signInbut.current){
+    e.stopPropagation();
+    if(e.target==e.currentTarget){
         setcol2num(-1)
     }
 }
@@ -198,8 +199,8 @@ const hidesidebar=(e)=>{
             <button className="offerlink" style={{marginTop:"1rem"}}><span className="goback"><FontAwesomeIcon icon={faHeart} size="lg" /> favourite</span> </button>
 
              <div className="signbuts">
-                 <button ref={signUpbut} className="offerlink offlink2" onClick={()=>{setsignactive(true);setsignIn(false);}}>Signup</button>
-                 <button ref={signInbut} className="offerlink offlink2" onClick={()=>{setsignactive(true);setsignIn(true);}}>Signin</button>
+                 <button  className="offerlink offlink2" onClick={()=>{setcol2num(-1);setsignactive(true);setsignIn(false);}}>Signup</button>
+                 <button  className="offerlink offlink2" onClick={()=>{setcol2num(-1); setsignactive(true);setsignIn(true);}}>Signin</button>
              </div>
             </div>
 
@@ -224,7 +225,7 @@ const hidesidebar=(e)=>{
           {
               
               curcol!==-1 && divnum!==-1 && navitemlist.current[divnum][curcol].listitem.map((option,index)=>
-            <Link className="link2" to={`/list/${navitemlist.current[divnum][curcol].pathname[index]}/${navitemlist.current[divnum][curcol].id[index]}`}>{option}</Link>
+            <Link className="link2" onClick={()=>setcol2num(-1)} to={`/list/${navitemlist.current[divnum][curcol].pathname[index]}/${navitemlist.current[divnum][curcol].id[index]}`}>{option}</Link>
               
               )
           }
