@@ -1,10 +1,11 @@
  import '../css files/sign.css';
  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  import {  faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { createClient } from '@supabase/supabase-js';
 import { useLocation } from 'react-router';
+import { userAuth } from './userAuth';
 
  export default function Sign(props){
 
@@ -16,7 +17,7 @@ import { useLocation } from 'react-router';
     const [errusernamemsg,seterrusernamemsg]=useState("");
     const [verifymsg,setverifymsg]=useState("");
     const location=useLocation();
-
+    const userContext=useContext(userAuth);
 
 
     useEffect(()=>{
@@ -27,7 +28,7 @@ import { useLocation } from 'react-router';
      console.log(location)
         const user =  supabase.auth.user();
         console.log(user)
-    
+     console.log(userContext.checkUser())
     },[]);
 
     const inputemail=(value)=>{
@@ -90,6 +91,9 @@ import { useLocation } from 'react-router';
                  }
                console.log(user)
                console.log(session)
+               if(!userContext.uid){
+                   userContext.checkUser();
+               }
              }
              catch (err){
                  console.log(err)

@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import {  useEffect, useRef, useState } from "react";
 import "../css files/navbar.css";
 import { Link, useRouteMatch,useParams } from "react-router-dom";
 import classNames from "classnames";
 import Sign from "./sign";
+import { createClient } from "@supabase/supabase-js";
 
 
 export default function Navbar() {
@@ -124,6 +125,23 @@ const hidesidebar=(e)=>{
     }
 }
 
+const SignOut=async()=>{
+    const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+  const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+  const supabase=createClient(superbaseURL,supabaseapi);
+  try{
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
+  console.log("done")
+  console.log(supabase.auth.user())
+
+
+  }
+  catch(er){
+      console.log(er)
+  }
+}
+
     return <div className="navbardiv">
        {signactive && <Sign setactive={setsignactive} signIn={signIn} setsignIn={setsignIn}/>}
         <div className="minbar">
@@ -154,7 +172,7 @@ const hidesidebar=(e)=>{
            <div className="iconlist">
             <div className="fav"> <FontAwesomeIcon icon={faHeart} size="lg" /></div>
             <div className="cart"> <FontAwesomeIcon icon={faShoppingBag} size="lg" /></div>
-            <div className="search"> <FontAwesomeIcon icon={faSearch} size="lg" /></div>
+            <div className="search" onClick={SignOut}> <FontAwesomeIcon icon={faSearch} size="lg" /></div>
             <div className="options"onClick={()=>{setcol2num(0)}}> <FontAwesomeIcon icon={faFolderMinus} size="lg" /></div>
             
 </div>

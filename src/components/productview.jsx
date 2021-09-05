@@ -11,6 +11,7 @@ import Random from "random-number-arrays";
 import classNames from "classnames";
 import { Link, Redirect, useParams } from "react-router-dom";
 import Sign from "./sign.jsx";
+import { useGetcontext } from "../functions/getcontext";
 
 
 export default function Productview(props){
@@ -35,6 +36,8 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
     const infoDiv=useRef(null);
     const [addcartclass,setaddcartclass]=useState("addcartbut2");
     const addcartBut=useRef(null);
+    const {uid,checkUser}=useGetcontext();
+
     useEffect(async()=>{
         const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
         console.log(process.env.REACT_APP_SUPABASE_URL)
@@ -65,12 +68,12 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
            },{root:null,rootMargin:"0px",threshold:[0,0.1]});
            console.log(addcartBut.current)
            observer.observe(addcartBut.current);
-
+          
         }
         catch (error){
              console.log(error);
         }
-
+          checkUser();
         setcurrentcolor(props.prop.shoecolor)
        
     },[id,colorindex]);

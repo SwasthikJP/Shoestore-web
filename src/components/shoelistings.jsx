@@ -10,6 +10,8 @@ import firebase from "firebase";
 import { Link, Redirect, useParams, withRouter } from "react-router-dom";
 import "../css files/shoelistings.css"
 import { createClient } from "@supabase/supabase-js";
+import { useContext } from "react";
+import { userAuth } from "./userAuth";
 
 // export default withRouter( function Shoelistings(props) {
 export default function Shoelistings(props) {
@@ -199,38 +201,7 @@ setsorting.current={sort:false,ascend:true};
     }else{
         console.log("id does not exist");
     }
-
-
-        // var app = firebase.initializeApp({
-        //     apiKey: "AIzaSyAykEHE4EwOe98VDhdyUc8kHX-IATvHn98",
-        //     authDomain: "shoestore-890e7.firebaseapp.com",
-        //     projectId: "shoestore-890e7",
-        //     storageBucket: "shoestore-890e7.appspot.com",
-        //     messagingSenderId: "432163263716",
-        //     appId: "1:432163263716:web:cc911376956aa8d50648f1",
-        //     measurementId: "G-0X43EGYRB2"
-        // });
-        // console.log(props.location)
-        // propsdata.current=props.location.state;
-        // getshoeslist(propsdata.current)
-    //     var db = firebase.firestore();
-    //     var ref= db.collection("shoes");
-    //   ref=addquery(ref);
-    //  console.log("hehe")
-
-    //           ref.get().then((query) => {
-    //               const a=[];
-    //               console.log("jj")
-    //               query.forEach((ele) => {
-    //                   a.push(ele.data())
-    //                   console.log(ele.data())
-    //               });
-    //               console.log(a.length)
-    //               // setlistdata(a)
-
-    //           }).catch((e) => {
-    //               console.log(e)
-    //           })
+    
     console.log(props.location)
     }, [id]);
 
@@ -517,7 +488,7 @@ addquery();
         <div className={maindivclass.classNames}>
             {/* <button className="dt"></button> */}
             
-            
+            {console.log("shoelistings render")}
                {filtercomp("filterbody")}
 
             <div className="shoelistbody" style={{opacity:transitionopacity?0.5:1}}>
