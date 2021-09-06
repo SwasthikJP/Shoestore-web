@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { createClient } from '@supabase/supabase-js';
 import { useLocation } from 'react-router';
-import { userAuth } from './userAuth';
+import { useGetcontext } from '../functions/getcontext';
 
  export default function Sign(props){
 
@@ -17,7 +17,7 @@ import { userAuth } from './userAuth';
     const [errusernamemsg,seterrusernamemsg]=useState("");
     const [verifymsg,setverifymsg]=useState("");
     const location=useLocation();
-    const userContext=useContext(userAuth);
+    const {uid,checkUser}=useGetcontext();
 
 
     useEffect(()=>{
@@ -28,7 +28,6 @@ import { userAuth } from './userAuth';
      console.log(location)
         const user =  supabase.auth.user();
         console.log(user)
-     console.log(userContext.checkUser())
     },[]);
 
     const inputemail=(value)=>{
@@ -91,9 +90,9 @@ import { userAuth } from './userAuth';
                  }
                console.log(user)
                console.log(session)
-               if(!userContext.uid){
-                   userContext.checkUser();
-               }
+
+               checkUser();
+               
              }
              catch (err){
                  console.log(err)
@@ -124,10 +123,20 @@ import { userAuth } from './userAuth';
                 if(user &&  !session){
                    setverifymsg("Verify your account by clicking the link sent to your email.")
                 }else{
+                    console.log(user)
+                    console.log(session)
+                 checkUser();
+                const {data,error}= await supabase.auth.update(
+                    {
+                       data:{full_name:username} 
+                    }
+                );
+                if(error) throw error;
+                console.log(user)
+                console.log(data)
                     props.setactive(false);
                 }
-              console.log(user)
-              console.log(session)
+             
             }
             catch (err){
                 console.log(err)

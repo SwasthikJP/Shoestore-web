@@ -459,7 +459,7 @@ addquery();
   
 
     return <div style={{position:"relative"}}>
-        <Navbar />
+        <Navbar signactive={false} signIn={true}/>
         <div className="infotab">
             <div>
                 {!Boolean(id.includes("tse")) ||

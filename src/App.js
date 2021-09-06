@@ -41,7 +41,6 @@ function App() {
   const supabase=createClient(superbaseURL,supabaseapi);
 
 console.log(supabase.auth.user().id)
-
   }
   ,[])
 

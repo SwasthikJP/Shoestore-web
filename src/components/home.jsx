@@ -121,7 +121,7 @@ export default function Home() {
 
 
     return <div className="home" >
-        <Navbar />
+        <Navbar signactive={false} signIn={true}/>
         <div className="cardanim">
         </div>
         <div className="im" >

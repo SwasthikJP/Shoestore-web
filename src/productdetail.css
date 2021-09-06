@@ -181,6 +181,24 @@ transition: width 300ms linear, left 300ms linear , border-radius 300ms linear;
     background-color: white;
     color: black;
     border: rgb(158, 158, 158) 1px solid;
+    transition: background-color 100ms ease, color 100ms linear;
+}
+
+.favbut_active{
+    background-color: #fe0000;
+    color: white;
+    animation: popup 300ms ease 0s 2 alternate forwards;
+}
+
+@keyframes popup {
+    
+    0%{
+        transform: scale(1);
+    }
+
+    100%{
+        transform: scale(1.02,1.1);
+    }
 }
 
 .shoedetails{

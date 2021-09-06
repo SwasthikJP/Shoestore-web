@@ -37,6 +37,8 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
     const [addcartclass,setaddcartclass]=useState("addcartbut2");
     const addcartBut=useRef(null);
     const {uid,checkUser}=useGetcontext();
+    const [favact,setfavact]=useState(false);
+    const [signactive,setsignactive]=useState(false);
 
     useEffect(async()=>{
         const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
@@ -44,6 +46,9 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
         const supabaseapi=process.env.REACT_APP_SUPABASE_API;
        
         try{
+          
+
+            checkUser();
 
         const supabase=createClient(superbaseURL,supabaseapi);
         var ref=supabase.from("shoes").select('*');
@@ -68,12 +73,22 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
            },{root:null,rootMargin:"0px",threshold:[0,0.1]});
            console.log(addcartBut.current)
            observer.observe(addcartBut.current);
-          
+          if(true){
+              const {data,error}=await supabase.from("Favourites").select().match({
+                uid:"8f4149bd-51ce-415b-b6e5-192f4c8ef45c",  shoeid:id
+              });
+              if(error) throw error;
+              console.log(data)
+              console.log(uid)
+          }
+          if(!uid){
+              console.log("no user")
+          }
         }
         catch (error){
              console.log(error);
         }
-          checkUser();
+        
         setcurrentcolor(props.prop.shoecolor)
        
     },[id,colorindex]);
@@ -125,6 +140,39 @@ console.log(e)
         // e.currentTarget.scrollBy({ left: e.currentTarget.width, behavior: "smooth" });
     }
 
+    const addtoFav=async()=>{
+        if(uid){
+            console.log("inside uid "+ favact);
+            
+           
+            try{
+                const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+                const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+                const supabase=createClient(superbaseURL,supabaseapi);
+                if(!favact){
+                var {data,error}=await supabase.from("Favourites").insert([{
+                uid,shoeid:id
+                }]);
+            }else{
+                var {data,error}=await supabase.from("Favourites").delete().match({
+                    uid,shoeid:id
+                });
+           }
+                if(error) throw error;
+                console.log(data);
+                setfavact((prev)=>!prev);
+           
+            }catch (err){
+                window.alert(err);
+                console.log(err);
+            }
+
+        }else{
+            setsignactive(true);
+        }
+        
+    }
+
 
       if(gotopage){
           return <Redirect  to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${nextcolor}`} />
@@ -133,7 +181,7 @@ console.log(e)
     return <div>
 
 
-        <Navbar />
+        <Navbar signactive={signactive} signIn/>
         {shoedata.map((ele)=>{
        
       return <div className="totaldiv"  >
@@ -191,10 +239,10 @@ console.log(e)
   
 
                 </div>
-
+      {console.log("product view rendered")}
                 <button ref={addcartBut} className="addcartbut">Add to Bag</button>
                 <button  className={addcartclass} onClick={()=>{console.log("pressed")}}>Add to Bag</button>
-                <button  className="favbut" onClick={()=>{fun2()}}>Favourite</button>
+                <button  className={favact?"favbut favbut_active":"favbut"} onClick={addtoFav}>Favourite</button>
 
                 <div  className="shoedetails">
                 Your workhorse with wings returns.The {ele.shoename} continues to put a spring in your step, using the same responsive foam as its predecessor.Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.

@@ -8,16 +8,16 @@ import Sign from "./sign";
 import { createClient } from "@supabase/supabase-js";
 
 
-export default function Navbar() {
-
+export default function Navbar(props) {
+console.log(props.signactive)
 const [divnum,setdivnum]=useState(-1);
 const selectionlist=useRef(["Men","Women","Nike","Puma","Skechers"]);
 const lastbarparentstyleactive=useRef({pointerEvents:"auto",backdropFilter:"blur(3px)",transition:"backdrop-filter 500ms linear"});
 const lastbarparentstyle=useRef({pointerEvents:"none",backdropFilter:"blur(0px)",transition:"none"});
 const [col2num,setcol2num]=useState(-1);
 const [curcol,setcurcol]=useState(-1);
-const [signactive,setsignactive]=useState(false);
-const [signIn,setsignIn]=useState(true);
+const [signactive,setsignactive]=useState(props.signactive);
+const [signIn,setsignIn]=useState(props.signIn);
 const signUpbut=useRef(null);
 const signInbut=useRef(null);
 const navitemlist=useRef(
@@ -117,6 +117,10 @@ const navitemlist=useRef(
     ]
 );
 
+   useEffect(()=>{
+setsignactive(props.signactive);
+   },[props]);
+
 
 const hidesidebar=(e)=>{
     e.stopPropagation();
@@ -204,6 +208,7 @@ const SignOut=async()=>{
             }
             </div>
         </div>
+        {console.log("inside navbar"+signactive)}
 <div className="sidebarcover"  style={col2num!==-1?{pointerEvents:"auto",boxShadow:"inset 0 0px 0px 100vh rgba(14, 13, 13, 0.281)",backdropFilter:"blur(3px)"}:{pointerEvents:"none"}} onClick={(e)=>{hidesidebar(e)}}>
         <div className="sidebar" style={col2num!==-1?{transform:"translate(0,0)"}:{}}>
       
