@@ -137,17 +137,22 @@ const SignOut=async()=>{
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
   console.log("done")
-  console.log(supabase.auth.user())
-
-
+localStorage.removeItem("supabase.auth.token")
+console.log(supabase.auth.user())
   }
   catch(er){
       console.log(er)
   }
 }
+  
+const setActive=(val)=>{
+props.setsignactive && props.setsignactive(val);
+  setsignactive(val);
+}
+  
 
     return <div className="navbardiv">
-       {signactive && <Sign setactive={setsignactive} signIn={signIn} setsignIn={setsignIn}/>}
+       {signactive && <Sign setactive={setActive} signIn={signIn} setsignIn={setsignIn}/>}
         <div className="minbar">
            <button>Help</button>
           <div className="vl"></div>

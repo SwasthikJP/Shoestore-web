@@ -22,15 +22,18 @@ function App() {
     const supabase=createClient(superbaseURL,supabaseapi);
   
   let user=supabase.auth.user();
-    setuid((prev)=>{
-      if(user){
-        value.current.uid=user.id;
-        return user.id;
-      }else{
-        value.current.uid="";
-        return "";
-      }
-    });
+  if(user){
+    console.log("user found "+user.id)
+    value.current.uid=user.id;
+    setuid(user.id);
+    return user.id;
+  }else{
+    console.log("no user");
+    value.current.uid="";
+    setuid("");
+    return "";
+  }
+   
 
   }
   const value=useRef({uid:uid,checkUser});
@@ -40,7 +43,7 @@ function App() {
   const supabaseapi=process.env.REACT_APP_SUPABASE_API;
   const supabase=createClient(superbaseURL,supabaseapi);
 
-console.log(supabase.auth.user().id)
+console.log(supabase.auth.user())
   }
   ,[])
 
@@ -50,7 +53,8 @@ console.log(supabase.auth.user().id)
     <div >
 
 <Router>
-  <userAuth.Provider  value={value.current}>
+  <userAuth.Provider  value={{uid,checkUser}}>
+    {console.log("app js render")}
   <Switch>
     <Route exact path="/">
       <Home></Home>
@@ -60,7 +64,7 @@ console.log(supabase.auth.user().id)
     </Route>
 
     <Route path="/details/:shoename/:id/:colorindex">
-     <Productview prop={{shoecolor:"red"}}/>
+     <Productview/>
     </Route>
 
   </Switch>

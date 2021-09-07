@@ -40,16 +40,15 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
     const [favact,setfavact]=useState(false);
     const [signactive,setsignactive]=useState(false);
 
+
+
     useEffect(async()=>{
         const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
         console.log(process.env.REACT_APP_SUPABASE_URL)
         const supabaseapi=process.env.REACT_APP_SUPABASE_API;
        
         try{
-          
-
-            checkUser();
-
+  
         const supabase=createClient(superbaseURL,supabaseapi);
         var ref=supabase.from("shoes").select('*');
         
@@ -73,25 +72,38 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
            },{root:null,rootMargin:"0px",threshold:[0,0.1]});
            console.log(addcartBut.current)
            observer.observe(addcartBut.current);
-          if(true){
-              const {data,error}=await supabase.from("Favourites").select().match({
-                uid:"8f4149bd-51ce-415b-b6e5-192f4c8ef45c",  shoeid:id
-              });
-              if(error) throw error;
-              console.log(data)
-              console.log(uid)
-          }
-          if(!uid){
-              console.log("no user")
-          }
+          
         }
         catch (error){
              console.log(error);
         }
         
-        setcurrentcolor(props.prop.shoecolor)
        
     },[id,colorindex]);
+
+    useEffect(async()=>{
+        let Uid=checkUser();
+        
+        if(Uid){
+            try{
+                const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+                console.log(process.env.REACT_APP_SUPABASE_URL)
+                const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+                const supabase=createClient(superbaseURL,supabaseapi);
+            const {data,error}=await supabase.from("Favourites").select().match({
+              uid:Uid,  shoeid:id,colorindex
+            });
+            if(error) throw error;
+            setfavact(Array.isArray(data) && data.length)
+            console.log(Uid)
+        }catch(err){
+            console.log(err)
+        }
+        }else{
+            setfavact(false)
+            console.log(Uid+"no user"+uid)
+        }
+    },[uid,id,colorindex]);
 
     const fun2= async()=>{
 // const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
@@ -141,7 +153,8 @@ console.log(e)
     }
 
     const addtoFav=async()=>{
-        if(uid){
+        let Uid=checkUser();
+        if(Uid){
             console.log("inside uid "+ favact);
             
            
@@ -150,18 +163,20 @@ console.log(e)
                 const supabaseapi=process.env.REACT_APP_SUPABASE_API;
                 const supabase=createClient(superbaseURL,supabaseapi);
                 if(!favact){
-                var {data,error}=await supabase.from("Favourites").insert([{
-                uid,shoeid:id
-                }]);
+
+  
+                var {error}=await supabase.from("Favourites").upsert({
+             uid:Uid,shoeid:id,colorindex,updated_at:new Date()
+                },{returning:"minimal",ignoreDuplicates:false});
             }else{
-                var {data,error}=await supabase.from("Favourites").delete().match({
-                    uid,shoeid:id
+                var {error}=await supabase.from("Favourites").delete({returning:"minimal"}).match({
+                    uid:Uid,shoeid:id,colorindex
                 });
            }
                 if(error) throw error;
-                console.log(data);
+
                 setfavact((prev)=>!prev);
-           
+
             }catch (err){
                 window.alert(err);
                 console.log(err);
@@ -181,7 +196,7 @@ console.log(e)
     return <div>
 
 
-        <Navbar signactive={signactive} signIn/>
+        <Navbar signactive={signactive} signIn setsignactive={setsignactive}/>
         {shoedata.map((ele)=>{
        
       return <div className="totaldiv"  >
@@ -239,7 +254,7 @@ console.log(e)
   
 
                 </div>
-      {console.log("product view rendered")}
+      {console.log("product view rendered==="+uid)}
                 <button ref={addcartBut} className="addcartbut">Add to Bag</button>
                 <button  className={addcartclass} onClick={()=>{console.log("pressed")}}>Add to Bag</button>
                 <button  className={favact?"favbut favbut_active":"favbut"} onClick={addtoFav}>Favourite</button>
