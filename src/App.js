@@ -11,6 +11,8 @@ import Footern from './components/footer';
 import {createClient} from "@supabase/supabase-js";
 import { userAuth } from './components/userAuth';
 import './functions/getcontext'
+import Favourite from './components/favourite';
+import Addcart from './components/addcart';
 
 function App() {
 
@@ -65,6 +67,18 @@ console.log(supabase.auth.user())
 
     <Route path="/details/:shoename/:id/:colorindex">
      <Productview/>
+    </Route>
+
+    <Route path="/fav">
+      <Favourite />
+    </Route>
+
+    <Route path="/cart">
+      <Addcart />
+    </Route>
+
+    <Route path="/checkout">
+      <Addcart />
     </Route>
 
   </Switch>

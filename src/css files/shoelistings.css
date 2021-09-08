@@ -392,7 +392,9 @@ transition: width 290ms ease,opacity 200ms linear;
     display: none;
 }
 
-
+.norbox_fav:hover .details{
+    display: block;
+}
 
 .norbox:hover .seconddetails{
     display: block;
@@ -417,6 +419,10 @@ margin-right: 0.5rem;
 .norbox:hover > p{
     transform: translate(0,-37px);
     transition: transform 300ms ease 0s;
+}
+
+.norbox_fav:hover > p{
+    transform: none;
 }
 
 .filterbut{
