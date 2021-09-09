@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft, faSignOutAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import {  useEffect, useRef, useState } from "react";
 import "../css files/navbar.css";
-import { Link, useRouteMatch,useParams } from "react-router-dom";
+import { Link, useRouteMatch,useParams ,Redirect} from "react-router-dom";
 import classNames from "classnames";
 import Sign from "./sign";
 import { createClient } from "@supabase/supabase-js";
+import { useGetcontext } from "../functions/getcontext";
 
 
 export default function Navbar(props) {
@@ -112,10 +113,21 @@ const navitemlist=useRef(
                   id:["SkAc","SkTpTs","SkJr","SkTs"],
                   pathname:["skechers-allclothing","skechers-topsandtshirts","skechers-jerseys","skechers-tracksuits"]
               }
-        ]
+        ],
 
     ]
 );
+
+const useroptions=useRef( 
+    {
+        title:"User",
+        listitem:["Orders","Favourites","Log out"],
+        // id:["MnSk","WmnSk","UnSk"],
+        pathname:["orders","favourites"]
+    }
+     );
+
+const {uid,checkUser}=useGetcontext();
 
    useEffect(()=>{
 setsignactive(props.signactive);
@@ -138,28 +150,51 @@ const SignOut=async()=>{
   if (error) throw error;
   console.log("done")
 localStorage.removeItem("supabase.auth.token")
+checkUser();
+setcol2num(-1);
 console.log(supabase.auth.user())
   }
   catch(er){
       console.log(er)
   }
 }
-  
-const setActive=(val)=>{
-props.setsignactive && props.setsignactive(val);
-  setsignactive(val);
+
+const getuserdetails=()=>{
+    const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+    const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+    const supabase=createClient(superbaseURL,supabaseapi);
+    return supabase.auth.user()?.user_metadata.full_name;
 }
   
+const setActive=(val)=>{
+   props.setsignactive?.(val);
+  setsignactive(val);
+}
+
 
     return <div className="navbardiv">
        {signactive && <Sign setactive={setActive} signIn={signIn} setsignIn={setsignIn}/>}
         <div className="minbar">
-           <button>Help</button>
+           <button> Help</button>
           <div className="vl"></div>
-           <button onClick={()=>{setsignactive(true);setsignIn(false);}}>Signup</button>
-         <div className="vl"></div>
-           <button onClick={()=>{setsignactive(true);setsignIn(true);}}>Signin</button>
-        
+     { uid &&  <div className="hoverthis">
+           <p>{getuserdetails()}</p>
+           <div className="usercardcover">
+           <div className="usercard">
+              
+                   <Link to="/orders" className="usercardopt">Orders</Link>
+                   <Link to="/favourites" className="usercardopt">Favourites</Link>
+                   <div onClick={SignOut} className="usercardopt">Log Out</div>
+
+                   </div>
+                   </div>
+           </div>}
+
+       
+       {!uid &&  <button onClick={()=>{setsignactive(true);setsignIn(false);}}>Signup</button>}
+   {!uid && <div className="vl"></div>}
+  { !uid &&     <button onClick={()=>{setsignactive(true);setsignIn(true);}}>Signin</button>
+  }
         </div>
         <div className="mainbar">
             <div className="logo"><h1>Shoestore</h1></div>
@@ -179,8 +214,8 @@ props.setsignactive && props.setsignactive(val);
                 <input type="text" placeholder="Search" />
             </div>
            <div className="iconlist">
-            <div className="fav"> <FontAwesomeIcon icon={faHeart} size="lg" /></div>
-            <div className="cart"> <FontAwesomeIcon icon={faShoppingBag} size="lg" /></div>
+            <Link className="fav" to="/favourites" > <FontAwesomeIcon icon={faHeart} size="lg" /></Link>
+            <Link className="cart" to="/cart"> <FontAwesomeIcon icon={faShoppingBag} size="lg" /></Link>
             <div className="search" onClick={SignOut}> <FontAwesomeIcon icon={faSearch} size="lg" /></div>
             <div className="options"onClick={()=>{setcol2num(0)}}> <FontAwesomeIcon icon={faFolderMinus} size="lg" /></div>
             
@@ -218,29 +253,39 @@ props.setsignactive && props.setsignactive(val);
         <div className="sidebar" style={col2num!==-1?{transform:"translate(0,0)"}:{}}>
       
         <div className={col2num===0?"col2":"col2hide"}>
+
+       { checkUser() &&    <button style={{marginBottom:"1rem"}} onClick={()=>{setdivnum(5);setcol2num(1);}}><span><i style={{fontStyle:"normal",fontSize:"1.05rem"}}><FontAwesomeIcon style={{marginRight:"0.5rem"}} icon={faUser} size="sm" />{getuserdetails()}</i> <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>}
         {
             selectionlist.current.map((title,index)=>{
                 return   <button onClick={()=>{setcol2num(1);setdivnum(index)}}><span> {title} <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
             })
         }
 
-            <button className="offerlink" style={{marginTop:"1rem"}}><span className="goback"><FontAwesomeIcon icon={faHeart} size="lg" /> favourite</span> </button>
+            <Link className="offerlink" to="/favourites" style={{marginTop:"1rem"}}><span className="goback"><FontAwesomeIcon icon={faHeart} size="lg" /> favourite</span> </Link>
 
-             <div className="signbuts">
+         { !uid &&   <div className="signbuts">
                  <button  className="offerlink offlink2" onClick={()=>{setcol2num(-1);setsignactive(true);setsignIn(false);}}>Signup</button>
                  <button  className="offerlink offlink2" onClick={()=>{setcol2num(-1); setsignactive(true);setsignIn(true);}}>Signin</button>
              </div>
+}
             </div>
 
 
             <div className={col2num===1?"col2":"col2hide"}>
             <button onClick={()=>{setcol2num(0)}}><span className="goback"><FontAwesomeIcon  icon={faChevronLeft} size="sm" /> All  </span></button>
-
-                {divnum!==-1 && navitemlist.current[divnum].map((col,index)=>
+              {
+           divnum===5 ?
+           useroptions.current.listitem.map((title,index)=>
+           index===2?   <button onClick={SignOut}><span>{title} </span></button>
+            :
+           <Link className="link2" onClick={()=>setcol2num(-1)} to={`/${useroptions.current.pathname[index]}`}>{title}</Link>
+               
+               )
+              :  divnum!==-1 && navitemlist.current[divnum].map((col,index)=>
             <button onClick={()=>{setcol2num(2);setcurcol(index)}}><span>{col.title}<FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
                 
-                )}
-       
+                )
+       }
            
             </div>
 

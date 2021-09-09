@@ -11,7 +11,7 @@ font-size: 0.8rem;
 font-weight: 500;
 display: var(--selectiondisplay);
 justify-content: flex-end;
-padding: 0.9em 3.5em;
+padding: 0.72rem 2.8rem;
 }
 
 .vl{
@@ -22,13 +22,63 @@ padding: 0.9em 3.5em;
     top: 0.1em;
 }
 
-.minbar > button{
+.minbar > button, .minbar p{
     background-color: transparent;
     line-height: 0.8rem;
     text-decoration: none;
     font-weight: 700;
     font-size: 0.74rem;
     padding: 0;
+    cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.hoverthis{
+    position: relative;
+    align-self: center;
+}
+
+.hoverthis:hover .usercardcover{
+    visibility: visible;
+}
+
+.hoverthis:hover .usercardcover .usercard{
+ transform: translate(0,0);
+
+}
+
+.usercardcover{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 2;
+    overflow: hidden;
+    padding-top: 0.72rem;
+    visibility: hidden;
+}
+
+.usercard{
+   
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem 4rem 1.5rem 1.5rem;
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: gray;
+    border-radius: 0.5rem;
+    transform: translate(0,-10%);
+    transition: transform ease 200ms;
+}
+
+.usercardopt{
+   cursor: pointer;
+   color: gray;
+}
+
+.usercardopt:hover{
+    color: rgb(199, 199, 199);
 }
 
 .mainbar{
@@ -83,6 +133,7 @@ flex-grow: 1;
     border-radius: 1.3rem;
     width: 17%;
     margin:  0 3% 0 7%;
+
 }
 
 .input input{
@@ -277,7 +328,7 @@ transition: transform 210ms ease;
 }
 
 
-.sidebar button > span{
+.sidebar button > span,.sidebar .offerlink > span{
     display: flex;
     justify-content: space-between;
     font-size: 1.2rem;
@@ -288,7 +339,7 @@ transition: transform 210ms ease;
     gap: 1rem;
 }
 
-.sidebar button > .goback{
+.sidebar button > .goback,.sidebar .offerlink > span{
     justify-content: flex-start;
     
 }

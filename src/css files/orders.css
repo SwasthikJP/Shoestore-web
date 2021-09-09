@@ -1,0 +1,39 @@
+
+
+.ordercombo{
+    border-top: 2rem solid black;
+    box-shadow: inset 0  0  0 1px #ddd;
+}
+
+.orderinfo{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.leftdetails,.rightdetails{
+    width: 40%;
+}
+
+.orderinfo p{
+    margin-bottom: 0.1rem;
+    font-weight: 500;
+}
+
+.rightdetails p:first-child{
+    margin-bottom: 0.4rem;
+}
+
+
+
+@media only screen and (max-width:640px){
+
+    .orderinfo{
+        flex-direction: column;
+    }
+
+    .leftdetails,.rightdetails{
+        width: 70%;
+    }
+
+}

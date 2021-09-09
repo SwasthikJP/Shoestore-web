@@ -13,6 +13,8 @@ import { userAuth } from './components/userAuth';
 import './functions/getcontext'
 import Favourite from './components/favourite';
 import Addcart from './components/addcart';
+import Checkout from './components/checkout';
+import Orders from './components/orders';
 
 function App() {
 
@@ -25,7 +27,7 @@ function App() {
   
   let user=supabase.auth.user();
   if(user){
-    console.log("user found "+user.id)
+    console.log(user)
     value.current.uid=user.id;
     setuid(user.id);
     return user.id;
@@ -69,7 +71,7 @@ console.log(supabase.auth.user())
      <Productview/>
     </Route>
 
-    <Route path="/fav">
+    <Route path="/favourites">
       <Favourite />
     </Route>
 
@@ -78,7 +80,11 @@ console.log(supabase.auth.user())
     </Route>
 
     <Route path="/checkout">
-      <Addcart />
+      <Checkout />
+    </Route>
+
+    <Route path="/orders">
+      <Orders />
     </Route>
 
   </Switch>
