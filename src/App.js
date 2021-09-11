@@ -4,7 +4,7 @@ import Home from './components/home';
 import Navbar from './components/navbar';
 import Shoelistings from './components/shoelistings';
 import Productview from './components/productview';
-import {BrowserRouter as Router, Route, Switch, useParams} from "react-router-dom"
+import {BrowserRouter as Router, Route, Switch, useParams, Redirect} from "react-router-dom"
 import { useEffect, useRef, useState } from 'react';
 import firebase from 'firebase';
 import Footern from './components/footer';
@@ -48,9 +48,9 @@ function App() {
   const supabase=createClient(superbaseURL,supabaseapi);
 
 console.log(supabase.auth.user())
+checkUser();
   }
   ,[])
-
 
 
   return (
@@ -71,20 +71,20 @@ console.log(supabase.auth.user())
      <Productview/>
     </Route>
 
-    <Route path="/favourites">
-      <Favourite />
+    <Route path="/favourites"  >
+    {uid?  <Favourite />  : <Redirect  to="/" />}
     </Route>
 
     <Route path="/cart">
-      <Addcart />
+    {uid?  <Addcart />  : <Redirect  to="/" />}
     </Route>
 
     <Route path="/checkout">
-      <Checkout />
+    {uid?  <Checkout /> : <Redirect  to="/" />}
     </Route>
 
     <Route path="/orders">
-      <Orders />
+    {uid?  <Orders /> : <Redirect  to="/" />}
     </Route>
 
   </Switch>

@@ -27,7 +27,8 @@ export default function Productview(props){
 const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
 
     const [currentcolor,setcurrentcolor]=useState("");
-    const [currentsize,setcurrentsize]=useState("7");
+    const [currentsize,setcurrentsize]=useState("0");
+    const [selectSize,setselectSize]=useState(false);
     const alldata=useRef([]);
     const {id,colorindex}=useParams();
     const [shoedata,setshoedata]=useState([]);
@@ -189,6 +190,46 @@ console.log(e)
     }
 
 
+    const addtocart=async()=>{
+        const Uid=checkUser();
+        const queryob={
+            shoeid:id,
+            uid:Uid,
+            colorindex,
+            shoesize:currentsize
+        };
+        if(Uid){
+            if(currentsize!=="0"){
+       try{
+        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+        const supabase=createClient(superbaseURL,supabaseapi);
+        const {data,error}=await supabase.from("Cart").select('quantity').match(
+           queryob
+        );
+        if(error) throw error;
+      
+           {
+        const {error}=await supabase.from("Cart").upsert({
+           ...queryob,
+           quantity:Array.isArray(data) && data.length!==0 ? data.pop().quantity + 1:1,
+            updated_at:new Date()
+        },{ignoreDuplicates:false});
+        if(error) throw error;
+           }
+       }catch(err){
+           window.alert(err.message)
+           console.log(err)
+       }
+    }else{
+        setselectSize(true);
+    }
+    }else{
+        setsignactive(true);
+    }
+    }
+
+
       if(gotopage){
           return <Redirect  to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${nextcolor}`} />
       }
@@ -243,20 +284,21 @@ console.log(e)
 
 
                 </div>
-                <p>Select Size</p>
-                <div className="shoesizediv">
+                <p style={{color:selectSize?"#d43f21":"black"}}>Select Size</p>
+                <div className={selectSize?"shoesizediv shoesizediv_active":"shoesizediv"}>
                     {ele.shoesizes.sort((a,b)=>{
                         return a-b;
                     }).map((num)=>{
-                        return <div className={currentsize===num? "shoesize shoesize_active":"shoesize"} onClick={()=>{setcurrentsize(num)}}>IND {num}</div>
+                        return <div className={currentsize===num? "shoesize shoesize_active":"shoesize"} onClick={()=>{setcurrentsize(num);setselectSize(false);}}>IND {num}</div>
                     })}
-                 
+                 {console.log("+++ "+typeof(currentsize))}
   
 
                 </div>
+              { selectSize && <p style={{marginBottom:"1rem",color:"#d43f21"}}>Please select a size.</p>}
       {console.log("product view rendered==="+uid)}
-                <button ref={addcartBut} className="addcartbut">Add to Bag</button>
-                <button  className={addcartclass} onClick={()=>{console.log("pressed")}}>Add to Bag</button>
+                <button ref={addcartBut} className="addcartbut"  onClick={addtocart}>Add to Bag</button>
+                <button  className={addcartclass} onClick={addtocart}>Add to Bag</button>
                 <button  className={favact?"favbut favbut_active":"favbut"} onClick={addtoFav}>Favourite</button>
 
                 <div  className="shoedetails">

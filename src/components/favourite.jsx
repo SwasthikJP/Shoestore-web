@@ -3,13 +3,13 @@ import { useGetcontext } from "../functions/getcontext";
 import Footern from "./footer";
 import Navbar from "./navbar";
 import { createClient } from "@supabase/supabase-js";
-import { Link } from "react-router-dom";
+import { Link ,Redirect} from "react-router-dom";
 
 
 export default function Favourite(){
 
 const [listdata,setlistdata]=useState([]);
-const {checkUser}=useGetcontext();
+const {uid,checkUser}=useGetcontext();
 
  useEffect(async()=>{
   try{
@@ -31,13 +31,15 @@ const {checkUser}=useGetcontext();
   }catch(err){
       console.log(err);
   }
- },[])
+ },[]);
+
+
 
     return <div>
         <Navbar signactive={false} signIn />
         <h3 style={{margin:"1rem 0 0 1rem"}}>Favourite</h3>
         <div className="shoelistbody" style={{padding:"1rem",overflowY:"auto"}}>
-
+        {console.log("==== fav ====")}
 {listdata.length!==0?
 listdata.map((ele,index)=>{
 

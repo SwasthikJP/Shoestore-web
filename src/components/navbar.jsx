@@ -128,10 +128,16 @@ const useroptions=useRef(
      );
 
 const {uid,checkUser}=useGetcontext();
+const [gotopage,setgotopage]=useState("");
 
    useEffect(()=>{
 setsignactive(props.signactive);
    },[props]);
+
+   useEffect(()=>{
+       checkUser();
+   })
+
 
 
 const hidesidebar=(e)=>{
@@ -171,6 +177,22 @@ const setActive=(val)=>{
   setsignactive(val);
 }
 
+const gotoPage=(path)=>{
+    if(checkUser()){
+        setgotopage(path);
+    }else{
+        setsignIn(true);
+        setsignactive(true);
+     
+    }
+    setcol2num(-1);
+   
+}
+
+
+    if(gotopage.length!==0){
+        return <Redirect push to={`/${gotopage}`}></Redirect>
+    }
 
     return <div className="navbardiv">
        {signactive && <Sign setactive={setActive} signIn={signIn} setsignIn={setsignIn}/>}
@@ -182,8 +204,8 @@ const setActive=(val)=>{
            <div className="usercardcover">
            <div className="usercard">
               
-                   <Link to="/orders" className="usercardopt">Orders</Link>
-                   <Link to="/favourites" className="usercardopt">Favourites</Link>
+                   <div onClick={()=>setgotopage("orders")} className="usercardopt">Orders</div>
+                   <div onClick={()=>setgotopage("favourites")} className="usercardopt">Favourites</div>
                    <div onClick={SignOut} className="usercardopt">Log Out</div>
 
                    </div>
@@ -214,8 +236,8 @@ const setActive=(val)=>{
                 <input type="text" placeholder="Search" />
             </div>
            <div className="iconlist">
-            <Link className="fav" to="/favourites" > <FontAwesomeIcon icon={faHeart} size="lg" /></Link>
-            <Link className="cart" to="/cart"> <FontAwesomeIcon icon={faShoppingBag} size="lg" /></Link>
+            <div className="fav" onClick={()=>gotoPage("favourites")} > <FontAwesomeIcon icon={faHeart} size="lg" /></div>
+            <div className="cart" onClick={()=>gotoPage("cart")}> <FontAwesomeIcon icon={faShoppingBag} size="lg" /></div>
             <div className="search" onClick={SignOut}> <FontAwesomeIcon icon={faSearch} size="lg" /></div>
             <div className="options"onClick={()=>{setcol2num(0)}}> <FontAwesomeIcon icon={faFolderMinus} size="lg" /></div>
             
@@ -254,14 +276,14 @@ const setActive=(val)=>{
       
         <div className={col2num===0?"col2":"col2hide"}>
 
-       { checkUser() &&    <button style={{marginBottom:"1rem"}} onClick={()=>{setdivnum(5);setcol2num(1);}}><span><i style={{fontStyle:"normal",fontSize:"1.05rem"}}><FontAwesomeIcon style={{marginRight:"0.5rem"}} icon={faUser} size="sm" />{getuserdetails()}</i> <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>}
+       { uid &&    <button style={{marginBottom:"1rem"}} onClick={()=>{setdivnum(5);setcol2num(1);}}><span><i style={{fontStyle:"normal",fontSize:"1.05rem"}}><FontAwesomeIcon style={{marginRight:"0.5rem"}} icon={faUser} size="sm" />{getuserdetails()}</i> <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>}
         {
             selectionlist.current.map((title,index)=>{
                 return   <button onClick={()=>{setcol2num(1);setdivnum(index)}}><span> {title} <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
             })
         }
 
-            <Link className="offerlink" to="/favourites" style={{marginTop:"1rem"}}><span className="goback"><FontAwesomeIcon icon={faHeart} size="lg" /> favourite</span> </Link>
+            <div className="offerlink" onClick={()=>gotoPage("favourites")} style={{marginTop:"1rem"}}><span className="goback"><FontAwesomeIcon icon={faHeart} size="lg" /> favourite</span> </div>
 
          { !uid &&   <div className="signbuts">
                  <button  className="offerlink offlink2" onClick={()=>{setcol2num(-1);setsignactive(true);setsignIn(false);}}>Signup</button>
@@ -278,7 +300,7 @@ const setActive=(val)=>{
            useroptions.current.listitem.map((title,index)=>
            index===2?   <button onClick={SignOut}><span>{title} </span></button>
             :
-           <Link className="link2" onClick={()=>setcol2num(-1)} to={`/${useroptions.current.pathname[index]}`}>{title}</Link>
+           <button  onClick={()=>{setcol2num(-1); setgotopage(useroptions.current.pathname[index])}}><span>{title}</ span></button>
                
                )
               :  divnum!==-1 && navitemlist.current[divnum].map((col,index)=>
