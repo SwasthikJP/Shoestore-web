@@ -40,6 +40,7 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
     const {uid,checkUser}=useGetcontext();
     const [favact,setfavact]=useState(false);
     const [signactive,setsignactive]=useState(false);
+    const [updatecart,setupdatecart]=useState(false);
 
 
 
@@ -212,10 +213,11 @@ console.log(e)
            {
         const {error}=await supabase.from("Cart").upsert({
            ...queryob,
-           quantity:Array.isArray(data) && data.length!==0 ? data.pop().quantity + 1:1,
+           quantity:Array.isArray(data) && data.length!==0 ? data[0].quantity===10 ?10:data.pop().quantity + 1:1,
             updated_at:new Date()
         },{ignoreDuplicates:false});
         if(error) throw error;
+        setupdatecart(true);
            }
        }catch(err){
            window.alert(err.message)
@@ -299,6 +301,8 @@ console.log(e)
       {console.log("product view rendered==="+uid)}
                 <button ref={addcartBut} className="addcartbut"  onClick={addtocart}>Add to Bag</button>
                 <button  className={addcartclass} onClick={addtocart}>Add to Bag</button>
+              { updatecart && <p style={{marginBottom:"1rem"}}>Added to cart.</p>}
+               
                 <button  className={favact?"favbut favbut_active":"favbut"} onClick={addtoFav}>Favourite</button>
 
                 <div  className="shoedetails">

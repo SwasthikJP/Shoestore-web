@@ -80,11 +80,13 @@ checkUser();
     </Route>
 
     <Route path="/checkout">
-    {uid?  <Checkout /> : <Redirect  to="/" />}
+    {/* {uid?  <Checkout /> : <Redirect  to="/" />} */}
+    <Checkout />
     </Route>
 
     <Route path="/orders">
-    {uid?  <Orders /> : <Redirect  to="/" />}
+    {/* {uid?  <Orders /> : <Redirect  to="/" />} */}
+    <Orders />
     </Route>
 
   </Switch>
