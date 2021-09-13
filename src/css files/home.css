@@ -26,9 +26,7 @@ button{
 
 
 .im{
-    margin-top: 2rem;
     /* height: 82vh; */
-    background-color: brown;
     position: relative;
     display: flex;
     gap: 1rem;
@@ -102,7 +100,6 @@ h3{
 .outer{
     position: relative;
     width: 100%;
-    background-color: brown;
     margin: 1.2rem 0  4.5rem 0;
 }
 
@@ -136,7 +133,6 @@ h3{
 
 .lists{
      display: inline-flex;  /*inline-flex makes the flex container inline, display:flex will make flex container block */
-    background-color: violet;
    gap: 1rem;
    /* width: 300%;
    overflow-x: scroll; */
@@ -144,18 +140,16 @@ h3{
 
  .norbox2:first-child{
         margin: 0 0 0 var(--homemargin);
-        background-color: greenyellow;
+       
 }
 
 .norbox2:last-child{
-    background-color: indigo;
 margin: 0 2.4rem 0 0;
 }
 
 .norbox2{
     display: flex;
     flex-direction: column;
-    background-color: pink;
     scroll-snap-align: start;
 }
 
@@ -163,6 +157,7 @@ margin: 0 2.4rem 0 0;
    width: 30vw;
    height: 30vw;
    object-fit: cover;
+    border-bottom: 1px solid rgb(189, 189, 189);
 }
 
 .maindetail{

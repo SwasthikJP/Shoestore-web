@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft, faSignOutAlt, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft, faSignOutAlt, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import {  useEffect, useRef, useState } from "react";
 import "../css files/navbar.css";
 import { Link, useRouteMatch,useParams ,Redirect} from "react-router-dom";
@@ -131,19 +131,27 @@ const {uid,checkUser}=useGetcontext();
 const [gotopage,setgotopage]=useState("");
 
    useEffect(()=>{
+console.log("rebuild +++++");
+ 
+   },[]);
+
+   useEffect(()=>{
 setsignactive(props.signactive);
+console.log("props changed");
    },[props]);
 
    useEffect(()=>{
+console.log("checkuser worked");
        checkUser();
-   })
+   });
 
 
 
 const hidesidebar=(e)=>{
     e.stopPropagation();
     if(e.target==e.currentTarget){
-        setcol2num(-1)
+        setcurcol(-1);
+        setcol2num(-1);
     }
 }
 
@@ -194,13 +202,14 @@ const gotoPage=(path)=>{
         return <Redirect push to={`/${gotopage}`}></Redirect>
     }
 
-    return <div className="navbardiv">
+    return <div>
+    <div className="navbardiv">
        {signactive && <Sign setactive={setActive} signIn={signIn} setsignIn={setsignIn}/>}
         <div className="minbar">
            <button> Help</button>
           <div className="vl"></div>
      { uid &&  <div className="hoverthis">
-           <p>{getuserdetails()}</p>
+           <p>{getuserdetails()}<FontAwesomeIcon style={{marginLeft:"0.5rem"}} icon={faUser} size="sm" /></p>
            <div className="usercardcover">
            <div className="usercard">
               
@@ -238,8 +247,8 @@ const gotoPage=(path)=>{
            <div className="iconlist">
             <div className="fav" onClick={()=>gotoPage("favourites")} > <FontAwesomeIcon icon={faHeart} size="lg" /></div>
             <div className="cart" onClick={()=>gotoPage("cart")}> <FontAwesomeIcon icon={faShoppingBag} size="lg" /></div>
-            <div className="search" onClick={SignOut}> <FontAwesomeIcon icon={faSearch} size="lg" /></div>
-            <div className="options"onClick={()=>{setcol2num(0)}}> <FontAwesomeIcon icon={faFolderMinus} size="lg" /></div>
+            <div className="search" > <FontAwesomeIcon icon={faSearch} size="lg" /></div>
+            <div className="options"onClick={()=>{setcol2num(0)}}> <FontAwesomeIcon icon={faBars} size="lg" /></div>
             
 </div>
 
@@ -313,7 +322,7 @@ const gotoPage=(path)=>{
 
 
             <div className={col2num===2?"col2":"col2hide"}>
-            <button onClick={()=>{setcol2num(1)}}><span className="goback"><FontAwesomeIcon  icon={faChevronLeft} size="sm" /> Men </span></button>
+            <button onClick={()=>{setcol2num(1);setcurcol(-1);}}><span className="goback"><FontAwesomeIcon  icon={faChevronLeft} size="sm" /> Men </span></button>
           {
              curcol!==-1 && divnum!==-1 && <p> {navitemlist.current[divnum][curcol].title} </p>
           }
@@ -329,6 +338,9 @@ const gotoPage=(path)=>{
             </div>
         </div>
        
+        </div>
+    </div>
+    <div className="cardanim" style={{width:"100%",height:"2rem",backgroundColor:"#f5f5f5"}}>
         </div>
     </div>
 }

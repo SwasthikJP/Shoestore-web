@@ -257,7 +257,7 @@ console.log(e)
                 <div className="shoetype">{ele.gender}'s shoe</div>
               
                
-                <div className="shoename">{ele.shoename}</div>
+                <div className="shoename" style={{textTransform:"capitalize"}}>{ele.shoename}</div>
                 </div>
                 <div className="tog">
                 <div className="shoecost">₹{ele.shoecost}</div>

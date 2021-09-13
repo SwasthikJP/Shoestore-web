@@ -122,8 +122,7 @@ export default function Home() {
 
     return <div className="home" >
         <Navbar signactive={false} signIn={true}/>
-        <div className="cardanim">
-        </div>
+        
         <div className="im" >
           <Link  className="Link" to="/list/nike-allshoes/NkAs">  <img  style={{ objectFit: "cover",width:"100%"}} src={nike} alt="nike shoe" /></Link>
             <span className="together">

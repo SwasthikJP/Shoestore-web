@@ -425,7 +425,7 @@ addquery();
 
 
                 {shoecolorslist.map((ele) => {
-                    return <div className="colorb" onClick={(e) =>sizeclick(e, ele)}><div className="circle" style={{ backgroundColor:ele, opacity: 0.85 }}> <div className={propsdata.current["shoecolors"].includes(ele) ? "tick tickactive" : "tick"} style={{ borderColor: ele === "white" ? "black" : "white" }}></div> </div>
+                    return <div className="colorb" onClick={(e) =>sizeclick(e, ele)}><div className="circle" style={{ backgroundColor:ele, opacity: 0.85, border: ele === "white" ? "1px solid rgb(229, 229, 229)" : "none" }}> <div className={propsdata.current["shoecolors"].includes(ele) ? "tick tickactive" : "tick"} style={{ borderColor: ele === "white" ? "black" : "white" }}></div> </div>
                         <div className={propsdata.current["shoecolors"].includes(ele) ?"cnameactive":""} >{ele}</div></div>
                 })}
 

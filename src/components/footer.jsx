@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {faArrowLeft,faCalculator} from "@fortawesome/free-solid-svg-icons"
 import "../css files/footer.css"
+import { faGithub, faGithubSquare, faInstagramSquare, faTwitterSquare } from "@fortawesome/free-brands-svg-icons"
 export default function Footern(){
 
     return <div>
@@ -14,10 +15,10 @@ export default function Footern(){
             <a target="_blank" href="https://in.puma.com/">About Puma</a>
             <a target="_blank" href="https://www.skechers.in/">About Skechers</a>
             </div>
-            <div className="allLinks"  style={{backgroundColor:"orange"}}>
-                <a href=""><FontAwesomeIcon icon={faCalculator}/></a>
-                <a href=""><FontAwesomeIcon icon={faArrowLeft}/></a>
-                <a href=""><FontAwesomeIcon icon={faCalculator}/></a>
+            <div className="allLinks"  >
+                <a href="https://github.com/swasthikjp" target="_blank"><FontAwesomeIcon color="white" size="2x" icon={faGithubSquare}/></a>
+                <a href="https://twitter.com/swasthikjp" target="_blank"><FontAwesomeIcon  color="white"  size="2x" icon={faTwitterSquare}/></a>
+                <a href="https://www.instagram.com/swasthikjpgowda/" target="_blank" ><FontAwesomeIcon color="white"   size="2x" icon={faInstagramSquare}/></a>
             </div>
         </div>
     </div>

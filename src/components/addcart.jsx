@@ -2,7 +2,7 @@ import Footern from "./footer";
 import Navbar from "./navbar";
 import "../css files/addcart.css";
 import air from "../images/jordan2.jpg";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import { useGetcontext } from "../functions/getcontext";
 import { createClient } from "@supabase/supabase-js";
 import { Link , Redirect} from "react-router-dom";
@@ -113,7 +113,7 @@ export default function Addcart(){
             </Link>
                   <div className="addcartinfo">
                     <Link to={`/details/${ele.shoes.gender}'s-${ele.shoes.shoename.replace(/ /g,"-")}/${ele.shoes.id}/${ele.colorindex}`}>  <p>{ele.shoes.shoename}</p></Link>
-                      <p className="subdetails">{ele.shoes.shoetype}</p>
+                      <p className="subdetails" style={{textTransform:"capitalize"}}>{ele.shoes.shoetype} shoe</p>
                       <p className="subdetails">Size <span style={{margin:"0 5px",fontSize:"0.85rem"}}>{ele.shoesize}</span>Quantity <span><select value={quantity[index]} onChange={(e)=>{updateQuantity(e,ele,index)}} defaultValue={ele.quantity} name="quantity" id="quantity">
                           <option value="1">1</option>
                           <option value="2">2</option>

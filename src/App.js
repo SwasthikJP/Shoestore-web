@@ -28,19 +28,16 @@ function App() {
   let user=supabase.auth.user();
   if(user){
     console.log(user)
-    value.current.uid=user.id;
     setuid(user.id);
     return user.id;
   }else{
     console.log("no user");
-    value.current.uid="";
     setuid("");
     return "";
   }
    
 
   }
-  const value=useRef({uid:uid,checkUser});
 
  useEffect(()=>{
   const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
@@ -80,13 +77,13 @@ checkUser();
     </Route>
 
     <Route path="/checkout">
-    {/* {uid?  <Checkout /> : <Redirect  to="/" />} */}
-    <Checkout />
+    {uid?  <Checkout /> : <Redirect  to="/" />}
+    {/* <Checkout /> */}
     </Route>
 
     <Route path="/orders">
-    {/* {uid?  <Orders /> : <Redirect  to="/" />} */}
-    <Orders />
+    {uid?  <Orders /> : <Redirect  to="/" />}
+    {/* <Orders /> */}
     </Route>
 
   </Switch>
