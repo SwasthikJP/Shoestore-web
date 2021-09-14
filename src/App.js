@@ -12,6 +12,7 @@ import Favourite from './components/favourite';
 import Addcart from './components/addcart';
 import Checkout from './components/checkout';
 import Orders from './components/orders';
+import { useEffect } from 'react/cjs/react.development';
 
 function App() {
 
@@ -47,8 +48,9 @@ function App() {
     return "";
   }
    
-
   }
+
+
 
   return (
     <div >
@@ -56,6 +58,7 @@ function App() {
 <Router>
   <userAuth.Provider  value={{uid,checkUser}}>
     {console.log("app js render")}
+
   <Switch>
     <Route exact path="/">
       <Home></Home>
@@ -65,7 +68,7 @@ function App() {
     </Route>
 
     <Route path="/details/:shoename/:id/:colorindex">
-     <Productview/>
+    <Productview/>
     </Route>
 
     <Route path="/favourites"  >
@@ -87,6 +90,8 @@ function App() {
     </Route>
 
   </Switch>
+
+
   </userAuth.Provider>
 </Router>
 

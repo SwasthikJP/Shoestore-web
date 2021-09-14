@@ -1,5 +1,5 @@
 import Navbar from "./navbar";
-import '../productdetail.css';
+import '../css files/productdetail.css';
 import '../css files/sign.css';
 import Footern from "./footer";
 import { useEffect, useRef, useState } from "react";
