@@ -1,12 +1,11 @@
 import Footern from "./footer";
 import Navbar from "./navbar";
 import "../css files/addcart.css";
-import air from "../images/jordan2.jpg";
 import { useEffect, useState } from "react";
-import { useGetcontext } from "../functions/getcontext";
-import { createClient } from "@supabase/supabase-js";
+import { useGetcontext } from "../custom_hooks/getcontext";
 import { Link , Redirect} from "react-router-dom";
-import getData from "../functions/getCartitems.js";
+import getData from "../functions/getCartitems";
+import {supabase} from '../functions/supabaseClient';
 
 export default function Addcart(){
     
@@ -15,6 +14,8 @@ export default function Addcart(){
     const [quantity,setquantity]=useState({});
     const [totalcost,settotalcost]=useState({subtotal:0,del:0,total:0});
     const [gotopage,setgotopage]=useState(null);
+
+
     
   
 
@@ -23,9 +24,6 @@ export default function Addcart(){
     },[]);
 
     const removeshoe=async(ele)=>{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
         try{
             const {data,error}=await supabase.from("Cart").delete()
             .match({
@@ -45,9 +43,6 @@ export default function Addcart(){
     }
 
     const updateQuantity=async(e,ele,index)=>{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
 
 
         let q=e.target.value;
@@ -107,7 +102,7 @@ export default function Addcart(){
   
           {shoedata.length!==0?
              shoedata.map((ele,index)=>{
-                  return  <div className="addcartbox">
+                  return  <div key={index} className="addcartbox">
                               <Link className="addcartimg"  to={`/details/${ele.shoes.gender}'s-${ele.shoes.shoename.replace(/ /g,"-")}/${ele.shoes.id}/${ele.colorindex}`}>
                   <img className="addcartimg" src={ele.shoes.shoeimages[ele.shoes.shoecolors[ele.colorindex]]} alt="shoe image" />
             </Link>

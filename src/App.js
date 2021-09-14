@@ -6,11 +6,10 @@ import Shoelistings from './components/shoelistings';
 import Productview from './components/productview';
 import {BrowserRouter as Router, Route, Switch, useParams, Redirect} from "react-router-dom"
 import { useEffect, useRef, useState } from 'react';
-import firebase from 'firebase';
 import Footern from './components/footer';
 import {createClient} from "@supabase/supabase-js";
-import { userAuth } from './components/userAuth';
-import './functions/getcontext'
+import { userAuth } from './functions/userAuth';
+import './custom_hooks/getcontext'
 import Favourite from './components/favourite';
 import Addcart from './components/addcart';
 import Checkout from './components/checkout';
@@ -18,7 +17,21 @@ import Orders from './components/orders';
 
 function App() {
 
-  const [uid,setuid]=useState("");
+  const [uid,setuid]=useState(()=>{
+    console.log("check user")
+    const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
+    const supabaseapi=process.env.REACT_APP_SUPABASE_API;
+    const supabase=createClient(superbaseURL,supabaseapi);
+  
+  let user=supabase.auth.user();
+  if(user){
+    console.log(user)
+    return user.id;
+  }else{
+    console.log("no user");
+    return "";
+  }
+  });
   const checkUser=()=>{
     console.log("check user")
     const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
@@ -38,17 +51,6 @@ function App() {
    
 
   }
-
- useEffect(()=>{
-  const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-  const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-  const supabase=createClient(superbaseURL,supabaseapi);
-
-console.log(supabase.auth.user())
-checkUser();
-  }
-  ,[])
-
 
   return (
     <div >

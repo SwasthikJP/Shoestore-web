@@ -7,13 +7,12 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import Footern from "./footer";
-import firebase from "firebase";
 import "../css files/home.css";
 import { Link } from "react-router-dom";
-import { createClient } from "@supabase/supabase-js";
 import nike from "../images/nike.gif";
 import nike2 from "../images/nike2.gif";
 import puma2 from "../images/puma2.gif";
+import  {supabase} from '../functions/supabaseClient';
 import skechers from "../images/skechers.gif";
  
 
@@ -36,12 +35,7 @@ export default function Home() {
 
 
     const getshoelist=async(brand)=>{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        console.log(process.env.REACT_APP_SUPABASE_URL)
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-      
                 try{
-                    const supabase=createClient(superbaseURL,supabaseapi);
                     var ref=supabase.from("shoes").select('*');
                     ref=ref.eq("brand",brand);
                     ref=ref.limit(8);

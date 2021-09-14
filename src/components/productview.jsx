@@ -4,32 +4,18 @@ import air2 from "../images/jordan2.jpg";
 import '../productdetail.css';
 import '../css files/sign.css';
 import Footern from "./footer";
-import firebase from "firebase";
-import { createClient } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
-import Random from "random-number-arrays";
 import classNames from "classnames";
 import { Link, Redirect, useParams } from "react-router-dom";
-import Sign from "./sign.jsx";
-import { useGetcontext } from "../functions/getcontext";
+import { useGetcontext } from "../custom_hooks/getcontext";
+import  {supabase} from '../functions/supabaseClient';
 
 
-export default function Productview(props){
+export default function Productview(){
 
-    const data=useRef({
-        shoecolors:["red","white"],
-        shoeimages:{
-            red:[air],
-            white:[air2]
-        },
-    });
 
-const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
-
-    const [currentcolor,setcurrentcolor]=useState("");
     const [currentsize,setcurrentsize]=useState("0");
     const [selectSize,setselectSize]=useState(false);
-    const alldata=useRef([]);
     const {id,colorindex}=useParams();
     const [shoedata,setshoedata]=useState([]);
     const [nextcolor,setnextcolor]=useState(0);
@@ -43,15 +29,10 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
     const [updatecart,setupdatecart]=useState(false);
 
 
-
     useEffect(async()=>{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        console.log(process.env.REACT_APP_SUPABASE_URL)
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-       
+
         try{
-  
-        const supabase=createClient(superbaseURL,supabaseapi);
+
         var ref=supabase.from("shoes").select('*');
         
        
@@ -88,10 +69,7 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
         
         if(Uid){
             try{
-                const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-                console.log(process.env.REACT_APP_SUPABASE_URL)
-                const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-                const supabase=createClient(superbaseURL,supabaseapi);
+
             const {data,error}=await supabase.from("Favourites").select().match({
               uid:Uid,  shoeid:id,colorindex
             });
@@ -107,46 +85,8 @@ const shoesizes=["4","5","6","7","8","9","10","11","12","13","14"];
         }
     },[uid,id,colorindex]);
 
-    const fun2= async()=>{
-// const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-// const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-// const supabase=createClient(superbaseURL,supabaseapi);
-
-// try{
-//   const {data,error} = await supabase.from("shoes").insert(alldata.current);
-//   if(error) throw error;
-//   console.log(data)
-
-// }catch (err){
-// console.log(err.message)
-// }
 
 
-    }
-
-      const fun=()=>{
-          const db=firebase.firestore();
-          db.collection("shoes").add({
-              brand:"skechers",
-              gender:"women",
-              shoecolors:["black"],
-              shoecost:4000,
-              shoeimages:{
-    black:[
-      "https://firebasestorage.googleapis.com/v0/b/shoestore-890e7.appspot.com/o/skechers%2Fsneakers%2Fwomen%2F149414%2F149414_nvhp_d_1.jpg?alt=media&token=fa6f05da-24cc-433a-b2ab-0861d20c5793",
-      "https://firebasestorage.googleapis.com/v0/b/shoestore-890e7.appspot.com/o/skechers%2Fsneakers%2Fwomen%2F149414%2F149414_nvhp_1.jpg?alt=media&token=63fb5ead-f6da-4ea2-abbb-f206bc80fddf",
-      "https://firebasestorage.googleapis.com/v0/b/shoestore-890e7.appspot.com/o/skechers%2Fsneakers%2Fwomen%2F149414%2F149414_nvhp_c_1.jpg?alt=media&token=0a03bbc5-6cfd-4b1b-8282-7856587c020b",
-      "https://firebasestorage.googleapis.com/v0/b/shoestore-890e7.appspot.com/o/skechers%2Fsneakers%2Fwomen%2F149414%2F149414_nvhp_b_1.jpg?alt=media&token=e6039965-f1d9-483d-8df1-1de8cdc58bd3"
-    ]
-            },
-              shoename:"Skechers Archfit",
-               shoetype:"sneakers"
-          }).then((ef)=>{
-              console.log("executed")
-          }).catch( (e)=>{
-console.log(e)
-          })
-      }
 
 
     const scrollfast=(e)=>{
@@ -161,9 +101,6 @@ console.log(e)
             
            
             try{
-                const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-                const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-                const supabase=createClient(superbaseURL,supabaseapi);
                 if(!favact){
 
   
@@ -202,9 +139,6 @@ console.log(e)
         if(Uid){
             if(currentsize!=="0"){
        try{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
         const {data,error}=await supabase.from("Cart").select('quantity').match(
            queryob
         );
@@ -240,13 +174,14 @@ console.log(e)
 
 
         <Navbar signactive={signactive} signIn setsignactive={setsignactive}/>
-        {shoedata.map((ele)=>{
+        <div style={{minHeight:"80vh"}}>
+        {shoedata.map((ele,index)=>{
        
-      return <div className="totaldiv"  >
+      return <div key={index} className="totaldiv"  >
             <div className="shoeimages">
                 {
-                    ele.shoeimages[ele.shoecolors[colorindex]].map((image)=>{
-                      return   <div className="image2"> <img src={image} alt="shoe image" /> </div>
+                    ele.shoeimages[ele.shoecolors[colorindex]].map((image,index)=>{
+                      return   <div key={index} className="image2"> <img src={image} alt="shoe image" /> </div>
                     })
                 }
 
@@ -268,8 +203,8 @@ console.log(e)
              <div className="shoeimages2cover" >
                 <div className="shoeimages2">
                 {
-                    ele.shoeimages[ele.shoecolors[colorindex]].map((image)=>{
-                      return   <span className="image2"> <img src={image} alt="shoe image" /> </span>
+                    ele.shoeimages[ele.shoecolors[colorindex]].map((image,index)=>{
+                      return   <span key={index} className="image2"> <img src={image} alt="shoe image" /> </span>
                     })
                 }
              </div>
@@ -279,7 +214,7 @@ console.log(e)
                     {
                         ele.shoecolors.map((color,index)=>{
               
-             return <Link replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}> <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt="shoe image"  /> </Link>
+             return <Link key={index} replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}> <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt="shoe image"  /> </Link>
                
                         })
                     }
@@ -290,8 +225,8 @@ console.log(e)
                 <div className={selectSize?"shoesizediv shoesizediv_active":"shoesizediv"}>
                     {ele.shoesizes.sort((a,b)=>{
                         return a-b;
-                    }).map((num)=>{
-                        return <div className={currentsize===num? "shoesize shoesize_active":"shoesize"} onClick={()=>{setcurrentsize(num);setselectSize(false);}}>IND {num}</div>
+                    }).map((num,index)=>{
+                        return <div key={index} className={currentsize===num? "shoesize shoesize_active":"shoesize"} onClick={()=>{setcurrentsize(num);setselectSize(false);}}>IND {num}</div>
                     })}
                  {console.log("+++ "+typeof(currentsize))}
   
@@ -311,8 +246,10 @@ console.log(e)
 
             </div>
         </div>
+        
              
             })}
+            </div>
         <Footern/>
     </div>
          

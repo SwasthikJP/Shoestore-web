@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {faArrowLeft,faCalculator} from "@fortawesome/free-solid-svg-icons"
 import "../css files/footer.css"
-import { faGithub, faGithubSquare, faInstagramSquare, faTwitterSquare } from "@fortawesome/free-brands-svg-icons"
+import { faGithubSquare, faInstagramSquare, faTwitterSquare } from "@fortawesome/free-brands-svg-icons"
 export default function Footern(){
 
     return <div>

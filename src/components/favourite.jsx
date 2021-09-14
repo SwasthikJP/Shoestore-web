@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react/cjs/react.development";
-import { useGetcontext } from "../functions/getcontext";
+import { useGetcontext } from "../custom_hooks/getcontext";
 import Footern from "./footer";
 import Navbar from "./navbar";
-import { createClient } from "@supabase/supabase-js";
 import { Link ,Redirect} from "react-router-dom";
+import  {supabase} from '../functions/supabaseClient';
 
 
 export default function Favourite(){
@@ -13,9 +13,6 @@ const {uid,checkUser}=useGetcontext();
 
  useEffect(async()=>{
   try{
-    const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-    const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-    const supabase=createClient(superbaseURL,supabaseapi);
    const Uid=checkUser();
     const {data,error}=await supabase.from("Favourites").select(`colorindex,shoes(*)`).match({
         uid:Uid
@@ -44,7 +41,7 @@ const {uid,checkUser}=useGetcontext();
 listdata.map((ele,index)=>{
 
 
-return  <Link to={`/details/${ele.gender}'s-${ele.shoename.replace(/ /g,"-")}/${ele.id}/${ele.colorindex}`} className="norbox norbox_fav"   data-key="0" >
+return  <Link key={index} to={`/details/${ele.gender}'s-${ele.shoename.replace(/ /g,"-")}/${ele.id}/${ele.colorindex}`} className="norbox norbox_fav"   data-key="0" >
     <div className="image">
     <img   src={ele.shoeimages[ele.shoecolors[ele.colorindex]]} alt="" />
     </div>

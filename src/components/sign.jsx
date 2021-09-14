@@ -1,11 +1,11 @@
  import '../css files/sign.css';
  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  import {  faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useEffect, useState } from 'react';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { createClient } from '@supabase/supabase-js';
 import { useLocation } from 'react-router';
-import { useGetcontext } from '../functions/getcontext';
+import { useGetcontext } from '../custom_hooks/getcontext';
+import { useState} from 'react';
+import  {supabase} from '../functions/supabaseClient';
 
  export default function Sign(props){
 
@@ -17,18 +17,8 @@ import { useGetcontext } from '../functions/getcontext';
     const [errusernamemsg,seterrusernamemsg]=useState("");
     const [verifymsg,setverifymsg]=useState("");
     const location=useLocation();
-    const {uid,checkUser}=useGetcontext();
+    const {checkUser}=useGetcontext();
 
-
-    useEffect(()=>{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        console.log(process.env.REACT_APP_SUPABASE_URL)
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
-     console.log(location)
-        const user =  supabase.auth.user();
-        console.log(user)
-    },[]);
 
     const inputemail=(value)=>{
     // setemail(e.target.value);
@@ -73,15 +63,13 @@ import { useGetcontext } from '../functions/getcontext';
         e.preventDefault();
         let v1=inputpassword(password);
         let v2=inputemail(email);
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
+
         if(v1 && v2){
             try{
                 const {user,session, error } = await supabase.auth.signIn({
                  email:email,
-                 password:password
-                },{redirectTo:`http://localhost:3000${location.pathname}`});
+                 password:password,
+                },{redirectTo:`${process.env.REACT_APP_PUBLIC_URL}${location.pathname}`});
                 if (error) throw error;
                 if(user &&  !session){
                     setverifymsg("Verify your account by clicking the link sent to your email.")
@@ -103,9 +91,7 @@ import { useGetcontext } from '../functions/getcontext';
     }
 
     const userSignup=async(e)=>{
-          const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
+
         console.log(errpasswordmsg)
         e.preventDefault();
         let v1=inputpassword(password);
@@ -118,7 +104,7 @@ import { useGetcontext } from '../functions/getcontext';
                 const { user,session,error } = await supabase.auth.signUp({
                  email:email,
                  password:password
-                },{redirectTo:`http://localhost:3000${location.pathname}`});
+                },{redirectTo:`${process.env.REACT_APP_PUBLIC_URL}${location.pathname}`});
                 if(error) throw error;
                 if(user &&  !session){
                    setverifymsg("Verify your account by clicking the link sent to your email.")
@@ -148,13 +134,10 @@ import { useGetcontext } from '../functions/getcontext';
   
 
     const googlesignin=async()=>{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
         try{
         const {error } = await supabase.auth.signIn({
-          provider: 'google'
-        },{redirectTo:`http://localhost:3000${location.pathname}`});
+          provider: 'google',
+        },{redirectTo:`${process.env.REACT_APP_PUBLIC_URL}${location.pathname}`});
         if(error) throw error;
     }
     catch (err){
@@ -177,7 +160,6 @@ import { useGetcontext } from '../functions/getcontext';
             <input value={password} onBlur={(e)=>inputpassword(e.target.value)} style={!checklength(errpasswordmsg)? {borderColor:"#fe0000"}:{}} onChange={(e)=>{setpassword(e.target.value)}}  type="text" placeholder="Password"/>
           {!checklength(errpasswordmsg) && <p className="erMessage">{errpasswordmsg}</p> }
           {!checklength(verifymsg) && <p className="erMessage">{verifymsg}</p>}
-           {/* <button>Using <FontAwesomeIcon  icon={faAd} size="2x" /></button> */}
             <button type="submit">Signin</button>
         </form>:
         <form onSubmit={(e)=>userSignup(e)}>

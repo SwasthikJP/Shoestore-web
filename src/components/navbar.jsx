@@ -2,11 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft, faSignOutAlt, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import {  useEffect, useRef, useState } from "react";
 import "../css files/navbar.css";
-import { Link, useRouteMatch,useParams ,Redirect} from "react-router-dom";
-import classNames from "classnames";
+import { Link, Redirect} from "react-router-dom";
 import Sign from "./sign";
-import { createClient } from "@supabase/supabase-js";
-import { useGetcontext } from "../functions/getcontext";
+import { useGetcontext } from "../custom_hooks/getcontext";
+import  {supabase} from '../functions/supabaseClient';
 
 
 export default function Navbar(props) {
@@ -19,8 +18,6 @@ const [col2num,setcol2num]=useState(-1);
 const [curcol,setcurcol]=useState(-1);
 const [signactive,setsignactive]=useState(props.signactive);
 const [signIn,setsignIn]=useState(props.signIn);
-const signUpbut=useRef(null);
-const signInbut=useRef(null);
 const navitemlist=useRef(
     [
        [ 
@@ -156,9 +153,6 @@ const hidesidebar=(e)=>{
 }
 
 const SignOut=async()=>{
-    const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-  const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-  const supabase=createClient(superbaseURL,supabaseapi);
   try{
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
@@ -174,9 +168,6 @@ console.log(supabase.auth.user())
 }
 
 const getuserdetails=()=>{
-    const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-    const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-    const supabase=createClient(superbaseURL,supabaseapi);
     return supabase.auth.user()?.user_metadata.full_name;
 }
   
@@ -232,7 +223,7 @@ const gotoPage=(path)=>{
             <div className="selections">
                 {
                     selectionlist.current.map((br,index)=>{
-                     return  <div onMouseOver={()=>{setdivnum(index)}} onMouseOut={()=>{setdivnum(-1)}} style={{borderBottom:divnum===index? "2px solid black":"2px solid transparent"}}>
+                     return  <div key={index} onMouseOver={()=>{setdivnum(index)}} onMouseOut={()=>{setdivnum(-1)}} style={{borderBottom:divnum===index? "2px solid black":"2px solid transparent"}}>
             <p href="">{br}</p>
                  </div>
                     })
@@ -261,8 +252,8 @@ const gotoPage=(path)=>{
                {
                    ele.map((ele2,index2)=>{
                   return  <div key={index+index2} className="col">
-                  <a href="" key={index+index2}>{ele2.title}</a>
-                  <div className="list" key={index+index2}>
+                  <a href="" >{ele2.title}</a>
+                  <div className="list">
                 
                  {ele2.listitem.map((ele3,index3)=>{
                      return  <Link key={index+index2+index3} to={`/list/${ele2.pathname[index3]}/${ele2.id[index3]}`}>{ele3}</Link>
@@ -288,7 +279,7 @@ const gotoPage=(path)=>{
        { uid &&    <button style={{marginBottom:"1rem"}} onClick={()=>{setdivnum(5);setcol2num(1);}}><span><i style={{fontStyle:"normal",fontSize:"1.05rem"}}><FontAwesomeIcon style={{marginRight:"0.5rem"}} icon={faUser} size="sm" />{getuserdetails()}</i> <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>}
         {
             selectionlist.current.map((title,index)=>{
-                return   <button onClick={()=>{setcol2num(1);setdivnum(index)}}><span> {title} <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
+                return   <button key={index} onClick={()=>{setcol2num(1);setdivnum(index)}}><span> {title} <FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
             })
         }
 
@@ -307,13 +298,13 @@ const gotoPage=(path)=>{
               {
            divnum===5 ?
            useroptions.current.listitem.map((title,index)=>
-           index===2?   <button onClick={SignOut}><span>{title} </span></button>
+           index===2?   <button key={index} onClick={SignOut}><span>{title} </span></button>
             :
-           <button  onClick={()=>{setcol2num(-1); setgotopage(useroptions.current.pathname[index])}}><span>{title}</ span></button>
+           <button key={index} onClick={()=>{setcol2num(-1); setgotopage(useroptions.current.pathname[index])}}><span>{title}</ span></button>
                
                )
               :  divnum!==-1 && navitemlist.current[divnum].map((col,index)=>
-            <button onClick={()=>{setcol2num(2);setcurcol(index)}}><span>{col.title}<FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
+            <button key={index} onClick={()=>{setcol2num(2);setcurcol(index)}}><span>{col.title}<FontAwesomeIcon  icon={faChevronRight} size="sm" /> </span></button>
                 
                 )
        }
@@ -329,7 +320,7 @@ const gotoPage=(path)=>{
           {
               
               curcol!==-1 && divnum!==-1 && navitemlist.current[divnum][curcol].listitem.map((option,index)=>
-            <Link className="link2" onClick={()=>setcol2num(-1)} to={`/list/${navitemlist.current[divnum][curcol].pathname[index]}/${navitemlist.current[divnum][curcol].id[index]}`}>{option}</Link>
+            <Link key={index} className="link2" onClick={()=>setcol2num(-1)} to={`/list/${navitemlist.current[divnum][curcol].pathname[index]}/${navitemlist.current[divnum][curcol].id[index]}`}>{option}</Link>
               
               )
           }

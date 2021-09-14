@@ -2,11 +2,11 @@ import { useState } from "react/cjs/react.development";
 import Footern from "./footer";
 import Navbar from "./navbar";
 import "../css files/checkout.css";
-import { useGetcontext } from "../functions/getcontext";
+import { useGetcontext } from "../custom_hooks/getcontext";
 import { Redirect } from "react-router";
 import getData from "../functions/getCartitems";
-import { createClient } from "@supabase/supabase-js";
 import date from "date-and-time";
+import  {supabase} from '../functions/supabaseClient';
 
 
 export default function Checkout(){
@@ -18,6 +18,7 @@ export default function Checkout(){
     const {uid}=useGetcontext();
     const [gotopage,setgotopage]=useState(null);
     const [btntext,setbtntext]=useState("Complete order");
+
  
 
 
@@ -29,11 +30,7 @@ export default function Checkout(){
       const cartItems=await getData(uid);
       if(cartItems.length!==0){
          try{
-            const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-            const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-            const supabase=createClient(superbaseURL,supabaseapi);
 
-           
             {
 
                 let total={};

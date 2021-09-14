@@ -14,7 +14,6 @@
     "@testing-library/user-event": "^12.8.3",
     "classnames": "^2.3.1",
     "date-and-time": "^2.0.0",
-    "firebase": "^8.8.1",
     "font-awesome": "^4.7.0",
     "random-number-arrays": "^1.0.11",
     "react": "^17.0.2",

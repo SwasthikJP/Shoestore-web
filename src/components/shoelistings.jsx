@@ -1,17 +1,12 @@
 import Navbar from "./navbar";
 import Footern from "./footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faServer, faArrowDown, faChevronCircleDown, faChevronDown, faChevronUp, faSlidersH, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import {  faChevronDown, faChevronUp, faSlidersH, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState, useEffect } from "react";
 import classNames from "classnames";
-import air from "../images/air_jordan_4.jpg";
-import air2 from "../images/jordan2.jpg";
-import firebase from "firebase";
-import { Link, Redirect, useParams, withRouter } from "react-router-dom";
-import "../css files/shoelistings.css"
-import { createClient } from "@supabase/supabase-js";
-import { useContext } from "react";
-import { userAuth } from "./userAuth";
+import {  Redirect, useParams } from "react-router-dom";
+import "../css files/shoelistings.css";
+import  {supabase} from "../functions/supabaseClient";
 
 // export default withRouter( function Shoelistings(props) {
 export default function Shoelistings(props) {
@@ -32,8 +27,6 @@ export default function Shoelistings(props) {
     });
     const [maindivclass, setmaindivclass] = useState({ classNames: "mainbody", effecton: true })
 const [listdata,setlistdata]=useState([]);
-    const [selectedsizes, setselectedsizes] = useState([]);
-    const [selectedcolors, setselectedcolors] = useState([]);
     console.log(propsdata.current)
     const {data,id}=useParams();
     const idlist=useRef({
@@ -76,58 +69,12 @@ const [listdata,setlistdata]=useState([]);
     const [gotopage,setgotopage]=useState(false);
     const [getdata,setgetdata]=useState({});
     const [showfilter,setshowfilter]=useState(false);
-    // const addquery2=(ref)=>{
-
-    //     for(const key in propsdata) {
-    //         ref=ref.where(key,"in",propsdata[key]);
-    //     }
-
-    //     return ref;
-    // }
   
 
-    const getshoeslist = (data) => {
-        console.log(data)
-        var db = firebase.firestore();
-        var ref = db.collection("shoes");
-        //   ref=addquery2(ref);
-        console.log("hehe")
-        for (const key in data) {
-            if (data[key].length != 0) {
-                if (key === "shoecolors" || key === "shoesizes") {
-                    console.log(data[key])
-                    ref = ref.where(key, "array-contains-any", data[key]);
-                } else {
-                    console.log(data[key])
-                    ref = ref.where(key, "==", data[key])
-                }
-            }
-        }
-        ref.get().then((query) => {
-            const a = [];
-            console.log("jj")
-            query.forEach((ele) => {
-                a.push(ele.data())
-             
-                // console.log(ele.data().gender)
-            });
-            console.log(a.length)
-            setlistdata(a)
-
-        }).catch((e) => {
-            console.log(e)
-        })
-
-    }
 
     const addquery = async() => {
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-console.log(process.env.REACT_APP_SUPABASE_URL)
-const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-     
-       
+
   try{
-     const supabase=createClient(superbaseURL,supabaseapi);
         var ref=supabase.from("shoes").select('*');
         
               
@@ -153,13 +100,7 @@ const supabaseapi=process.env.REACT_APP_SUPABASE_API;
             
         }
 
-       
-    
-console.log(ref);
-
         
-            // const {data,error} = await supabase.from("shoes").select();
-        //    var ref=supabase.from("shoes").select();
         const {data,error}=await ref;
             if(error) throw error;
             setlistdata(data);
@@ -407,9 +348,9 @@ addquery();
             <div className="allsizes bottompadding" data-key="shoesizes">
                 {
 
-                    shoesizeslist.map((ele) => {
+                    shoesizeslist.map((ele,index) => {
                       
-                        return <div className={propsdata.current["shoesizes"].includes(ele) ? "size sizeactive" : "size"} id={ele} onClick={(e) => { sizeclick(e, ele) }}>{ele}</div>
+                        return <div key={index} className={propsdata.current["shoesizes"].includes(ele) ? "size sizeactive" : "size"} id={ele} onClick={(e) => { sizeclick(e, ele) }}>{ele}</div>
                     })
                 }
 
@@ -424,8 +365,8 @@ addquery();
             <div className="allcolors bottompadding" data-key="shoecolors">
 
 
-                {shoecolorslist.map((ele) => {
-                    return <div className="colorb" onClick={(e) =>sizeclick(e, ele)}><div className="circle" style={{ backgroundColor:ele, opacity: 0.85, border: ele === "white" ? "1px solid rgb(229, 229, 229)" : "none" }}> <div className={propsdata.current["shoecolors"].includes(ele) ? "tick tickactive" : "tick"} style={{ borderColor: ele === "white" ? "black" : "white" }}></div> </div>
+                {shoecolorslist.map((ele,index) => {
+                    return <div key={index} className="colorb" onClick={(e) =>sizeclick(e, ele)}><div className="circle" style={{ backgroundColor:ele, opacity: 0.85, border: ele === "white" ? "1px solid rgb(229, 229, 229)" : "none" }}> <div className={propsdata.current["shoecolors"].includes(ele) ? "tick tickactive" : "tick"} style={{ borderColor: ele === "white" ? "black" : "white" }}></div> </div>
                         <div className={propsdata.current["shoecolors"].includes(ele) ?"cnameactive":""} >{ele}</div></div>
                 })}
 
@@ -497,7 +438,7 @@ addquery();
                 listdata.map((ele,index)=>{
    
             
-             return  <div className="norbox"  data-key="0" onClick={(e)=>{setdata(e,ele)}} >
+             return  <div className="norbox" key={index} data-key="0" onClick={(e)=>{setdata(e,ele)}} >
                     <div className="image">
                     <img   src={ele.shoeimages[ele.shoecolors[0]]} alt="" />
                     </div>
@@ -512,7 +453,7 @@ addquery();
                         <div className="picturediv">
                             {
                                 ele.shoecolors.map((color,index2)=>{
-                             return     <img src={ele.shoeimages[color][0]} onMouseOver={(e) => { addseconddetails(e,index2) }} style={{ height: "40px", width: "40px" }} alt="" />
+                             return     <img key={index2} src={ele.shoeimages[color][0]} onMouseOver={(e) => { addseconddetails(e,index2) }} style={{ height: "40px", width: "40px" }} alt="" />
                            
                                 })
                             }

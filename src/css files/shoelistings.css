@@ -331,7 +331,7 @@ overflow-y: scroll;
 padding: 0 3.4rem;
 gap: 1rem;
 transition: width 290ms ease,opacity 200ms linear;
-
+min-height: 70vh;
 /* flex-grow: 1; */
 }
 

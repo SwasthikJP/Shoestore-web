@@ -3,10 +3,11 @@ import Footern from "./footer";
 import air from "../images/jordan2.jpg";
 import "../css files/orders.css";
 import { useEffect, useRef, useState } from "react";
-import { useGetcontext } from "../functions/getcontext";
-import { createClient } from "@supabase/supabase-js";
+import { useGetcontext } from "../custom_hooks/getcontext";
 import date from "date-and-time";
 import { Link } from "react-router-dom";
+import  {supabase} from '../functions/supabaseClient';
+
 
 export default function Orders (){
 
@@ -14,11 +15,9 @@ export default function Orders (){
     const {uid,checkUser} =useGetcontext();
     const paymentType=useRef(["Cash on Delivary","Upi","Credit/Debit card"]);
 
+
     useEffect(async()=>{
     try{
-        const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-        const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-        const supabase=createClient(superbaseURL,supabaseapi);
         
         const {data,error}=await supabase.from("Orders").select('*')
         .eq("uid",uid);
@@ -38,8 +37,8 @@ export default function Orders (){
             <h3 style={{fontWeight:"500",marginBottom:"1rem"}}>Orders</h3>
            {shoeorders.length!==0?
 
-           shoeorders.map((ele)=>{
-          return  <div className="ordercombo">
+           shoeorders.map((ele,index)=>{
+          return  <div key={index} className="ordercombo">
                <div className="orderinfo">
                    <div className="leftdetails">
                        <p>Ordered on: {date.format(new Date(ele.created_at), 'ddd, MMM DD YYYY')}</p>
@@ -54,8 +53,8 @@ export default function Orders (){
                </div>
 
                {
-                   ele.shoeDetails.map((ele2)=>
-                   <div className="addcartbox">
+                   ele.shoeDetails.map((ele2,index2)=>
+                   <div key={index+index2} className="addcartbox">
                               <Link className="addcartimg"  to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>
                    <img className="addcartimg" src={ele2.shoes.shoeimages[ele2.shoes.shoecolors[ele2.colorindex]][0]} alt="shoe image" />
                   </Link>
