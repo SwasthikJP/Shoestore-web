@@ -1,12 +1,10 @@
 
 import './App.css';
 import Home from './components/home';
-import Navbar from './components/navbar';
 import Shoelistings from './components/shoelistings';
 import Productview from './components/productview';
-import {BrowserRouter as Router, Route, Switch, useParams, Redirect} from "react-router-dom"
-import { useEffect, useRef, useState } from 'react';
-import Footern from './components/footer';
+import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import {  useState } from 'react';
 import {createClient} from "@supabase/supabase-js";
 import { userAuth } from './functions/userAuth';
 import './custom_hooks/getcontext'

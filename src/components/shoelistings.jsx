@@ -28,7 +28,7 @@ export default function Shoelistings(props) {
     const [maindivclass, setmaindivclass] = useState({ classNames: "mainbody", effecton: true })
 const [listdata,setlistdata]=useState([]);
     console.log(propsdata.current)
-    const {data,id}=useParams();
+    const {id}=useParams();
     const idlist=useRef({
         MnAs:{gender:"men"},
         MntseRn:{gender:"men",shoetype:"running"},
@@ -44,14 +44,8 @@ const [listdata,setlistdata]=useState([]);
         WmnNk:{gender:"women",brand:"nike"},
         WmnPm:{gender:"women",brand:"puma"},
         WmnSk:{gender:"women",brand:"skechers"},
-        MnNk:{gender:"men",brand:"nike"},
-        WmnNk:{gender:"women",brand:"nike"},
         UnNk:{gender:"unisex",brand:"nike"},
-        MnPm:{gender:"men",brand:"puma"},
-        WmnPm:{gender:"women",brand:"puma"},
         UnPm:{gender:"unisex",brand:"puma"},
-        MnSk:{gender:"men",brand:"skechers"},
-        WmnSk:{gender:"women",brand:"skechers"},
         UnSk:{gender:"unisex",brand:"skechers"},
         PmAs:{brand:"puma"},
         NkAs:{brand:"nike"},
@@ -81,8 +75,8 @@ const [listdata,setlistdata]=useState([]);
         for (const key in propsdata.current) {
             console.log(propsdata.current[key])
             var ar=propsdata.current[key];
-            if(Array.isArray(ar) &&  ar.length!=0){
-            if (key != "shoesizes" && key != "shoecolors") {
+            if(Array.isArray(ar) &&  ar.length!==0){
+            if (key !== "shoesizes" && key !== "shoecolors") {
                 // ob[key] = [props.prop[key]];
                 // ref=ref.eq(key,propsdata.current[key][0])
               ref=ref.in(key,ar);
@@ -118,7 +112,6 @@ const [listdata,setlistdata]=useState([]);
     }
 
     useEffect(() => {
-    console.log(id+" haha "+data)
     // const dataarray=data.split("-");
     propsdata.current={
         brand:[],
@@ -142,8 +135,6 @@ setsorting.current={sort:false,ascend:true};
     }else{
         console.log("id does not exist");
     }
-    
-    console.log(props.location)
     }, [id]);
 
     const dropdown_fun = () => {
@@ -167,7 +158,7 @@ setsorting.current={sort:false,ascend:true};
     }
 
     const getcount=(ar)=>{
-        if(ar.length!=0){
+        if(ar.length!==0){
             return `(${ar.length})`;
         }
         return "";
@@ -189,7 +180,7 @@ setsorting.current={sort:false,ascend:true};
                 console.log(prev[key])
             } else {
     
-                prev[key] = prev[key].filter(ele => ele != value);
+                prev[key] = prev[key].filter(ele => ele !== value);
             }
             console.log(prev)
             // getshoeslist(prev);
@@ -215,7 +206,7 @@ setsorting.current={sort:false,ascend:true};
     var keyarrayvalue=propsdata.current[key];
     if (keyarrayvalue.includes(value)) {
     console.log("sfasf" + value)
-    keyarrayvalue = keyarrayvalue.filter((n) => n != value);
+    keyarrayvalue = keyarrayvalue.filter((n) => n !== value);
     } else {
     keyarrayvalue = [...keyarrayvalue, value]
     }
@@ -230,60 +221,7 @@ setsorting.current={sort:false,ascend:true};
     }
 
 
-    const colorclick = (e, color) => {
-
-            settransitionopacity((res)=>{
-                console.log("h1")
-             return true;
-            })
-      
-
-setTimeout(() => {
-        var ob=propsdata.current;
-     if (ob["shoecolors"].includes(color)) {
-        console.log("sfasf" + color)
-        ob["shoecolors"] = ob["shoecolors"].filter((n) => n != color);
-    } else {
-        ob["shoecolors"] = [...ob["shoecolors"], color]
-    }
-    console.log("h2")
-
-propsdata.current=ob;
-console.log(propsdata.current["shoecolors"])
-addquery();
-
-}, 0);
-
-
  
-    
-
-//         setselectedcolors((res) => {
-
-//             if (res.includes(color)) {
-//                 console.log("sfasf" + color)
-//                 res = res.filter((n) => n != color);
-//             } else {
-//                 res = [...res, color]
-//             }
-
-//             var prev = propsdata.current;
-//             prev["shoecolors"] = [...res];
-//             console.log(prev)
-//             console.log(res)
-//             // getshoeslist(prev);
-//             propsdata.current = prev;
-// console.log(propsdata.current["shoecolors"])
-//             return res;
-//         })
-
-
-     
-
-
-
-        console.log(e.target)
-    }
 
     const sortcostlh=(ascend)=>{
         settransitionopacity((res)=>{

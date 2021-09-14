@@ -2,20 +2,20 @@ import { useEffect, useState } from "react/cjs/react.development";
 import { useGetcontext } from "../custom_hooks/getcontext";
 import Footern from "./footer";
 import Navbar from "./navbar";
-import { Link ,Redirect} from "react-router-dom";
+import { Link } from "react-router-dom";
 import  {supabase} from '../functions/supabaseClient';
 
 
 export default function Favourite(){
 
 const [listdata,setlistdata]=useState([]);
-const {uid,checkUser}=useGetcontext();
+const {uid}=useGetcontext();
 
- useEffect(async()=>{
+ useEffect(()=>{
+     async function fetchData(){
   try{
-   const Uid=checkUser();
     const {data,error}=await supabase.from("Favourites").select(`colorindex,shoes(*)`).match({
-        uid:Uid
+        uid
     });
     if(error) throw error;
     console.log(data)
@@ -28,7 +28,9 @@ const {uid,checkUser}=useGetcontext();
   }catch(err){
       console.log(err);
   }
- },[]);
+     }
+     fetchData();
+ },[uid]);
 
 
 

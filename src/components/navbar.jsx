@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faHeart, faShoppingBag, faFolderMinus, faChevronRight, faChevronLeft, faSignOutAlt, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faHeart, faShoppingBag, faChevronRight, faChevronLeft, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import {  useEffect, useRef, useState } from "react";
 import "../css files/navbar.css";
 import { Link, Redirect} from "react-router-dom";
@@ -9,7 +9,6 @@ import  {supabase} from '../functions/supabaseClient';
 
 
 export default function Navbar(props) {
-console.log(props.signactive)
 const [divnum,setdivnum]=useState(-1);
 const selectionlist=useRef(["Men","Women","Nike","Puma","Skechers"]);
 const lastbarparentstyleactive=useRef({pointerEvents:"auto",backdropFilter:"blur(3px)",transition:"backdrop-filter 500ms linear"});
@@ -146,7 +145,7 @@ console.log("checkuser worked");
 
 const hidesidebar=(e)=>{
     e.stopPropagation();
-    if(e.target==e.currentTarget){
+    if(e.target===e.currentTarget){
         setcurcol(-1);
         setcol2num(-1);
     }
@@ -244,15 +243,15 @@ const gotoPage=(path)=>{
 </div>
 
         </div>
-        <div className="lastbarparent" style={divnum!=-1?lastbarparentstyleactive.current:lastbarparentstyle.current}>
-        <div className={divnum!=-1?"lastbar lastbaranim":"lastbar"}>
+        <div className="lastbarparent" style={divnum!==-1?lastbarparentstyleactive.current:lastbarparentstyle.current}>
+        <div className={divnum!==-1?"lastbar lastbaranim":"lastbar"}>
             {
                 navitemlist.current.map((ele,index)=>{
                 return <div key={index} className={divnum===index?"listanim":""} onMouseOver={()=>{setdivnum(index)}} onMouseOut={()=>{setdivnum(-1)}}>
                {
                    ele.map((ele2,index2)=>{
                   return  <div key={index+index2} className="col">
-                  <a href="" >{ele2.title}</a>
+                  <p style={{fontSize:"1.15rem",marginBottom:"0.3rem"}}>{ele2.title}</p>
                   <div className="list">
                 
                  {ele2.listitem.map((ele3,index3)=>{

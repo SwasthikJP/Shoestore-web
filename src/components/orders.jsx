@@ -1,6 +1,5 @@
 import Navbar from "./navbar";
 import Footern from "./footer";
-import air from "../images/jordan2.jpg";
 import "../css files/orders.css";
 import { useEffect, useRef, useState } from "react";
 import { useGetcontext } from "../custom_hooks/getcontext";
@@ -12,11 +11,12 @@ import  {supabase} from '../functions/supabaseClient';
 export default function Orders (){
 
     const [shoeorders,setshoeorders]=useState([]);
-    const {uid,checkUser} =useGetcontext();
+    const {uid} =useGetcontext();
     const paymentType=useRef(["Cash on Delivary","Upi","Credit/Debit card"]);
 
 
-    useEffect(async()=>{
+    useEffect(()=>{
+        async function fetchData(){
     try{
         
         const {data,error}=await supabase.from("Orders").select('*')
@@ -27,7 +27,8 @@ export default function Orders (){
     }catch (err){
         window.alert(err.message);
         console.log(err);
-    }
+    }}
+    fetchData();
     },[uid]);
   
     return <div>
@@ -56,7 +57,7 @@ export default function Orders (){
                    ele.shoeDetails.map((ele2,index2)=>
                    <div key={index+index2} className="addcartbox">
                               <Link className="addcartimg"  to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>
-                   <img className="addcartimg" src={ele2.shoes.shoeimages[ele2.shoes.shoecolors[ele2.colorindex]][0]} alt="shoe image" />
+                   <img className="addcartimg" src={ele2.shoes.shoeimages[ele2.shoes.shoecolors[ele2.colorindex]][0]} alt={ele2.shoes.shoename} />
                   </Link>
                    <div className="addcartinfo">
                    <Link to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>   <p>{ele2.shoes.shoename}</p></Link>

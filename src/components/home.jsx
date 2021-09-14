@@ -1,7 +1,4 @@
 import Navbar from "./navbar";
-import blurry_gradient from "../images/blurry_gradient.svg";
-import air from "../images/air_jordan_4.jpg";
-import air2 from "../images/leb.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
@@ -28,7 +25,6 @@ export default function Home() {
     const [rightcl2, setrightcl2] = useState("rightar whitebac");
     const [leftcl3, setleftcl3] = useState("leftar");
     const [rightcl3, setrightcl3] = useState("rightar whitebac");
-    const [listdata, setlistdata] = useState([]);
     const [nikeshoedata,setnikeshoedata]=useState([]);
     const [pumashoedata,setpumashoedata]=useState([]);
     const [skechersshoedata,setskechershoedata]=useState([]);
@@ -52,7 +48,9 @@ export default function Home() {
                 
     }
 
-  useEffect(async()=>{
+  useEffect(()=>{
+    
+    async function fetchData(){
 
   
     try{
@@ -74,6 +72,8 @@ export default function Home() {
     }
 
   console.log("executed")
+    }
+    fetchData();
   },[]);
 
 
@@ -101,7 +101,7 @@ export default function Home() {
 
     const norboxfun=(item,index)=>{
      return <Link to={`/details/${item.gender}'s-${item.shoename.replace(/ /g,"-")}/${item.id}/${0}`} className="norbox2" key={index}>
-     <img src={item.shoeimages[item.shoecolors[0]][0]} alt={`${item.shoename} image`} />
+     <img src={item.shoeimages[item.shoecolors[0]][0]} alt={`${item.shoename}`} />
      <div className="maindetail">
          <p>{item.shoename}</p>
          <p className="shoecost1">₹{item.shoecost}</p>

@@ -1,6 +1,4 @@
-import Navbar from "./navbar"
-import air from "../images/air_jordan_4.jpg";
-import air2 from "../images/jordan2.jpg";
+import Navbar from "./navbar";
 import '../productdetail.css';
 import '../css files/sign.css';
 import Footern from "./footer";
@@ -18,7 +16,7 @@ export default function Productview(){
     const [selectSize,setselectSize]=useState(false);
     const {id,colorindex}=useParams();
     const [shoedata,setshoedata]=useState([]);
-    const [nextcolor,setnextcolor]=useState(0);
+    // const [nextcolor,setnextcolor]=useState(0);
     const [gotopage,setgotopage]=useState(false);
     const infoDiv=useRef(null);
     const [addcartclass,setaddcartclass]=useState("addcartbut2");
@@ -29,7 +27,8 @@ export default function Productview(){
     const [updatecart,setupdatecart]=useState(false);
 
 
-    useEffect(async()=>{
+    useEffect(()=>{
+        async function fetchData(){
 
         try{
 
@@ -60,60 +59,56 @@ export default function Productview(){
         catch (error){
              console.log(error);
         }
-        
-       
+      
+    }
+    fetchData();
     },[id,colorindex]);
 
-    useEffect(async()=>{
-        let Uid=checkUser();
+    useEffect(()=>{
+        async function fetchData(){
+       
         
-        if(Uid){
+        if(uid){
             try{
 
             const {data,error}=await supabase.from("Favourites").select().match({
-              uid:Uid,  shoeid:id,colorindex
+              uid,  shoeid:id,colorindex
             });
             if(error) throw error;
             setfavact(Array.isArray(data) && data.length)
-            console.log(Uid)
         }catch(err){
             console.log(err)
         }
         }else{
             setfavact(false)
-            console.log(Uid+"no user"+uid)
         }
+    }
+    fetchData();
     },[uid,id,colorindex]);
 
 
 
 
-
-    const scrollfast=(e)=>{
-        console.log(e.currentTarget.scrollLeft)
-        // e.currentTarget.scrollBy({ left: e.currentTarget.width, behavior: "smooth" });
-    }
-
     const addtoFav=async()=>{
         let Uid=checkUser();
         if(Uid){
-            console.log("inside uid "+ favact);
             
            
             try{
                 if(!favact){
 
   
-                var {error}=await supabase.from("Favourites").upsert({
+                const {error}=await supabase.from("Favourites").upsert({
              uid:Uid,shoeid:id,colorindex,updated_at:new Date()
                 },{returning:"minimal",ignoreDuplicates:false});
+                if(error) throw error;
             }else{
-                var {error}=await supabase.from("Favourites").delete({returning:"minimal"}).match({
+                const {error}=await supabase.from("Favourites").delete({returning:"minimal"}).match({
                     uid:Uid,shoeid:id,colorindex
                 });
-           }
                 if(error) throw error;
-
+           }
+            
                 setfavact((prev)=>!prev);
 
             }catch (err){
@@ -167,7 +162,7 @@ export default function Productview(){
 
 
       if(gotopage){
-          return <Redirect  to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${nextcolor}`} />
+          return <Redirect  to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${0}`} />
       }
 
     return <div>
@@ -181,7 +176,7 @@ export default function Productview(){
             <div className="shoeimages">
                 {
                     ele.shoeimages[ele.shoecolors[colorindex]].map((image,index)=>{
-                      return   <div key={index} className="image2"> <img src={image} alt="shoe image" /> </div>
+                      return   <div key={index} className="image2"> <img src={image} alt={ele.shoename} /> </div>
                     })
                 }
 
@@ -204,7 +199,7 @@ export default function Productview(){
                 <div className="shoeimages2">
                 {
                     ele.shoeimages[ele.shoecolors[colorindex]].map((image,index)=>{
-                      return   <span key={index} className="image2"> <img src={image} alt="shoe image" /> </span>
+                      return   <span key={index} className="image2"> <img src={image} alt={ele.shoename} /> </span>
                     })
                 }
              </div>
@@ -214,7 +209,7 @@ export default function Productview(){
                     {
                         ele.shoecolors.map((color,index)=>{
               
-             return <Link key={index} replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}> <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt="shoe image"  /> </Link>
+             return <Link key={index} replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}> <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt={ele.shoename}  /> </Link>
                
                         })
                     }
