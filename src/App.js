@@ -12,7 +12,6 @@ import Favourite from './components/favourite';
 import Addcart from './components/addcart';
 import Checkout from './components/checkout';
 import Orders from './components/orders';
-import { useEffect } from 'react/cjs/react.development';
 
 function App() {
 
