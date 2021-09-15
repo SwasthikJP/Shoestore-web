@@ -107,7 +107,7 @@ export default function Addcart(){
              shoedata.map((ele,index)=>{
                   return  <div key={index} className="addcartbox">
                               <Link className="addcartimg"  to={`/details/${ele.shoes.gender}'s-${ele.shoes.shoename.replace(/ /g,"-")}/${ele.shoes.id}/${ele.colorindex}`}>
-                  <img className="addcartimg" src={ele.shoes.shoeimages[ele.shoes.shoecolors[ele.colorindex]]} alt={ele.shoe.shoename} />
+                  <img className="addcartimg" src={ele.shoes.shoeimages[ele.shoes.shoecolors[ele.colorindex]]} alt={ele.shoes.shoename} />
             </Link>
                   <div className="addcartinfo">
                     <Link to={`/details/${ele.shoes.gender}'s-${ele.shoes.shoename.replace(/ /g,"-")}/${ele.shoes.id}/${ele.colorindex}`}>  <p>{ele.shoes.shoename}</p></Link>
