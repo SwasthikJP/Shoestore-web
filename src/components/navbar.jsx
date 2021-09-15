@@ -6,6 +6,7 @@ import { Link, Redirect} from "react-router-dom";
 import Sign from "./sign";
 import { useGetcontext } from "../custom_hooks/getcontext";
 import  {supabase} from '../functions/supabaseClient';
+import { useLocation } from "react-router";
 
 
 export default function Navbar(props) {
@@ -125,19 +126,36 @@ const useroptions=useRef(
 
 const {uid,checkUser}=useGetcontext();
 const [gotopage,setgotopage]=useState("");
+const location=useLocation();
 
-   useEffect(()=>{
-console.log("rebuild +++++");
- 
-   },[]);
+
+useEffect(()=>{
+    const fetchPath=()=>{
+        let path=location.pathname;
+        let title={
+        details:"Shoestore",
+        cart:"Cart-Shoestore",
+        favourites:"Favourites-Shoestore",
+        orders:"Orders-Shoestore",
+        list:"Shoestore",
+        checkout:"Checkout-Shoestore" 
+       };
+    
+        for(const key in title){
+         if(path.includes(key)){
+             return title[key];
+         }
+        }
+        return "Shoestore";
+        }
+   document.title=fetchPath();
+},[location.pathname]);
 
    useEffect(()=>{
 setsignactive(props.signactive);
-console.log("props changed");
    },[props]);
 
    useEffect(()=>{
-console.log("checkuser worked");
        checkUser();
    });
 
@@ -155,14 +173,12 @@ const SignOut=async()=>{
   try{
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
-  console.log("done")
 localStorage.removeItem("supabase.auth.token")
 checkUser();
 setcol2num(-1);
-console.log(supabase.auth.user())
   }
   catch(er){
-      console.log(er)
+      console.log(er.message)
   }
 }
 
@@ -269,7 +285,6 @@ const gotoPage=(path)=>{
             }
             </div>
         </div>
-        {console.log("inside navbar"+signactive)}
 <div className="sidebarcover"  style={col2num!==-1?{pointerEvents:"auto",boxShadow:"inset 0 0px 0px 100vh rgba(14, 13, 13, 0.281)",backdropFilter:"blur(3px)"}:{pointerEvents:"none"}} onClick={(e)=>{hidesidebar(e)}}>
         <div className="sidebar" style={col2num!==-1?{transform:"translate(0,0)"}:{}}>
       

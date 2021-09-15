@@ -38,7 +38,7 @@ export default function Checkout(){
         return prev+cur.shoes.shoecost*cur.quantity},0);
         total.del=total.subtotal>10000? 0:1000;
         total.total=total.del+total.subtotal;
-            const {data,error}=await supabase.from("Orders").insert({
+            const {error}=await supabase.from("Orders").insert({
              address,
              payment:paymentoption,
             delivered_at:date.addDays(new Date(),7),
@@ -47,7 +47,6 @@ export default function Checkout(){
             shoeDetails:cartItems
             });
             if(error) throw error;
-            console.log(data);
           
             }
             const {error}=await supabase.from("Cart").delete({returning:"minimal"})

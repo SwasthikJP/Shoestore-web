@@ -22,11 +22,10 @@ export default function Orders (){
         const {data,error}=await supabase.from("Orders").select('*')
         .eq("uid",uid);
         if(error) throw error;
-        console.log(data);
         setshoeorders(data);
     }catch (err){
         window.alert(err.message);
-        console.log(err);
+        console.log(err.message);
     }}
     fetchData();
     },[uid]);

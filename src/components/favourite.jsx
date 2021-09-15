@@ -18,15 +18,13 @@ const {uid}=useGetcontext();
         uid
     });
     if(error) throw error;
-    console.log(data)
     let a=data.map((ele)=>{
         return {colorindex:ele.colorindex,...ele.shoes};
     });
-    console.log(a)
     setlistdata(a);
     
   }catch(err){
-      console.log(err);
+      console.log(err.message);
   }
      }
      fetchData();
@@ -38,7 +36,7 @@ const {uid}=useGetcontext();
         <Navbar signactive={false} signIn />
         <h3 style={{margin:"1rem 0 0 1rem"}}>Favourite</h3>
         <div className="shoelistbody" style={{padding:"1rem",overflowY:"auto"}}>
-        {console.log("==== fav ====")}
+
 {listdata.length!==0?
 listdata.map((ele,index)=>{
 

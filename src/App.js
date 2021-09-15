@@ -16,27 +16,16 @@ import {supabase} from "../src/functions/supabaseClient";
 function App() {
 
   const [uid,setuid]=useState(()=>{
-    console.log("check user")
-  
-  let user=supabase.auth.user();
-  if(user){
-    console.log(user)
-    return user.id;
-  }else{
-    console.log("no user");
-    return "";
-  }
+  return supabase.auth.user()??"";
   });
+
+
   const checkUser=()=>{
-    console.log("check user")
-  
   let user=supabase.auth.user();
   if(user){
-    console.log(user)
     setuid(user.id);
     return user.id;
   }else{
-    console.log("no user");
     setuid("");
     return "";
   }
@@ -50,7 +39,6 @@ function App() {
 
 <Router>
   <userAuth.Provider  value={{uid,checkUser}}>
-    {console.log("app js render")}
 
   <Switch>
     <Route exact path="/">
@@ -83,7 +71,6 @@ function App() {
     </Route>
 
   </Switch>
-
 
   </userAuth.Provider>
 </Router>

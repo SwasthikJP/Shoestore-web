@@ -27,7 +27,6 @@ export default function Shoelistings(props) {
     });
     const [maindivclass, setmaindivclass] = useState({ classNames: "mainbody", effecton: true })
 const [listdata,setlistdata]=useState([]);
-    console.log(propsdata.current)
     const {id}=useParams();
     const idlist=useRef({
         MnAs:{gender:"men"},
@@ -73,7 +72,6 @@ const [listdata,setlistdata]=useState([]);
         
               
         for (const key in propsdata.current) {
-            console.log(propsdata.current[key])
             var ar=propsdata.current[key];
             if(Array.isArray(ar) &&  ar.length!==0){
             if (key !== "shoesizes" && key !== "shoecolors") {
@@ -100,7 +98,7 @@ const [listdata,setlistdata]=useState([]);
             setlistdata(data);
           
           }catch (err){
-          console.log(err)
+          console.log(err.message)
           }
           settransitionopacity(false);
 
@@ -177,12 +175,10 @@ setsorting.current={sort:false,ascend:true};
             // }
             if (!prev[key].includes(value)) {
                 prev[key].push(value);
-                console.log(prev[key])
             } else {
     
                 prev[key] = prev[key].filter(ele => ele !== value);
             }
-            console.log(prev)
             // getshoeslist(prev);
             propsdata.current = prev;
             addquery();
@@ -196,8 +192,7 @@ setsorting.current={sort:false,ascend:true};
 
     const sizeclick = (e, value) => {
         var key = e.target.closest(".bottompadding").dataset.key;   
-    settransitionopacity((res)=>{
-        console.log("h1")
+    settransitionopacity(()=>{
      return true;
     })
 
@@ -205,32 +200,26 @@ setsorting.current={sort:false,ascend:true};
     setTimeout(() => {
     var keyarrayvalue=propsdata.current[key];
     if (keyarrayvalue.includes(value)) {
-    console.log("sfasf" + value)
     keyarrayvalue = keyarrayvalue.filter((n) => n !== value);
     } else {
     keyarrayvalue = [...keyarrayvalue, value]
     }
-    console.log("h2")
 
     propsdata.current[key]=keyarrayvalue;
-    console.log(propsdata.current[key])
     addquery();
 
     }, 0);
-        console.log(e.target)
     }
 
 
  
 
     const sortcostlh=(ascend)=>{
-        settransitionopacity((res)=>{
-            console.log("h1");
+        settransitionopacity(()=>{
             return true;
         });
         setTimeout(()=>{
     setsorting.current.sort=true;
-    console.log("h2")
     setsorting.current.ascend=ascend;
     addquery();
 },0)
@@ -250,7 +239,6 @@ setsorting.current={sort:false,ascend:true};
     }
 
     const setdata=(e,ele)=>{
-  console.log(e.currentTarget.dataset.key)
   setgetdata({ele:ele,key:e.currentTarget.dataset.key});
   setgotopage(true);
     }
@@ -367,7 +355,6 @@ setsorting.current={sort:false,ascend:true};
         <div className={maindivclass.classNames}>
             {/* <button className="dt"></button> */}
             
-            {console.log("shoelistings render")}
                {filtercomp("filterbody")}
 
             <div className="shoelistbody" style={{opacity:transitionopacity?0.5:1}}>

@@ -28,40 +28,36 @@ export default function Productview(){
 
 
     useEffect(()=>{
+        const observer=new IntersectionObserver((entries)=>{
+            entries.forEach((entry)=>{
+                setaddcartclass(classNames("addcartbut2",{addcartbut_active:entry.intersectionRatio===0}));
+
+            })
+            
+        },{root:null,rootMargin:"0px",threshold:[0,0.1]});
+
         async function fetchData(){
 
         try{
 
         var ref=supabase.from("shoes").select('*');
         
-       
            ref.eq("id",id);
            const {data,error}=await ref;
            if(error) throw error;
-           console.log(data)
            setshoedata(data);
            setgotopage(false);
-           let observer=new IntersectionObserver((entries)=>{
-               entries.forEach((entry,index)=>{
-                   setaddcartclass(classNames("addcartbut2",{addcartbut_active:entry.intersectionRatio===0}));
-                console.log("index"+index)
-                   console.log(entry.target)
-                    console.log(entry.intersectionRatio)
-               
-                 
-               })
-               
-           },{root:null,rootMargin:"0px",threshold:[0,0.1]});
-           console.log(addcartBut.current)
            observer.observe(addcartBut.current);
-          
         }
         catch (error){
-             console.log(error);
+             console.log(error.message);
         }
       
     }
     fetchData();
+    return ()=>{
+        observer.disconnect();
+    }
     },[id,colorindex]);
 
     useEffect(()=>{
@@ -77,10 +73,10 @@ export default function Productview(){
             if(error) throw error;
             setfavact(Array.isArray(data) && data.length)
         }catch(err){
-            console.log(err)
+            console.log(err.message)
         }
         }else{
-            setfavact(false)
+            setfavact(false);
         }
     }
     fetchData();
@@ -113,7 +109,7 @@ export default function Productview(){
 
             }catch (err){
                 window.alert(err);
-                console.log(err);
+                console.log(err.message);
             }
 
         }else{
@@ -150,7 +146,7 @@ export default function Productview(){
            }
        }catch(err){
            window.alert(err.message)
-           console.log(err)
+           console.log(err.message)
        }
     }else{
         setselectSize(true);
@@ -223,12 +219,11 @@ export default function Productview(){
                     }).map((num,index)=>{
                         return <div key={index} className={currentsize===num? "shoesize shoesize_active":"shoesize"} onClick={()=>{setcurrentsize(num);setselectSize(false);}}>IND {num}</div>
                     })}
-                 {console.log("+++ "+typeof(currentsize))}
+
   
 
                 </div>
               { selectSize && <p style={{marginBottom:"1rem",color:"#d43f21"}}>Please select a size.</p>}
-      {console.log("product view rendered==="+uid)}
                 <button ref={addcartBut} className="addcartbut"  onClick={addtocart}>Add to Bag</button>
                 <button  className={addcartclass} onClick={addtocart}>Add to Bag</button>
               { updatecart && <p style={{marginBottom:"1rem"}}>Added to cart.</p>}

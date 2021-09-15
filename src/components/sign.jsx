@@ -59,7 +59,6 @@ import  {supabase} from '../functions/supabaseClient';
     }
 
     const userSignin=async(e)=>{
-        console.log(errpasswordmsg)
         e.preventDefault();
         let v1=inputpassword(password);
         let v2=inputemail(email);
@@ -76,14 +75,11 @@ import  {supabase} from '../functions/supabaseClient';
                  }else{
                      props.setactive(false);
                  }
-               console.log(user)
-               console.log(session)
-
                checkUser();
                
              }
              catch (err){
-                 console.log(err)
+                 console.log(err.message)
                  setverifymsg(err.message)
                  
              }
@@ -92,14 +88,11 @@ import  {supabase} from '../functions/supabaseClient';
 
     const userSignup=async(e)=>{
 
-        console.log(errpasswordmsg)
         e.preventDefault();
         let v1=inputpassword(password);
         let v2=inputemail(email);
         let v3=inputusername(username);
         if(v1 && v2 && v3){
-            console.log(errpasswordmsg)
-            console.log("hehe")
             try{
                 const { user,session,error } = await supabase.auth.signUp({
                  email:email,
@@ -109,23 +102,19 @@ import  {supabase} from '../functions/supabaseClient';
                 if(user &&  !session){
                    setverifymsg("Verify your account by clicking the link sent to your email.")
                 }else{
-                    console.log(user)
-                    console.log(session)
                  checkUser();
-                const {data,error}= await supabase.auth.update(
+                const {error}= await supabase.auth.update(
                     {
                        data:{full_name:username} 
                     }
                 );
                 if(error) throw error;
-                console.log(user)
-                console.log(data)
                     props.setactive(false);
                 }
              
             }
             catch (err){
-                console.log(err)
+                console.log(err.message)
                 setverifymsg(err.message);
             }
         }
@@ -141,7 +130,7 @@ import  {supabase} from '../functions/supabaseClient';
         if(error) throw error;
     }
     catch (err){
-        console.log(err)
+        console.log(err.message);
         verifymsg(err.message);
     }
       }
@@ -149,7 +138,6 @@ import  {supabase} from '../functions/supabaseClient';
 
  
     return <div className="signcover">
-{console.log("rendered"+props.signIn)}
     <div className="signbox">
         <button className="close" onClick={()=>{props.setactive(false)}}><FontAwesomeIcon  icon={faTimesCircle} size="2x" /></button>
         <h4>Shoestore</h4>

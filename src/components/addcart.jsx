@@ -28,7 +28,7 @@ export default function Addcart(){
 
     const removeshoe=async(ele)=>{
         try{
-            const {data,error}=await supabase.from("Cart").delete()
+            const {error}=await supabase.from("Cart").delete()
             .match({
                 shoeid:ele.shoes.id,
                 colorindex:ele.colorindex,
@@ -36,16 +36,15 @@ export default function Addcart(){
                 uid:uid
             });
             if(error) throw error;
-            console.log(data);
            updateParams(await getData(uid));
               
         }catch(err){
             window.alert(err.message);
-            console.log(err);
+            console.log(err.message);
         }
     }
 
-    const updateQuantity=async(e,ele,index)=>{
+    const updateQuantity=async(e,ele)=>{
 
 
         let q=e.target.value;
@@ -63,7 +62,7 @@ export default function Addcart(){
            updateParams(await getData(uid));
         }catch(err){
             window.alert(err);
-            console.log(err);
+            console.log(err.message);
         }
 
     }
@@ -86,7 +85,6 @@ export default function Addcart(){
         setshoedata(data);
         setquantity(q);
        settotalcost(total);
-       console.log(total)
     }
 
 
@@ -132,11 +130,10 @@ export default function Addcart(){
              
               }) : <p style={{marginTop:"1rem"}}>There are no items in your bag. </p>
           }
-{console.log(quantity)}
+
            
 
             </div>
-          {console.log("(((((9 add cart")}
             <div className="summary">
                 <h3>Summary</h3>
                 

@@ -37,12 +37,11 @@ export default function Home() {
                     ref=ref.limit(8);
                     const {data,error}=await ref;
                     if(error) throw error;
-                    console.log(data)
                   return data;
 
                 }
                 catch (error){
-                    console.log(error);
+                    console.log(error.message);
                    return [];
                 }
                 
@@ -55,23 +54,19 @@ export default function Home() {
   
     try{
   const nikedata=await getshoelist("nike");
-  console.log("1")
   setnikeshoedata(nikedata);
   const pumadata=await getshoelist("puma");
-  console.log("2")
   setpumashoedata(pumadata);
   const skecherdata=await getshoelist("skechers");
-  console.log("3")
   setskechershoedata(skecherdata);
     }
     catch (err){
-        console.log(err);
+        console.log(err.message);
         setnikeshoedata([]);
         setpumashoedata([]);
         setskechershoedata([]);
     }
 
-  console.log("executed")
     }
     fetchData();
   },[]);
@@ -138,7 +133,6 @@ export default function Home() {
             <Link to="/details/women's-Air-Run-2/3/0" className="hover offerlink" >Shop</Link>
         </div>
 
-{console.log("rendered")}
         <h3 className="moreh3">More Nike</h3>
 
         <div className="outer">
