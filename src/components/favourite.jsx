@@ -8,7 +8,7 @@ import  {supabase} from '../functions/supabaseClient';
 
 export default function Favourite(){
 
-const [listdata,setlistdata]=useState([]);
+const [shoedata,setshoedata]=useState([]);
 const {uid}=useGetcontext();
 
  useEffect(()=>{
@@ -18,10 +18,9 @@ const {uid}=useGetcontext();
         uid
     });
     if(error) throw error;
-    let a=data.map((ele)=>{
-        return {colorindex:ele.colorindex,...ele.shoes};
-    });
-    setlistdata(a);
+    setshoedata(data.map((ele)=>{
+        return {...ele.shoes,colorindex:ele.colorindex};
+    }));
     
   }catch(err){
       console.log(err.message);
@@ -37,8 +36,8 @@ const {uid}=useGetcontext();
         <h3 style={{margin:"1rem 0 0 1rem"}}>Favourite</h3>
         <div className="shoelistbody" style={{padding:"1rem",overflowY:"auto"}}>
 
-{listdata.length!==0?
-listdata.map((ele,index)=>{
+{shoedata.length!==0?
+shoedata.map((ele,index)=>{
 
 
 return  <Link key={index} to={`/details/${ele.gender}'s-${ele.shoename.replace(/ /g,"-")}/${ele.id}/${ele.colorindex}`} className="norbox norbox_fav"   data-key="0" >
