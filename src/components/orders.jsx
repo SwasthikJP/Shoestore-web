@@ -20,7 +20,7 @@ export default function Orders (){
     try{
         
         const {data,error}=await supabase.from("Orders").select('*')
-        .eq("uid",uid);
+        .eq("uid",uid).order("created_at",{ascending:false});
         if(error) throw error;
         setshoeorders(data);
     }catch (err){

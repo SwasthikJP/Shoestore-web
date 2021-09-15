@@ -16,7 +16,7 @@ const {uid}=useGetcontext();
   try{
     const {data,error}=await supabase.from("Favourites").select(`colorindex,shoes(*)`).match({
         uid
-    });
+    }).order("created_at",{ascending:false});
     if(error) throw error;
     setshoedata(data.map((ele)=>{
         return {...ele.shoes,colorindex:ele.colorindex};
