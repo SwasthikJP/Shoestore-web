@@ -11,7 +11,7 @@ import  {supabase} from '../functions/supabaseClient';
 
 export default function Checkout(){
 
-    const [paymentoption,setpaymentoption]=useState("");
+    const [paymentoption,setpaymentoption]=useState(null);
     const [address,setaddress]=useState("");
     const [errpay,seterrpay]=useState(false);
     const [erradd,seterradd]=useState(false);
