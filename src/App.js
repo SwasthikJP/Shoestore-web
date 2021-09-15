@@ -12,14 +12,12 @@ import Favourite from './components/favourite';
 import Addcart from './components/addcart';
 import Checkout from './components/checkout';
 import Orders from './components/orders';
+import {supabase} from "../src/functions/supabaseClient";
 
 function App() {
 
   const [uid,setuid]=useState(()=>{
     console.log("check user")
-    const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-    const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-    const supabase=createClient(superbaseURL,supabaseapi);
   
   let user=supabase.auth.user();
   if(user){
@@ -32,9 +30,6 @@ function App() {
   });
   const checkUser=()=>{
     console.log("check user")
-    const superbaseURL=process.env.REACT_APP_SUPABASE_URL;
-    const supabaseapi=process.env.REACT_APP_SUPABASE_API;
-    const supabase=createClient(superbaseURL,supabaseapi);
   
   let user=supabase.auth.user();
   if(user){
