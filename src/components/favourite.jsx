@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import { useGetcontext } from "../custom_hooks/getcontext";
 import Footern from "./footer";
 import Navbar from "./navbar";

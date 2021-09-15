@@ -1,4 +1,4 @@
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import Footern from "./footer";
 import Navbar from "./navbar";
 import "../css files/checkout.css";
@@ -11,7 +11,7 @@ import  {supabase} from '../functions/supabaseClient';
 
 export default function Checkout(){
 
-    const [paymentoption,setpaymentoption]=useState(null);
+    const [paymentoption,setpaymentoption]=useState("");
     const [address,setaddress]=useState("");
     const [errpay,seterrpay]=useState(false);
     const [erradd,seterradd]=useState(false);
@@ -74,11 +74,6 @@ export default function Checkout(){
         }
     }
 
-    const payfun=(e)=>{
-        setpaymentoption(e.target.id);
-        seterrpay(false);
-    }
-
     if(gotopage){
         return <Redirect push to={gotopage}></Redirect>
     }
@@ -96,13 +91,13 @@ export default function Checkout(){
         <div className="paymentbox">
             <h4>Payment</h4>
             <label htmlFor="cod">
-                 <input type="radio" id="0" name="payment" checked={paymentoption==="0"} onChange={(e)=>{payfun(e);}} />
+                 <input type="radio" id="0" name="payment" checked={paymentoption==="0"} onChange={(e)=>{setpaymentoption(e.target.id);seterrpay(false);}} />
             Cash on delivary</label>
             <label htmlFor="upi">
-                 <input type="radio" id="1" name="payment" checked={paymentoption==="1"} onChange={(e)=>{payfun(e);}} />
+                 <input type="radio" id="1" name="payment" checked={paymentoption==="1"} onChange={(e)=>{setpaymentoption(e.target.id);seterrpay(false);}} />
             Upi</label>
             <label htmlFor="card">
-                 <input type="radio" id="2" name="payment" checked={paymentoption==="2"}  onChange={(e)=>{payfun(e);}} />
+                 <input type="radio" id="2" name="payment" checked={paymentoption==="2"}  onChange={(e)=>{setpaymentoption(e.target.id);seterrpay(false);}} />
             Credit/Debit card</label>
           {errpay &&  <p style={{marginLeft:"0.7rem",color:"red"}}>Please select the payment option.</p>}
        
