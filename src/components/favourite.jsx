@@ -42,7 +42,7 @@ shoedata.map((ele,index)=>{
 
 return  <Link key={index} to={`/details/${ele.gender}'s-${ele.shoename.replace(/ /g,"-")}/${ele.id}/${ele.colorindex}`} className="norbox norbox_fav"   data-key="0" >
     <div className="image">
-    <img   src={ele.shoeimages[ele.shoecolors[ele.colorindex]]} alt="" />
+    <img   src={ele.shoeimages[ele.shoecolors[ele.colorindex]]} alt={ele.shoename} />
     </div>
     <div className="details">
         <p>{ele.shoename}</p>

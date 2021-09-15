@@ -31,7 +31,7 @@ export default function Checkout(){
       if(cartItems.length!==0){
          try{
 
-            {
+        if(true)    {
 
                 let total={};
     total["subtotal"]=cartItems.reduce((prev,cur)=>{
