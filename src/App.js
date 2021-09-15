@@ -5,7 +5,6 @@ import Shoelistings from './components/shoelistings';
 import Productview from './components/productview';
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {  useState } from 'react';
-import {createClient} from "@supabase/supabase-js";
 import { userAuth } from './functions/userAuth';
 import './custom_hooks/getcontext'
 import Favourite from './components/favourite';
