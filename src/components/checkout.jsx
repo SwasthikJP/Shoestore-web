@@ -74,6 +74,11 @@ export default function Checkout(){
         }
     }
 
+    const payfun=(e)=>{
+        setpaymentoption(e.target.id);
+        seterrpay(false);
+    }
+
     if(gotopage){
         return <Redirect push to={gotopage}></Redirect>
     }
@@ -91,13 +96,13 @@ export default function Checkout(){
         <div className="paymentbox">
             <h4>Payment</h4>
             <label htmlFor="cod">
-                 <input type="radio" id="0" name="payment" checked={paymentoption==="0"} onChange={(e)=>{setpaymentoption(e.target.id);seterrpay(false);}} />
+                 <input type="radio" id="0" name="payment" checked={paymentoption==="0"} onChange={(e)=>{payfun(e);}} />
             Cash on delivary</label>
             <label htmlFor="upi">
-                 <input type="radio" id="1" name="payment" checked={paymentoption==="1"} onChange={(e)=>{setpaymentoption(e.target.id);seterrpay(false);}} />
+                 <input type="radio" id="1" name="payment" checked={paymentoption==="1"} onChange={(e)=>{payfun(e);}} />
             Upi</label>
             <label htmlFor="card">
-                 <input type="radio" id="2" name="payment" checked={paymentoption==="2"}  onChange={(e)=>{setpaymentoption(e.target.id);seterrpay(false);}} />
+                 <input type="radio" id="2" name="payment" checked={paymentoption==="2"}  onChange={(e)=>{payfun(e);}} />
             Credit/Debit card</label>
           {errpay &&  <p style={{marginLeft:"0.7rem",color:"red"}}>Please select the payment option.</p>}
        
