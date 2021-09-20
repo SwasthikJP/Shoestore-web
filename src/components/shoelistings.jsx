@@ -400,7 +400,7 @@ setsorting.current={sort:false,ascend:true};
         <Footern />
 <div className="filterdivcover" style={{pointerEvents:showfilter?"auto":"none"}}>
 <div className={showfilter? "filterdiv filterdiv_active":"filterdiv"}>
-  <button onClick={()=>setshowfilter(false)} style={{position:"sticky",top:"0rem",left:"100%",backgroundColor:"transparent"}}><FontAwesomeIcon icon={faTimesCircle} size="2x"></FontAwesomeIcon></button>
+  <button aria-label="close filter" onClick={()=>setshowfilter(false)} style={{position:"sticky",top:"0rem",left:"100%",backgroundColor:"transparent"}}><FontAwesomeIcon icon={faTimesCircle} size="2x"></FontAwesomeIcon></button>
 
     <h3 style={{marginBottom:"1rem"}}>Filter</h3>
     {filtercomp("")}

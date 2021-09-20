@@ -6,11 +6,15 @@ import classNames from "classnames";
 import Footern from "./footer";
 import "../css files/home.css";
 import { Link } from "react-router-dom";
-import nike from "../images/nike.gif";
-import nike2 from "../images/nike2.gif";
-import puma2 from "../images/puma2.gif";
+import nikewebm from "../images/nike.webm";
+import nikemp4 from "../images/nike.mp4";
+import nike2webm from "../images/nike2.webm";
+import nike2mp4 from "../images/nike2.mp4";
+import puma2webm from "../images/puma2.webm";
+import puma2mp4 from "../images/puma2.mp4";
 import  {supabase} from '../functions/supabaseClient';
-import skechers from "../images/skechers.gif";
+import skecherswebm from "../images/skechers.webm";
+import skechersmp4 from "../images/skechers.mp4";
  
 
 export default function Home() {
@@ -30,35 +34,18 @@ export default function Home() {
     const [skechersshoedata,setskechershoedata]=useState([]);
 
 
-    const getshoelist=async(brand)=>{
-                try{
-                    var ref=supabase.from("shoes").select('*');
-                    ref=ref.eq("brand",brand);
-                    ref=ref.limit(8);
-                    const {data,error}=await ref;
-                    if(error) throw error;
-                  return data;
 
-                }
-                catch (error){
-                    console.log(error.message);
-                   return [];
-                }
-                
-    }
 
   useEffect(()=>{
     
     async function fetchData(){
 
-  
     try{
-  const nikedata=await getshoelist("nike");
-  setnikeshoedata(nikedata);
-  const pumadata=await getshoelist("puma");
-  setpumashoedata(pumadata);
-  const skecherdata=await getshoelist("skechers");
-  setskechershoedata(skecherdata);
+ const {data,error} =await supabase.from("Home").select("*");
+ if(error) throw error;
+ setnikeshoedata(data[0].nike.shoes);
+ setpumashoedata(data[0].puma.shoes);
+ setskechershoedata(data[0].skechers.shoes);
     }
     catch (err){
         console.log(err.message);
@@ -113,11 +100,20 @@ export default function Home() {
         <Navbar signactive={false} signIn={true}/>
         
         <div className="im" >
-          <Link  className="Link" to="/list/nike-allshoes/NkAs">  <img  style={{ objectFit: "cover",width:"100%"}} src={nike} alt="nike shoe" /></Link>
+          <Link  className="Link" to="/list/nike-allshoes/NkAs">  <video autoPlay loop muted playsInline style={{ objectFit: "cover",width:"100%"}}  >
+            <source src={nikewebm} type="video/webm"/>
+            <source src={nikemp4} type="video/mp4" />
+            </ video></Link>
             <span className="together">
                
-            <Link to="/list/puma-allshoes/PmAs">  <img style={{display:"inline-block"}} src={puma2} alt="puma shoe" /></Link>
-            <Link to="/list/skechers-allshoes/SkAs"> <img src={skechers} alt="skechers shoe" /></Link>
+            <Link to="/list/puma-allshoes/PmAs">  <video autoPlay loop muted playsInline style={{display:"inline-block"}} >
+              <source src={puma2webm} type="video/webm"/>
+              <source src={puma2mp4} type="video/mp4"/>
+              </video></Link>
+            <Link to="/list/skechers-allshoes/SkAs"> <video autoPlay loop muted playsInline>
+              <source src={skecherswebm} type="video/webm" />
+              <source src={skechersmp4} type="video/mp4"/>
+              </video></Link>
             </span>
            
         </div>
@@ -129,15 +125,18 @@ export default function Home() {
         </div>
 
         <div className="im2" >
-            <img  src={nike2} alt="" />
+            <video autoPlay loop muted playsInline>
+              <source src={nike2webm} type="video/webm"/>
+              <source src={nike2mp4} type="video/mp4"/>
+            </video>
             <Link to="/details/women's-Air-Run-2/3/0" className="hover offerlink" >Shop</Link>
         </div>
 
         <h3 className="moreh3">More Nike</h3>
 
         <div className="outer">
-            <button className={leftcl1} onClick={() => scroll(1,lists1)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
-            <button className={rightcl1} onClick={() => scroll(-1,lists1)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
+            <button aria-label="scroll left" className={leftcl1} onClick={() => scroll(1,lists1)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
+            <button aria-label="scroll right" className={rightcl1} onClick={() => scroll(-1,lists1)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
           <div className="scrollthis" ref={lists1} onScroll={() => scrolldetect(lists1,setrightcl1,setleftcl1)}>
             <div className="lists" >
        {
@@ -156,8 +155,8 @@ export default function Home() {
         <h3 className="moreh3">More Puma</h3>
 
 <div className="outer">
-    <button className={leftcl2} onClick={() => scroll(1,lists2)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
-    <button className={rightcl2} onClick={() => scroll(-1,lists2)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
+    <button aria-label="scroll left" className={leftcl2} onClick={() => scroll(1,lists2)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
+    <button aria-label="scroll right" className={rightcl2} onClick={() => scroll(-1,lists2)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
   <div className="scrollthis" ref={lists2} onScroll={() => scrolldetect(lists2,setrightcl2,setleftcl2)}>
     <div className="lists" >
 {
@@ -171,8 +170,8 @@ export default function Home() {
 <h3 className="moreh3">More Skechers</h3>
 
 <div className="outer">
-    <button className={leftcl3} onClick={() => scroll(1,lists3)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
-    <button className={rightcl3} onClick={() => scroll(-1,lists3)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
+    <button aria-label="scroll left" className={leftcl3} onClick={() => scroll(1,lists3)}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
+    <button aria-label="scroll right"  className={rightcl3} onClick={() => scroll(-1,lists3)}><FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
   <div className="scrollthis" ref={lists3} onScroll={() => scrolldetect(lists3,setrightcl3,setleftcl3)}>
     <div className="lists" >
 {

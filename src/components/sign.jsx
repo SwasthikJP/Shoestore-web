@@ -139,7 +139,7 @@ import  {supabase} from '../functions/supabaseClient';
  
     return <div className="signcover">
     <div className="signbox">
-        <button className="close" onClick={()=>{props.setactive(false)}}><FontAwesomeIcon  icon={faTimesCircle} size="2x" /></button>
+        <button aria-label="close sign in" className="close" onClick={()=>{props.setactive(false)}}><FontAwesomeIcon  icon={faTimesCircle} size="2x" /></button>
         <h4>Shoestore</h4>
      {
      props.signIn?   <form onSubmit={(e)=>userSignin(e)}>

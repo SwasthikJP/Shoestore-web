@@ -1,4 +1,28 @@
-# Getting Started with Create React App
+# [Shoestore](https://web-shoestore.netlify.app/) is an online shoe store built using [React](https://reactjs.org/) and [Supabase](https://supabase.io/)
+
+
+## Features
+
+- Browse through a range on brands including **Nike**, **Puma**, **Skechers**.
+- Sign In using **email** or **google id**.
+- Completely **responsive design**.
+- Filters based on size, brand, gender, color.
+- Sort on price: Low-High or High-Low.
+- Add to **favourites** and **cart** option.
+
+## Desktop view 
+>### Home page
+
+<!-- <img src="readme_files/home_page.png" width="340" height="1000" />  -->
+
+<img src="readme_files/overall.gif" width="580" height="320" /> 
+
+### Screenshots
+<img src="readme files/thatswhasapp.jpg" width="640" height="350" /> 
+<img src="readme files/thatswhasapp 2.jpg" width="640" height="350" />
+<img src="readme files/thatswhasapp 3.jpg" width="640" height="350" /> 
+<img src="readme files/thatswhasapp 4.jpg" width="640" height="350" /> 
+<img src="readme files/thatswhasapp 5.jpg" width="640" height="350" />
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -67,4 +91,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [sdf](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { Link, Redirect, useParams } from "react-router-dom";
 import { useGetcontext } from "../custom_hooks/getcontext";
 import  {supabase} from '../functions/supabaseClient';
+import { IKImage, IKContext, IKUpload } from 'imagekitio-react';
 
 
 export default function Productview(){
@@ -25,6 +26,7 @@ export default function Productview(){
     const [favact,setfavact]=useState(false);
     const [signactive,setsignactive]=useState(false);
     const [updatecart,setupdatecart]=useState(false);
+    const largeimg=useRef(null);
 
 
     useEffect(()=>{
@@ -169,13 +171,28 @@ export default function Productview(){
         {shoedata.map((ele,index)=>{
        
       return <div key={index} className="totaldiv"  >
-            <div className="shoeimages">
+            <div  className="shoeimages">
                 {
                     ele.shoeimages[ele.shoecolors[colorindex]].map((image,index)=>{
-                      return   <div key={index} className="image2"> <img src={image} alt={ele.shoename} /> </div>
+                      return   <div   key={index} className="image2">
+                          {console.log(image)}
+                          
+                           <IKContext urlEndpoint="https://ik.imagekit.io/34ckqvtm5wm/fb">
+                               <IKImage 
+                              
+                             path="/nike/jordan/men/air-jordan-xxxv-pf-basketball-shoe-QrRrHz/air-jordan-xxxv-pf-basketball-shoe-QrRrHz (4).jpg"
+                             transformation={[{
+                                "height":"415",
+                                "width": "350"
+                              }]}
+                              loading="lazy"
+                              lqip={{ active: true }}
+                            />
+                           </IKContext>
+                           </div>
                     })
+                    
                 }
-
             </div>
             <div className="infodiv" ref={infoDiv}>
                 <div className="changedir">
@@ -195,7 +212,20 @@ export default function Productview(){
                 <div className="shoeimages2">
                 {
                     ele.shoeimages[ele.shoecolors[colorindex]].map((image,index)=>{
-                      return   <span key={index} className="image2"> <img src={image} alt={ele.shoename} /> </span>
+                      return   <span  key={index} className="image2">
+                             <IKContext urlEndpoint="https://ik.imagekit.io/34ckqvtm5wm/fb">
+                               <IKImage 
+                              
+                             path="/nike/jordan/men/air-jordan-xxxv-pf-basketball-shoe-QrRrHz/air-jordan-xxxv-pf-basketball-shoe-QrRrHz (1).jpg"
+                             transformation={[{
+                                "height":"900",
+                                "width": "800"
+                              }]}
+                              loading="lazy"
+                              lqip={{ active: true }}
+                            />
+                           </IKContext>
+                            </span>
                     })
                 }
              </div>
@@ -205,8 +235,21 @@ export default function Productview(){
                     {
                         ele.shoecolors.map((color,index)=>{
               
-             return <Link key={index} replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}> <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt={ele.shoename}  /> </Link>
+             return <Link key={index} replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}>
+                  {/* <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt={ele.shoename}  /> */}
+   
+                <IKContext urlEndpoint="https://ik.imagekit.io/34ckqvtm5wm/fb">
+                <IKImage   className={colorindex===`${index}`? "shoepicimg":""}
                
+              path="/nike/jordan/men/air-jordan-xxxv-pf-basketball-shoe-QrRrHz/air-jordan-xxxv-pf-basketball-shoe-QrRrHz (4).jpg"
+              transformation={[{
+                 "height":"96",
+                 "width": "96"
+               }]}
+               loading="lazy"
+               lqip={{ active: true }}
+             />
+            </IKContext> </Link>
                         })
                     }
 
