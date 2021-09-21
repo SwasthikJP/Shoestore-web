@@ -4,6 +4,7 @@ import Footern from "./footer";
 import Navbar from "./navbar";
 import { Link } from "react-router-dom";
 import  {supabase} from '../functions/supabaseClient';
+import { IKImage } from "imagekitio-react";
 
 
 export default function Favourite(){
@@ -42,7 +43,15 @@ shoedata.map((ele,index)=>{
 
 return  <Link key={index} to={`/details/${ele.gender}'s-${ele.shoename.replace(/ /g,"-")}/${ele.id}/${ele.colorindex}`} className="norbox norbox_fav"   data-key="0" >
     <div className="image">
-    <img   src={ele.shoeimages[ele.shoecolors[ele.colorindex]]} alt={ele.shoename} />
+  
+    <IKImage 
+      path={ele.shoeimages[ele.shoecolors[ele.colorindex]][0]}
+      transformation={[{
+         "height":"430",
+         "width": "430"
+       }]}
+       loading="lazy" lqip={{ active: true }}
+     />
     </div>
     <div className="details">
         <p>{ele.shoename}</p>

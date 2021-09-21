@@ -7,7 +7,7 @@ import classNames from "classnames";
 import { Link, Redirect, useParams } from "react-router-dom";
 import { useGetcontext } from "../custom_hooks/getcontext";
 import  {supabase} from '../functions/supabaseClient';
-import { IKImage, IKContext, IKUpload } from 'imagekitio-react';
+import { IKImage} from "imagekitio-react";
 
 
 export default function Productview(){
@@ -26,7 +26,6 @@ export default function Productview(){
     const [favact,setfavact]=useState(false);
     const [signactive,setsignactive]=useState(false);
     const [updatecart,setupdatecart]=useState(false);
-    const largeimg=useRef(null);
 
 
     useEffect(()=>{
@@ -159,6 +158,7 @@ export default function Productview(){
     }
 
 
+
       if(gotopage){
           return <Redirect  to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${0}`} />
       }
@@ -175,12 +175,10 @@ export default function Productview(){
                 {
                     ele.shoeimages[ele.shoecolors[colorindex]].map((image,index)=>{
                       return   <div   key={index} className="image2">
-                          {console.log(image)}
-                          
-                           <IKContext urlEndpoint="https://ik.imagekit.io/34ckqvtm5wm/fb">
+                         
                                <IKImage 
                               
-                             path="/nike/jordan/men/air-jordan-xxxv-pf-basketball-shoe-QrRrHz/air-jordan-xxxv-pf-basketball-shoe-QrRrHz (4).jpg"
+                             path={image}
                              transformation={[{
                                 "height":"415",
                                 "width": "350"
@@ -188,7 +186,7 @@ export default function Productview(){
                               loading="lazy"
                               lqip={{ active: true }}
                             />
-                           </IKContext>
+                         
                            </div>
                     })
                     
@@ -213,10 +211,10 @@ export default function Productview(){
                 {
                     ele.shoeimages[ele.shoecolors[colorindex]].map((image,index)=>{
                       return   <span  key={index} className="image2">
-                             <IKContext urlEndpoint="https://ik.imagekit.io/34ckqvtm5wm/fb">
+                           
                                <IKImage 
                               
-                             path="/nike/jordan/men/air-jordan-xxxv-pf-basketball-shoe-QrRrHz/air-jordan-xxxv-pf-basketball-shoe-QrRrHz (1).jpg"
+                             path={image}
                              transformation={[{
                                 "height":"900",
                                 "width": "800"
@@ -224,7 +222,7 @@ export default function Productview(){
                               loading="lazy"
                               lqip={{ active: true }}
                             />
-                           </IKContext>
+                          
                             </span>
                     })
                 }
@@ -238,10 +236,10 @@ export default function Productview(){
              return <Link key={index} replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}>
                   {/* <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt={ele.shoename}  /> */}
    
-                <IKContext urlEndpoint="https://ik.imagekit.io/34ckqvtm5wm/fb">
+             
                 <IKImage   className={colorindex===`${index}`? "shoepicimg":""}
                
-              path="/nike/jordan/men/air-jordan-xxxv-pf-basketball-shoe-QrRrHz/air-jordan-xxxv-pf-basketball-shoe-QrRrHz (4).jpg"
+              path={ele.shoeimages[color][0]}
               transformation={[{
                  "height":"96",
                  "width": "96"
@@ -249,7 +247,7 @@ export default function Productview(){
                loading="lazy"
                lqip={{ active: true }}
              />
-            </IKContext> </Link>
+         </Link>
                         })
                     }
 
@@ -284,6 +282,7 @@ export default function Productview(){
             })}
             </div>
         <Footern/>
+      
     </div>
          
 

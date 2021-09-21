@@ -7,6 +7,7 @@ import classNames from "classnames";
 import {  Redirect, useParams } from "react-router-dom";
 import "../css files/shoelistings.css";
 import  {supabase} from "../functions/supabaseClient";
+import { IKImage } from "imagekitio-react";
 
 // export default withRouter( function Shoelistings(props) {
 export default function Shoelistings(props) {
@@ -102,15 +103,9 @@ const [listdata,setlistdata]=useState([]);
           }
           settransitionopacity(false);
 
-        // var ob = {};
-      
-        // propsdata.current = ob;
-        // console.log(ob)
-        // return ref;
     }
 
     useEffect(() => {
-    // const dataarray=data.split("-");
     propsdata.current={
         brand:[],
         gender:[],
@@ -119,13 +114,9 @@ const [listdata,setlistdata]=useState([]);
         shoetype:[]
     };
     if(id in idlist.current){
-    // var ob={};
   for(const [key,value] of Object.entries(idlist.current[id])){
 propsdata.current[key]=[value];
-// ob[key]=[value];
     }
-    // console.log(ob)
-    // propsdata.current=ob;
 setsorting.current={sort:false,ascend:true};
 
   
@@ -365,7 +356,14 @@ setsorting.current={sort:false,ascend:true};
             
              return  <div className="norbox" key={index} data-key="0" onClick={(e)=>{setdata(e,ele)}} >
                     <div className="image">
-                    <img   src={ele.shoeimages[ele.shoecolors[0]]} alt="" />
+                    <IKImage  
+      path={ele.shoeimages[ele.shoecolors[0]][0]}
+      transformation={[{
+         "height":"440",
+         "width": "440"
+       }]}
+       loading="lazy" lqip={{ active: true }}
+     />
                     </div>
                     <div className="details">
                         <p>{ele.shoename}</p>
@@ -378,12 +376,18 @@ setsorting.current={sort:false,ascend:true};
                         <div className="picturediv">
                             {
                                 ele.shoecolors.map((color,index2)=>{
-                             return     <img key={index2} src={ele.shoeimages[color][0]} onMouseOver={(e) => { addseconddetails(e,index2) }} style={{ height: "40px", width: "40px" }} alt="" />
-                           
+                             return   <IKImage  key={index2}
+                             path={ele.shoeimages[color][0]}
+                             onMouseOver={(e) => { addseconddetails(e,index2) }} style={{ height: "40px", width: "40px" }}
+                             transformation={[{
+                                "height":"440",
+                                "width": "440"
+                              }]}
+                              loading="lazy" lqip={{ active: true }}
+                            />
                                 })
                             }
                               </div>
-                        {/* <p>₹20,200</p> */}
                     </div>
                     <p>₹{ele.shoecost}</p>
                

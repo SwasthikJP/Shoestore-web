@@ -15,6 +15,7 @@ import puma2mp4 from "../images/puma2.mp4";
 import  {supabase} from '../functions/supabaseClient';
 import skecherswebm from "../images/skechers.webm";
 import skechersmp4 from "../images/skechers.mp4";
+import { IKImage } from "imagekitio-react";
  
 
 export default function Home() {
@@ -43,9 +44,9 @@ export default function Home() {
     try{
  const {data,error} =await supabase.from("Home").select("*");
  if(error) throw error;
- setnikeshoedata(data[0].nike.shoes);
- setpumashoedata(data[0].puma.shoes);
- setskechershoedata(data[0].skechers.shoes);
+ setnikeshoedata(data[0].nike);
+ setpumashoedata(data[0].puma);
+ setskechershoedata(data[0].skechers);
     }
     catch (err){
         console.log(err.message);
@@ -83,7 +84,14 @@ export default function Home() {
 
     const norboxfun=(item,index)=>{
      return <Link to={`/details/${item.gender}'s-${item.shoename.replace(/ /g,"-")}/${item.id}/${0}`} className="norbox2" key={index}>
-     <img src={item.shoeimages[item.shoecolors[0]][0]} alt={`${item.shoename}`} />
+     <IKImage  
+      path={item.shoeimages[item.shoecolors[0]][0]}
+      transformation={[{
+         "height":"415",
+         "width": "415"
+       }]}
+       loading="lazy" lqip={{ active: true }}
+     />
      <div className="maindetail">
          <p>{item.shoename}</p>
          <p className="shoecost1">₹{item.shoecost}</p>

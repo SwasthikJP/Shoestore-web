@@ -12,6 +12,7 @@ import Addcart from './components/addcart';
 import Checkout from './components/checkout';
 import Orders from './components/orders';
 import {supabase} from "../src/functions/supabaseClient";
+import {IKContext} from "imagekitio-react";
 
 function App() {
 
@@ -36,7 +37,7 @@ function App() {
 
   return (
     <div >
-
+  <IKContext urlEndpoint="https://ik.imagekit.io/34ckqvtm5wm/fb">
 <Router>
   <userAuth.Provider  value={{uid,checkUser}}>
 
@@ -74,7 +75,7 @@ function App() {
 
   </userAuth.Provider>
 </Router>
-
+</IKContext>
   {/* <Home /> */}
   {/* <Shoelistings prop={{gender:"men"}}/> */}
   {/* <Productview prop={{shoecolor:"red"}}/> */}

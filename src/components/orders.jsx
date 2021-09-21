@@ -6,6 +6,7 @@ import { useGetcontext } from "../custom_hooks/getcontext";
 import date from "date-and-time";
 import { Link } from "react-router-dom";
 import  {supabase} from '../functions/supabaseClient';
+import { IKImage } from "imagekitio-react";
 
 
 export default function Orders (){
@@ -56,7 +57,15 @@ export default function Orders (){
                    ele.shoeDetails.map((ele2,index2)=>
                    <div key={index+index2} className="addcartbox">
                               <Link className="addcartimg"  to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>
-                   <img className="addcartimg" src={ele2.shoes.shoeimages[ele2.shoes.shoecolors[ele2.colorindex]][0]} alt={ele2.shoes.shoename} />
+                   {/* <img className="addcartimg" src={ele2.shoes.shoeimages[ele2.shoes.shoecolors[ele2.colorindex]][0]} alt={ele2.shoes.shoename} /> */}
+                   <IKImage  className="addcartimg"
+      path={ele2.shoes.shoeimages[ele2.shoes.shoecolors[ele2.colorindex]][0]} 
+      transformation={[{
+         "height":"151",
+         "width": "151"
+       }]}
+       loading="lazy" lqip={{ active: true }}
+     />
                   </Link>
                    <div className="addcartinfo">
                    <Link to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>   <p>{ele2.shoes.shoename}</p></Link>
