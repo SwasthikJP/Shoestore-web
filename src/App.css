@@ -1,3 +1,20 @@
 *{
   box-sizing: border-box;
 }
+
+p{
+  margin: 0%;
+  font-size: 1.1rem;
+}
+
+button{
+  cursor: pointer;
+  outline: none;
+  border:none;
+}
+
+h3{
+  margin: 0%;
+    font-size: 1.6rem;
+    font-weight: 400;
+}

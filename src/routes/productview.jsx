@@ -1,7 +1,7 @@
-import Navbar from "./navbar";
+import Navbar from "../components/navbar";
 import '../css files/productdetail.css';
 import '../css files/sign.css';
-import Footern from "./footer";
+import Footern from "../components/footer";
 import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { Link, Redirect, useParams } from "react-router-dom";
@@ -177,7 +177,6 @@ export default function Productview(){
                       return   <div   key={index} className="image2">
                          
                                <IKImage 
-                              
                              path={image}
                              transformation={[{
                                 "height":"415",
@@ -233,7 +232,7 @@ export default function Productview(){
                     {
                         ele.shoecolors.map((color,index)=>{
               
-             return <Link key={index} replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}>
+             return <Link aria-label={shoedata[0].shoename} key={index} replace to={`/details/${shoedata[0].gender}'s-${shoedata[0].shoename.replace(/ /g,"-")}/${shoedata[0].id}/${index}`}>
                   {/* <img className={colorindex===`${index}`? "shoepicimg":""} src={ele.shoeimages[color][0]}   alt={ele.shoename}  /> */}
    
              

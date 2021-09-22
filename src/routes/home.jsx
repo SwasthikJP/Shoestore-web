@@ -1,9 +1,10 @@
-import Navbar from "./navbar";
+import Navbar from "../components/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft} from "@fortawesome/free-solid-svg-icons/faArrowLeft";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
 import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
-import Footern from "./footer";
+import Footern from "../components/footer";
 import "../css files/home.css";
 import { Link } from "react-router-dom";
 import nikewebm from "../images/nike.webm";
@@ -83,7 +84,7 @@ export default function Home() {
 
 
     const norboxfun=(item,index)=>{
-     return <Link to={`/details/${item.gender}'s-${item.shoename.replace(/ /g,"-")}/${item.id}/${0}`} className="norbox2" key={index}>
+     return <Link aria-label={item.shoename} to={`/details/${item.gender}'s-${item.shoename.replace(/ /g,"-")}/${item.id}/${0}`} className="norbox2" key={index}>
      <IKImage  
       path={item.shoeimages[item.shoecolors[0]][0]}
       transformation={[{
@@ -108,17 +109,17 @@ export default function Home() {
         <Navbar signactive={false} signIn={true}/>
         
         <div className="im" >
-          <Link  className="Link" to="/list/nike-allshoes/NkAs">  <video autoPlay loop muted playsInline style={{ objectFit: "cover",width:"100%"}}  >
+          <Link aria-label="go to nike shoes" className="Link" to="/list/nike-allshoes/NkAs">  <video autoPlay loop muted playsInline style={{ objectFit: "cover",width:"100%"}}  >
             <source src={nikewebm} type="video/webm"/>
             <source src={nikemp4} type="video/mp4" />
             </ video></Link>
             <span className="together">
                
-            <Link to="/list/puma-allshoes/PmAs">  <video autoPlay loop muted playsInline style={{display:"inline-block"}} >
+            <Link aria-label="go to puma shoes" to="/list/puma-allshoes/PmAs">  <video autoPlay loop muted playsInline style={{display:"inline-block"}} >
               <source src={puma2webm} type="video/webm"/>
               <source src={puma2mp4} type="video/mp4"/>
               </video></Link>
-            <Link to="/list/skechers-allshoes/SkAs"> <video autoPlay loop muted playsInline>
+            <Link aria-label="go to skechers shoes" to="/list/skechers-allshoes/SkAs"> <video autoPlay loop muted playsInline>
               <source src={skecherswebm} type="video/webm" />
               <source src={skechersmp4} type="video/mp4"/>
               </video></Link>

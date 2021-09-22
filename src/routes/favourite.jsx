@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useGetcontext } from "../custom_hooks/getcontext";
-import Footern from "./footer";
-import Navbar from "./navbar";
+import Footern from "../components/footer";
+import Navbar from "../components/navbar";
 import { Link } from "react-router-dom";
 import  {supabase} from '../functions/supabaseClient';
 import { IKImage } from "imagekitio-react";
-
+import "../css files/shoelistings.css"
 
 export default function Favourite(){
 
@@ -41,7 +41,7 @@ const {uid}=useGetcontext();
 shoedata.map((ele,index)=>{
 
 
-return  <Link key={index} to={`/details/${ele.gender}'s-${ele.shoename.replace(/ /g,"-")}/${ele.id}/${ele.colorindex}`} className="norbox norbox_fav"   data-key="0" >
+return  <Link aria-label={ele.shoename} key={index} to={`/details/${ele.gender}'s-${ele.shoename.replace(/ /g,"-")}/${ele.id}/${ele.colorindex}`} className="norbox norbox_fav"   data-key="0" >
     <div className="image">
   
     <IKImage 

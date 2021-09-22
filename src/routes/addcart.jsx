@@ -1,5 +1,5 @@
-import Footern from "./footer";
-import Navbar from "./navbar";
+import Footern from "../components/footer";
+import Navbar from "../components/navbar";
 import "../css files/addcart.css";
 import { useEffect, useState } from "react";
 import { useGetcontext } from "../custom_hooks/getcontext";
@@ -105,7 +105,7 @@ export default function Addcart(){
           {shoedata.length!==0?
              shoedata.map((ele,index)=>{
                   return  <div key={index} className="addcartbox">
-                              <Link className="addcartimg"  to={`/details/${ele.shoes.gender}'s-${ele.shoes.shoename.replace(/ /g,"-")}/${ele.shoes.id}/${ele.colorindex}`}>
+                              <Link aria-label={ele.shoes.shoename} className="addcartimg"  to={`/details/${ele.shoes.gender}'s-${ele.shoes.shoename.replace(/ /g,"-")}/${ele.shoes.id}/${ele.colorindex}`}>
                   <IKImage  className="addcartimg"
       path={ele.shoes.shoeimages[ele.shoes.shoecolors[ele.colorindex]][0]}
       transformation={[{
@@ -116,7 +116,7 @@ export default function Addcart(){
      />
             </Link>
                   <div className="addcartinfo">
-                    <Link to={`/details/${ele.shoes.gender}'s-${ele.shoes.shoename.replace(/ /g,"-")}/${ele.shoes.id}/${ele.colorindex}`}>  <p>{ele.shoes.shoename}</p></Link>
+                    <Link aria-label={ele.shoes.shoename} to={`/details/${ele.shoes.gender}'s-${ele.shoes.shoename.replace(/ /g,"-")}/${ele.shoes.id}/${ele.colorindex}`}>  <p>{ele.shoes.shoename}</p></Link>
                       <p className="subdetails" style={{textTransform:"capitalize"}}>{ele.shoes.shoetype} shoe</p>
                       <p className="subdetails">Size <span style={{margin:"0 5px",fontSize:"0.85rem"}}>{ele.shoesize}</span>Quantity <span><select value={quantity[index]} onChange={(e)=>{updateQuantity(e,ele,index)}} defaultValue={ele.quantity} name="quantity" id="quantity">
                           <option value="1">1</option>

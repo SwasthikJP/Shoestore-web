@@ -1,0 +1,9 @@
+*.webm
+  cache-control: public
+  cache-control: max-age=604800
+  cache-control: immutable
+
+*.mp4
+  cache-control: public
+  cache-control: max-age=604800
+  cache-control: immutable

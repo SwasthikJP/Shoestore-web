@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Footern from "./footer";
-import Navbar from "./navbar";
+import Footern from "../components/footer";
+import Navbar from "../components/navbar";
 import "../css files/checkout.css";
 import { useGetcontext } from "../custom_hooks/getcontext";
 import { Redirect } from "react-router";

@@ -15,7 +15,7 @@
     "classnames": "^2.3.1",
     "date-and-time": "^2.0.0",
     "font-awesome": "^4.7.0",
-    "imagekit-react": "^0.1.0",
+    "imagekitio-react": "^1.0.11",
     "random-number-arrays": "^1.0.11",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -48,7 +48,6 @@
     ]
   },
   "devDependencies": {
-    "@types/react": "^17.0.20",
-    "imagekitio-react": "^1.0.11"
+    "@types/react": "^17.0.20"
   }
 }

@@ -1,18 +1,19 @@
-
+import {lazy,Suspense} from 'react';
 import './App.css';
-import Home from './components/home';
-import Shoelistings from './components/shoelistings';
-import Productview from './components/productview';
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {  useState } from 'react';
 import { userAuth } from './functions/userAuth';
 import './custom_hooks/getcontext'
-import Favourite from './components/favourite';
-import Addcart from './components/addcart';
-import Checkout from './components/checkout';
-import Orders from './components/orders';
 import {supabase} from "../src/functions/supabaseClient";
 import {IKContext} from "imagekitio-react";
+import ErrorBoundary from './components/errorBoundart';
+const Home=lazy(()=>import('./routes/home'));
+const Shoelistings=lazy(()=>import( './routes/shoelistings'));
+const Productview =lazy(()=>import('./routes/productview'));
+const Favourite =lazy(()=>import('./routes/favourite'));
+const Addcart =lazy(()=>import('./routes/addcart'));
+const Checkout  =lazy(()=>import('./routes/checkout'));
+const Orders =lazy(()=>import('./routes/orders'));
 
 function App() {
 
@@ -38,10 +39,12 @@ function App() {
   return (
     <div >
   <IKContext urlEndpoint="https://ik.imagekit.io/34ckqvtm5wm/fb">
+    <ErrorBoundary>
 <Router>
   <userAuth.Provider  value={{uid,checkUser}}>
-
+  <Suspense fallback={<div></div>}>
   <Switch>
+   
     <Route exact path="/">
       <Home></Home>
     </Route>
@@ -72,13 +75,11 @@ function App() {
     </Route>
 
   </Switch>
-
+</Suspense>
   </userAuth.Provider>
 </Router>
+</ ErrorBoundary >
 </IKContext>
-  {/* <Home /> */}
-  {/* <Shoelistings prop={{gender:"men"}}/> */}
-  {/* <Productview prop={{shoecolor:"red"}}/> */}
     </div>
   );
 }

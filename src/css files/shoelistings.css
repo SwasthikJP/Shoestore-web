@@ -1,6 +1,4 @@
-p{
-    margin: 0%;
-}
+
 
 .infotab{
     /* width: 90%; */
@@ -435,9 +433,7 @@ margin-right: 0.5rem;
 }
 
 
-button{
-    cursor: pointer;
-}
+
 
 .filterdivcover{
     display: var(--hidediv);

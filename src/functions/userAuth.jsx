@@ -1,6 +1,6 @@
-import React from "react";
+import {createContext} from "react";
 
-export const userAuth=React.createContext({
+export const userAuth=createContext({
     uid:"",
     checkUser:()=>{}
 })

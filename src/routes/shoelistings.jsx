@@ -1,5 +1,5 @@
-import Navbar from "./navbar";
-import Footern from "./footer";
+import Navbar from "../components/navbar";
+import Footern from "../components/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faChevronDown, faChevronUp, faSlidersH, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState, useEffect } from "react";

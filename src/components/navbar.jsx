@@ -1,12 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faHeart, faShoppingBag, faChevronRight, faChevronLeft, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
-import {  useEffect, useRef, useState } from "react";
+import { faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
+import { faHeart} from "@fortawesome/free-solid-svg-icons/faHeart";
+import {faShoppingBag} from "@fortawesome/free-solid-svg-icons/faShoppingBag";
+import {faChevronRight} from "@fortawesome/free-solid-svg-icons/faChevronRight";
+import {faChevronLeft} from "@fortawesome/free-solid-svg-icons/faChevronLeft";
+import {faUser} from "@fortawesome/free-solid-svg-icons/faUser";
+import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
+import { lazy,Suspense, useEffect, useRef, useState } from "react";
 import "../css files/navbar.css";
 import { Link, Redirect} from "react-router-dom";
-import Sign from "./sign";
 import { useGetcontext } from "../custom_hooks/getcontext";
 import  {supabase} from '../functions/supabaseClient';
 import { useLocation } from "react-router";
+const  Sign=lazy(()=>import("./sign"));
 
 
 export default function Navbar(props) {
@@ -209,10 +215,13 @@ const gotoPage=(path)=>{
     }
 
     return <div>
+       
     <div className="navbardiv">
+    <Suspense fallback={<div></div>}>
        {signactive && <Sign setactive={setActive} signIn={signIn} setsignIn={setsignIn}/>}
+       </Suspense>
         <div className="minbar">
-           <button> Help</button>
+           <a  style={{fontWeight:700,fontSize:"11.84px",lineHeight:"11.84px"}} href="https://github.com/SwasthikJP/Shoestore-web" rel="noreferrer" target="_blank"> Help</a>
           <div className="vl"></div>
      { uid &&  <div className="hoverthis">
            <p>{getuserdetails()}<FontAwesomeIcon style={{marginLeft:"0.5rem"}} icon={faUser} size="sm" /></p>
@@ -347,5 +356,6 @@ const gotoPage=(path)=>{
     </div>
     <div className="cardanim" style={{width:"100%",height:"2rem",backgroundColor:"#f5f5f5"}}>
         </div>
+       
     </div>
 }

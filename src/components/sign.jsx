@@ -1,7 +1,7 @@
  import '../css files/sign.css';
  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
- import {  faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+ import {  faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle';
 import { useLocation } from 'react-router';
 import { useGetcontext } from '../custom_hooks/getcontext';
 import { useState} from 'react';

@@ -1,6 +1,7 @@
-import Navbar from "./navbar";
-import Footern from "./footer";
+import Navbar from "../components/navbar";
+import Footern from "../components/footer";
 import "../css files/orders.css";
+import "../css files/addcart.css";
 import { useEffect, useRef, useState } from "react";
 import { useGetcontext } from "../custom_hooks/getcontext";
 import date from "date-and-time";
@@ -56,7 +57,7 @@ export default function Orders (){
                {
                    ele.shoeDetails.map((ele2,index2)=>
                    <div key={index+index2} className="addcartbox">
-                              <Link className="addcartimg"  to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>
+                              <Link aria-label={ele2.shoes.shoename} className="addcartimg"  to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>
                    {/* <img className="addcartimg" src={ele2.shoes.shoeimages[ele2.shoes.shoecolors[ele2.colorindex]][0]} alt={ele2.shoes.shoename} /> */}
                    <IKImage  className="addcartimg"
       path={ele2.shoes.shoeimages[ele2.shoes.shoecolors[ele2.colorindex]][0]} 
@@ -68,7 +69,7 @@ export default function Orders (){
      />
                   </Link>
                    <div className="addcartinfo">
-                   <Link to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>   <p>{ele2.shoes.shoename}</p></Link>
+                   <Link aria-label={ele2.shoes.shoename} to={`/details/${ele2.shoes.gender}'s-${ele2.shoes.shoename.replace(/ /g,"-")}/${ele2.shoes.id}/${ele2.colorindex}`}>   <p>{ele2.shoes.shoename}</p></Link>
                        <p className="subdetails" style={{textTransform:"capitalize"}}>{ele2.shoes.shoetype} shoe</p>
                        <p className="subdetails">Size <span style={{margin:"0 5px",fontSize:"1rem"}}>{ele2.shoesize}</span>Quantity <span>{ele2.quantity}
                       </span></p>
