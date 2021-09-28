@@ -39,15 +39,17 @@ export default function Home() {
 
 
   useEffect(()=>{
-    
+    let mounted=true;
     async function fetchData(){
 
     try{
  const {data,error} =await supabase.from("Home").select("*");
  if(error) throw error;
+ if(mounted){
  setnikeshoedata(data[0].nike);
  setpumashoedata(data[0].puma);
  setskechershoedata(data[0].skechers);
+ }
     }
     catch (err){
         console.log(err.message);
@@ -58,6 +60,9 @@ export default function Home() {
 
     }
     fetchData();
+    return ()=>{
+      mounted=false;
+    }
   },[]);
 
 

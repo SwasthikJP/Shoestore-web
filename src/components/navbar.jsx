@@ -136,7 +136,6 @@ const location=useLocation();
 
 
 useEffect(()=>{
-    console.log("useEffect1");
     const fetchPath=()=>{
         let path=location.pathname;
         let title={
@@ -160,13 +159,11 @@ useEffect(()=>{
 },[location.pathname]);
 
    useEffect(()=>{
-    console.log("useEffect2");
 
 setsignactive(props.signactive);
    },[props]);
 
    useEffect(()=>{
-    console.log("useEffect3");
 
        checkUser();
    });
