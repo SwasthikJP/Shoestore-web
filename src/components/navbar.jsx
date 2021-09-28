@@ -136,6 +136,7 @@ const location=useLocation();
 
 
 useEffect(()=>{
+    console.log("useEffect1");
     const fetchPath=()=>{
         let path=location.pathname;
         let title={
@@ -155,13 +156,18 @@ useEffect(()=>{
         return "Shoestore";
         }
    document.title=fetchPath();
+
 },[location.pathname]);
 
    useEffect(()=>{
+    console.log("useEffect2");
+
 setsignactive(props.signactive);
    },[props]);
 
    useEffect(()=>{
+    console.log("useEffect3");
+
        checkUser();
    });
 
@@ -179,9 +185,9 @@ const SignOut=async()=>{
   try{
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
-localStorage.removeItem("supabase.auth.token")
-checkUser();
+localStorage.removeItem("supabase.auth.token");
 setcol2num(-1);
+checkUser();
   }
   catch(er){
       console.log(er.message)
