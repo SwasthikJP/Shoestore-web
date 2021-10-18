@@ -10,8 +10,8 @@ export default function Footern(){
     return <div>
         <div className="foot">
             <div className="points">
-              <a href="https://github.com/SwasthikJP/Shoestore-web" rel="noreferrer" target="_blank">About Shoe store</a>
-              <a href="https://github.com/SwasthikJP/Shoestore-web" rel="noreferrer" target="_blank">Help</a>
+              <a href="https://github.com/SwasthikJP/Shoestore-web#shoestore-is-an-online-shoe-store-built-using-react-and-supabase" rel="noreferrer" target="_blank">About Shoe store</a>
+              <a href="https://github.com/SwasthikJP/Shoestore-web#shoestore-is-an-online-shoe-store-built-using-react-and-supabase" rel="noreferrer" target="_blank">Help</a>
             </div>
             <div className="points">
             <a target="_blank" rel="noreferrer" href="https://www.nike.com/in">About Nike</a>
