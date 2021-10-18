@@ -224,7 +224,7 @@ const gotoPage=(path)=>{
        {signactive && <Sign setactive={setActive} signIn={signIn} setsignIn={setsignIn}/>}
        </Suspense>
         <div className="minbar">
-           <a  style={{fontWeight:700,fontSize:"11.84px",lineHeight:"11.84px"}} href="https://github.com/SwasthikJP/Shoestore-web#shoestore-is-an-online-shoe-store-built-using-react-and-supabase" rel="noreferrer" target="_blank"> Help</a>
+           <a  style={{fontWeight:700,fontSize:"11.84px",lineHeight:"11.84px"}} href="https://github.com/SwasthikJP/Shoestore-web#readme" rel="noreferrer" target="_blank"> Help</a>
           <div className="vl"></div>
      { uid &&  <div className="hoverthis">
            <p>{getuserdetails()}<FontAwesomeIcon style={{marginLeft:"0.5rem"}} icon={faUser} size="sm" /></p>
