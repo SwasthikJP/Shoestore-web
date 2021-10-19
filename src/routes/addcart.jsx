@@ -97,7 +97,7 @@ export default function Addcart(){
     }
 
     return <div>
-        <Navbar></Navbar>
+        <Navbar signactive={false} signIn></Navbar>
         <div className="addcartcover">
             <div className="addcartlist">
             <h3>Bag</h3>

@@ -1,4 +1,6 @@
 import React from "react";
+import meme from "../images/Bhaisahab-Ye-Kis-Line-Mei-Aa-Gaye-Aap-meme-template-of-welcome-movie.jpg";
+import "../css files/errorboundary.css";
 export default class ErrorBoundary extends React.Component {
     
     constructor(props) {
@@ -16,7 +18,13 @@ export default class ErrorBoundary extends React.Component {
     render() {
       if (this.state.hasError) {
         // You can render any custom fallback UI
-        return <center> <h1>Something went wrong.</h1></center>;
+        return  <div className="column">
+          <h1>ERROR 404</h1>
+            <img src={meme} alt="meme" />
+          
+          <p>Page not found, <a href="https://web-shoestore.netlify.app/">Click here to return to the Home page.</a></p>
+          </div>;
+        
       }
   
       return this.props.children; 

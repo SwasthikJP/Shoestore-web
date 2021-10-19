@@ -79,7 +79,7 @@ export default function Checkout(){
     }
 
     return <div>
-        <Navbar></Navbar>
+        <Navbar signactive={false} signIn></Navbar>
     <div>
         <form className="checkoutform" onSubmit={(e)=>comOrder(e)}>
         <h3 style={{marginBottom:"0.3rem",fontWeight:"600"}}>Checkout</h3>
