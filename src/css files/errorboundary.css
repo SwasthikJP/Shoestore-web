@@ -1,6 +1,6 @@
 
 
-.column{
+.error_column{
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -10,30 +10,30 @@
     margin: 0 auto;
 }
 
-.column> img{
+.error_column> img{
 width: 100%;
 margin-bottom: 0.5rem;
 }
 
-p{
+.err_p{
     font-weight: 500;
     font-size: 1.3rem;
 }
 
-p> a{
+.err_p> a{
     color: rgb(206, 206, 8);
     text-decoration: underline;
 }
 
 @media only screen and (max-width: 3020px) {
-    .column{
+    .error_column{
         width: 60%;
     }
 
 }
 
 @media only screen and (max-width: 640px) {
-.column{
+.error_column{
     width: 80%;
 }
 }

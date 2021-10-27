@@ -18,11 +18,11 @@ export default class ErrorBoundary extends React.Component {
     render() {
       if (this.state.hasError) {
         // You can render any custom fallback UI
-        return  <div className="column">
-          <h1>ERROR 404</h1>
+        return  <div className="error_column">
+          <h1 >ERROR 404</h1>
             <img src={meme} alt="meme" />
           
-          <p>Page not found, <a href="https://web-shoestore.netlify.app/">Click here to return to the Home page.</a></p>
+          <p className="err_p">Page not found, <a href="https://web-shoestore.netlify.app/">Click here to return to the Home page.</a></p>
           </div>;
         
       }
